@@ -16,7 +16,8 @@
 
 ```
 Or-Haalacha/
-├── client/   # אפליקציית React (Vite)
+├── client/   # החנות – React (Vite)
+├── admin/    # אזור הניהול – React (Vite), אפליקציה נפרדת
 ├── server/   # שרת Node.js
 └── README.md
 ```
