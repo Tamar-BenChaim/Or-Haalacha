@@ -1,0 +1,36 @@
+name: CodeQL
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "23 5 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: analyze
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect JavaScript sources
+        id: detect
+        run: |
+          if [ -n "$(git ls-files '*.js' '*.jsx' '*.ts' '*.tsx' '*.mjs' | head -n 1)" ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "No JavaScript sources yet, skipping."
+          fi
+      - uses: github/codeql-action/init@v3
+        if: steps.detect.outputs.found == 'true'
+        with:
+          languages: javascript-typescript
+      - uses: github/codeql-action/analyze@v3
+        if: steps.detect.outputs.found == 'true'
