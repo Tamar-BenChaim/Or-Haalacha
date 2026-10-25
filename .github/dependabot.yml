@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+
+  # Enable each npm entry below once the workspace has a package.json
+  # (Dependabot reports an error for a directory without a manifest).
+  #
+  # - package-ecosystem: npm
+  #   directory: /client
+  #   schedule:
+  #     interval: weekly
+  # - package-ecosystem: npm
+  #   directory: /admin
+  #   schedule:
+  #     interval: weekly
+  # - package-ecosystem: npm
+  #   directory: /server
+  #   schedule:
+  #     interval: weekly

@@ -1,0 +1,10 @@
+title = "Or Haalacha gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Placeholder values in example env files"
+paths = [
+  '''(^|/)\.env\.example$''',
+]
