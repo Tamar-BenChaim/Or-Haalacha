@@ -61,7 +61,7 @@ jobs:
             echo "found=false" >> "$GITHUB_OUTPUT"
             echo "No package.json in ${{ matrix.workspace }} yet, skipping."
           fi
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         if: steps.detect.outputs.found == 'true'
         with:
           node-version: 22
