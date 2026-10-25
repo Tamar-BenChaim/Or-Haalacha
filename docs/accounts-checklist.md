@@ -12,7 +12,9 @@
 - [ ] Settings › Code security: להפעיל Secret scanning, ‏Push protection, ‏Dependabot alerts ו־Dependabot security updates.
 - [ ] Settings › Branches: חוק הגנה על `main` (ראו למטה).
 
-חוק הגנה מומלץ על `main`: חובה Pull Request, חובה שהבדיקות יעברו (`secrets`, `dependency-review`, `workspace (client)`, `workspace (admin)`, `workspace (server)`, `analyze`), בלי force push ובלי מחיקה.
+חוק ההגנה הפעיל (`protect-main`, Settings › Rules › Rulesets): חובה Pull Request (בלי דרישת אישור, כי יש בעלים אחד), חובה שהבדיקות יעברו, בלי force push ובלי מחיקה. רשימת העקיפה כוללת את תפקיד Repository admin ב"תמיד", כדי לאפשר דחיפה ישירה של מסמכי `docs/` בשלב האפיון. קוד עובר תמיד Pull Request.
+
+חוק הגנה מומלץ על `main` (ההגדרה המקורית): חובה Pull Request, חובה שהבדיקות יעברו (`secrets`, `dependency-review`, `workspace (client)`, `workspace (admin)`, `workspace (server)`, `analyze`), בלי force push ובלי מחיקה.
 
 ### 2. Cloudflare
 - [ ] חשבון על `support@orhaalacha.org`.
