@@ -6,9 +6,16 @@ describe('GET /health', () => {
   it('responds ok with a request id', async () => {
     const res = await request(buildApp()).get('/health');
     expect(res.status).toBe(200);
-    expect(res.body).toEqual({ status: 'ok' });
+    expect(res.body).toEqual({ status: 'ok', database: 'ok' });
     expect(res.headers['x-request-id']).toMatch(/^[0-9a-f-]{36}$/);
     expect(res.headers['cache-control']).toBe('no-store');
+  });
+
+  it('responds 503 when the database is unreachable', async () => {
+    const database = { ping: async () => Promise.reject(new Error('timeout')) };
+    const res = await request(buildApp({ database })).get('/health');
+    expect(res.status).toBe(503);
+    expect(res.body).toEqual({ status: 'error', database: 'unavailable' });
   });
 });
 

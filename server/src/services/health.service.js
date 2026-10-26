@@ -1,8 +1,12 @@
-// Will also report database connectivity once the data layer is added.
-export function createHealthService() {
+export function createHealthService({ database }) {
   return {
-    getStatus() {
-      return { status: 'ok' };
+    async getStatus() {
+      try {
+        await database.ping();
+        return { status: 'ok', database: 'ok' };
+      } catch {
+        return { status: 'error', database: 'unavailable' };
+      }
     },
   };
 }

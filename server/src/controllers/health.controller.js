@@ -1,7 +1,11 @@
 export function createHealthController({ healthService }) {
   return {
-    get(req, res) {
-      res.set('Cache-Control', 'no-store').json(healthService.getStatus());
+    async get(req, res) {
+      const health = await healthService.getStatus();
+      res
+        .status(health.status === 'ok' ? 200 : 503)
+        .set('Cache-Control', 'no-store')
+        .json(health);
     },
   };
 }

@@ -24,11 +24,14 @@ const envSchema = z.object({
     .positive()
     .default(15 * 60 * 1000),
   RATE_LIMIT_MAX: z.coerce.number().int().positive().default(300),
+  MONGODB_URI: z.string().regex(/^mongodb(\+srv)?:\/\/\S+$/),
+  MONGODB_DB_NAME: z.string().regex(/^[A-Za-z0-9_-]{1,38}$/),
 });
 
 /**
  * Validates environment variables and returns a frozen config object.
  * Error messages name the invalid variables but never echo their values.
+ * The config holds secrets (the database URI), so it must never be logged.
  */
 export function loadConfig(env = process.env) {
   const result = envSchema.safeParse(env);
@@ -45,5 +48,6 @@ export function loadConfig(env = process.env) {
     corsOrigins: Object.freeze(env_.CORS_ORIGINS.map((origin) => new URL(origin).origin)),
     trustProxy: env_.TRUST_PROXY,
     rateLimit: Object.freeze({ windowMs: env_.RATE_LIMIT_WINDOW_MS, max: env_.RATE_LIMIT_MAX }),
+    mongodb: Object.freeze({ uri: env_.MONGODB_URI, dbName: env_.MONGODB_DB_NAME }),
   });
 }
