@@ -18,7 +18,12 @@
 
 ### 2. Cloudflare
 - [x] חשבון על `support@orhaalacha.org`.
-- [ ] הוספת הדומיין `orhaalacha.org` והעברת שרתי ה־DNS אליהם (אצל רשם הדומיין).
+- [x] הוספת הדומיין `orhaalacha.org` והעברת שרתי ה־DNS אליהם (אצל רשם הדומיין).
+  - הדומיין רשום ב־Zoho דרך Tucows. שרתי השמות מוחלפים במסך הניהול של OpenSRS (הקישור ופרטי הכניסה ב־Zoho Mail › דומיינים › פרטי רישום). צריך לפתוח את הנעילה (Domain Locking) לפני השינוי, ולנעול מחדש מיד אחריו.
+  - שרתי השמות של Cloudflare: `addilyn.ns.cloudflare.com`, `amit.ns.cloudflare.com`.
+  - רשומות המייל (MX ×3, ‏SPF, ‏DKIM) הועתקו ל־Cloudflare ונשארו DNS only. נמחקו דף החניה (A) ו־`www` של Zoho Sites. `mail` הועבר ל־DNS only.
+- [ ] אישור מ־Cloudflare שהדומיין פעיל, ובדיקה שהמייל מתקבל.
+- [ ] הוספת רשומת DMARC.
 - [ ] בהמשך: Pages לחנות ולניהול, ו־Access (Zero Trust, מסלול חינמי) לשער של `admin.orhaalacha.org`.
 
 ### 3. MongoDB Atlas
