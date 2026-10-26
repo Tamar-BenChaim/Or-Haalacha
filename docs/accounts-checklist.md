@@ -17,7 +17,7 @@
 חוק הגנה מומלץ על `main` (ההגדרה המקורית): חובה Pull Request, חובה שהבדיקות יעברו (`secrets`, `dependency-review`, `workspace (client)`, `workspace (admin)`, `workspace (server)`, `analyze`), בלי force push ובלי מחיקה.
 
 ### 2. Cloudflare
-- [ ] חשבון על `support@orhaalacha.org`.
+- [x] חשבון על `support@orhaalacha.org`.
 - [ ] הוספת הדומיין `orhaalacha.org` והעברת שרתי ה־DNS אליהם (אצל רשם הדומיין).
 - [ ] בהמשך: Pages לחנות ולניהול, ו־Access (Zero Trust, מסלול חינמי) לשער של `admin.orhaalacha.org`.
 
