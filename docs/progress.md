@@ -37,7 +37,7 @@
 
 - GitHub: חוק ההגנה פעיל. Secret scanning, ‏Push protection ו־Dependabot security updates מופעלים.
 - Cloudflare: החשבון נפתח, הדומיין נוסף, ושרתי השמות הוחלפו ב־OpenSRS (2026-10-26). ממתינים לאישור ההפעלה. אחר כך: בדיקת המייל והוספת DMARC.
-- MongoDB Atlas: טרם נפתח.
+- MongoDB Atlas: החשבון והארגון נפתחו, עם אימות דו־שלבי. הבא: שני פרויקטים (dev, prod).
 
 ## הצעדים הבאים
 
