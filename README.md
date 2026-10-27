@@ -24,4 +24,11 @@ Or-Haalacha/
 
 ## סטטוס
 
-הפרויקט בשלב התכנון הראשוני. האתר יתוכנן ויפותח שלב אחרי שלב.
+הפרויקט בשלב הפיתוח הראשוני. מצב העבודה ושלביה מתועדים ב־[docs/progress.md](docs/progress.md).
+
+## תיעוד
+
+- [docs/planning.md](docs/planning.md) – אפיון, החלטות ושאלות פתוחות
+- [docs/decisions/](docs/decisions/) – החלטות ארכיטקטורה
+- [docs/api.md](docs/api.md) – תיעוד ה־API
+- [server/README.md](server/README.md) – הרצת השרת
