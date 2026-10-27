@@ -32,13 +32,18 @@ export function memoryLogStore() {
 
 export const healthyDatabase = { ping: async () => {} };
 
+export const emptyRepositories = {
+  books: { findVisible: async () => [], findVisibleBySlug: async () => null },
+};
+
 export function buildApp({
   config = testConfig(),
   logger = silentLogger,
   logStore = memoryLogStore(),
   database = healthyDatabase,
+  repositories = emptyRepositories,
 } = {}) {
-  return createApp({ config, logger, logStore, database });
+  return createApp({ config, logger, logStore, database, repositories });
 }
 
 /**

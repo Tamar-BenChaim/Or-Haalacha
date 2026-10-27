@@ -21,6 +21,15 @@ npm run dev              # מריץ עם טעינה מחדש בכל שינוי
 docker run -d --name mongo -p 27017:27017 mongo:8.0
 ```
 
+## בדיקה ב־Postman
+
+1. מפעילים את השרת (`npm run dev`) וממלאים נתוני דוגמה (`npm run seed`).
+2. ב־Postman: ‏**Import** ובוחרים את הקובץ `postman/or-haalacha.postman_collection.json`.
+3. שולחים כל בקשה בנפרד, או מריצים את כל האוסף: לחיצה ימנית על האוסף › **Run collection**.
+4. בלשונית **Test Results** של כל בקשה רואים אילו בדיקות עברו.
+
+כתובת השרת מוגדרת במשתנה `baseUrl` של האוסף (ברירת המחדל: `http://localhost:3000`).
+
 ## בדיקות ומסד הנתונים
 
 בדיקות האינטגרציה רצות מול MongoDB אמיתי, ולא מול Atlas:
@@ -58,6 +67,9 @@ test/
   unit/            בדיקות יחידה
   integration/     בדיקות של האפליקציה כולה ושל שכבת הנתונים מול MongoDB
   setup/           הפעלת MongoDB לבדיקות
+scripts/
+  seed.js          מילוי מסד הפיתוח בנתוני דוגמה
+postman/           אוסף בקשות מוכן לבדיקה ב־Postman
 ```
 
 סדר השכבות: routes → controllers → services → data access. כל שכבה מקבלת את התלויות שלה כפרמטר, וכך קל לבדוק אותה בנפרד.

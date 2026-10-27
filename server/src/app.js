@@ -9,7 +9,7 @@ import { createRoutes } from './routes/index.js';
 const BODY_LIMIT = '100kb';
 
 /** Builds the Express app without listening, so tests can drive it directly. */
-export function createApp({ config, logger, logStore, database }) {
+export function createApp({ config, logger, logStore, database, repositories }) {
   const app = express();
 
   app.set('trust proxy', config.trustProxy);
@@ -23,7 +23,7 @@ export function createApp({ config, logger, logStore, database }) {
   app.use(express.json({ limit: BODY_LIMIT }));
   app.use(rejectUnsafeKeys);
 
-  app.use(createRoutes({ database }));
+  app.use(createRoutes({ database, repositories }));
 
   app.use(notFound);
   app.use(errorHandler({ logger }));

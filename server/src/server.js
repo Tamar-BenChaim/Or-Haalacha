@@ -34,6 +34,7 @@ const app = createApp({
   logger,
   logStore: createMongoLogStore(repositories),
   database,
+  repositories,
 });
 
 const server = app.listen(config.port, () => {
