@@ -181,6 +181,205 @@
       ]
     },
     {
+      "name": "Bundles",
+      "item": [
+        {
+          "name": "List bundles",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "const [bundle] = pm.response.json().bundles;",
+                  "pm.test('returns the full set', () => pm.expect(bundle.slug).to.eql('full-set'));",
+                  "pm.test('shows the saving', () => pm.expect(bundle.separatePriceAgorot).to.be.above(bundle.priceAgorot));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bundles",
+              "host": ["{{baseUrl}}"],
+              "path": ["bundles"]
+            },
+            "description": "Bundles such as the full set, with the price of the books bought separately."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Quote a cart",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "const quote = pm.response.json();",
+                  "pm.test('price comes from the database, not the request', () => {",
+                  "  pm.expect(quote.items[0].unitPriceAgorot).to.eql(6500);",
+                  "});",
+                  "pm.test('subtotal', () => pm.expect(quote.subtotalAgorot).to.eql(3 * 6500));",
+                  "pm.test('everything is available', () => pm.expect(quote.allAvailable).to.be.true);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cart/quote",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "quote"]
+            },
+            "description": "Recalculates the cart on the server. The priceAgorot sent here is ignored on purpose.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"type\": \"book\",\n      \"slug\": \"or-haalacha-1\",\n      \"quantity\": 2,\n      \"priceAgorot\": 1\n    },\n    {\n      \"type\": \"book\",\n      \"slug\": \"or-haalacha-2\",\n      \"quantity\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Quote with stock problems",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "const quote = pm.response.json();",
+                  "pm.test('line statuses', () => {",
+                  "  pm.expect(quote.items.map((i) => i.status)).to.eql(['out_of_stock', 'unavailable', 'limited', 'out_of_stock']);",
+                  "});",
+                  "pm.test('not everything is available', () => pm.expect(quote.allAvailable).to.be.false);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cart/quote",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "quote"]
+            },
+            "description": "Volume 4 is out of stock, volume 5 is hidden, 50 copies of volume 2 exceed the sample stock, and the full set includes the out-of-stock volume 4.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"type\": \"book\",\n      \"slug\": \"or-haalacha-4\",\n      \"quantity\": 1\n    },\n    {\n      \"type\": \"book\",\n      \"slug\": \"or-haalacha-5\",\n      \"quantity\": 1\n    },\n    {\n      \"type\": \"book\",\n      \"slug\": \"or-haalacha-2\",\n      \"quantity\": 50\n    },\n    {\n      \"type\": \"bundle\",\n      \"slug\": \"full-set\",\n      \"quantity\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Invalid quantity is rejected",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('error code', () => pm.expect(pm.response.json().error.code).to.eql('VALIDATION_ERROR'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cart/quote",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "quote"]
+            },
+            "description": "Quantities must be whole numbers from 1 to 99.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"type\": \"book\",\n      \"slug\": \"or-haalacha-1\",\n      \"quantity\": 0\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Injection attempt is rejected",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('status is 400', () => pm.response.to.have.status(400));"]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cart/quote",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "quote"]
+            },
+            "description": "A MongoDB operator instead of a slug must never reach the database.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"type\": \"book\",\n      \"slug\": {\n        \"$ne\": null\n      },\n      \"quantity\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "Unknown route",
       "event": [
         {

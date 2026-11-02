@@ -18,3 +18,15 @@ export const sampleBooks = volumes.map((letter, index) => ({
   hidden: index === 4,
   sortOrder: index + 1,
 }));
+
+export const sampleBundles = [
+  {
+    slug: 'full-set',
+    title: 'הסט המלא – אור ההלכה',
+    description: 'כל כרכי הסדרה במחיר מיוחד. תיאור לדוגמה.',
+    priceAgorot: 22000,
+    bookSlugs: ['or-haalacha-1', 'or-haalacha-2', 'or-haalacha-3', 'or-haalacha-4'],
+    hidden: false,
+    sortOrder: 1,
+  },
+];

@@ -2,7 +2,7 @@
 import { loadConfig } from '../src/config/env.js';
 import { connectDatabase } from '../src/data/database.js';
 import { createRepositories, ensureIndexes } from '../src/data/index.js';
-import { seedSampleBooks } from '../src/data/seed.js';
+import { seedSampleData } from '../src/data/seed.js';
 
 const config = loadConfig();
 
@@ -15,8 +15,10 @@ const database = await connectDatabase(config.mongodb);
 try {
   const repositories = createRepositories(database.db);
   await ensureIndexes(repositories);
-  const count = await seedSampleBooks(repositories.books);
-  console.log(`Seeded ${count} sample books into "${config.mongodb.dbName}".`);
+  const counts = await seedSampleData(repositories);
+  console.log(
+    `Seeded ${counts.books} books and ${counts.bundles} bundles into "${config.mongodb.dbName}".`,
+  );
 } finally {
   await database.close();
 }

@@ -15,6 +15,10 @@ export function createBookRepository(db) {
       return collection.findOne({ slug, hidden: false });
     },
 
+    findVisibleBySlugs(slugs) {
+      return collection.find({ slug: { $in: slugs }, hidden: false }).toArray();
+    },
+
     /** Inserts or replaces a book identified by its slug, keeping its original creation time. */
     async upsertBySlug(book, now = new Date()) {
       await collection.updateOne(

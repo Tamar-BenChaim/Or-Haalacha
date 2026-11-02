@@ -2,7 +2,7 @@ import request from 'supertest';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { createRepositories, ensureIndexes } from '../../src/data/index.js';
 import { sampleBooks } from '../../src/data/sampleBooks.js';
-import { seedSampleBooks } from '../../src/data/seed.js';
+import { seedSampleData } from '../../src/data/seed.js';
 import { buildApp, useTestDatabase } from '../helpers.js';
 
 const getDatabase = useTestDatabase();
@@ -12,7 +12,7 @@ let repositories;
 beforeAll(async () => {
   repositories = createRepositories(getDatabase().db);
   await ensureIndexes(repositories);
-  await seedSampleBooks(repositories.books);
+  await seedSampleData(repositories);
   app = buildApp({ repositories });
 });
 
@@ -62,7 +62,7 @@ describe('books data', () => {
     const collection = getDatabase().db.collection('books');
     const before = await collection.findOne({ slug: 'or-haalacha-1' });
 
-    await seedSampleBooks(repositories.books);
+    await seedSampleData(repositories);
 
     expect(await collection.countDocuments()).toBe(sampleBooks.length);
     const after = await collection.findOne({ slug: 'or-haalacha-1' });

@@ -33,7 +33,12 @@ export function memoryLogStore() {
 export const healthyDatabase = { ping: async () => {} };
 
 export const emptyRepositories = {
-  books: { findVisible: async () => [], findVisibleBySlug: async () => null },
+  books: {
+    findVisible: async () => [],
+    findVisibleBySlug: async () => null,
+    findVisibleBySlugs: async () => [],
+  },
+  bundles: { findVisible: async () => [], findVisibleBySlugs: async () => [] },
 };
 
 export function buildApp({
