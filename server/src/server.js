@@ -2,6 +2,7 @@ import { createApp } from './app.js';
 import { loadConfig } from './config/env.js';
 import { createRepositories, ensureIndexes } from './data/index.js';
 import { connectDatabase } from './data/database.js';
+import { createAccessTokenVerifier, rejectAllTokens } from './lib/cloudflareAccess.js';
 import { createLogger } from './lib/logger.js';
 import { createMongoLogStore } from './logging/mongoLogStore.js';
 
@@ -26,6 +27,10 @@ try {
   process.exit(1);
 }
 
+if (config.admin.devEmail) {
+  logger.warn('ADMIN_DEV_EMAIL is set: admin routes skip Cloudflare Access (development only)');
+}
+
 const repositories = createRepositories(database.db);
 await ensureIndexes(repositories);
 
@@ -35,6 +40,9 @@ const app = createApp({
   logStore: createMongoLogStore(repositories),
   database,
   repositories,
+  verifyAccessToken: config.cloudflareAccess
+    ? createAccessTokenVerifier(config.cloudflareAccess)
+    : rejectAllTokens,
 });
 
 const server = app.listen(config.port, () => {

@@ -2,6 +2,7 @@ import express from 'express';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 import { rejectUnsafeKeys } from './middleware/rejectUnsafeKeys.js';
 import { requestId } from './middleware/requestId.js';
+import { requireAdmin } from './middleware/requireAdmin.js';
 import { requestLog } from './middleware/requestLog.js';
 import { corsPolicy, rateLimiter, securityHeaders } from './middleware/security.js';
 import { createRoutes } from './routes/index.js';
@@ -9,7 +10,7 @@ import { createRoutes } from './routes/index.js';
 const BODY_LIMIT = '100kb';
 
 /** Builds the Express app without listening, so tests can drive it directly. */
-export function createApp({ config, logger, logStore, database, repositories }) {
+export function createApp({ config, logger, logStore, database, repositories, verifyAccessToken }) {
   const app = express();
 
   app.set('trust proxy', config.trustProxy);
@@ -23,7 +24,13 @@ export function createApp({ config, logger, logStore, database, repositories }) 
   app.use(express.json({ limit: BODY_LIMIT }));
   app.use(rejectUnsafeKeys);
 
-  app.use(createRoutes({ database, repositories }));
+  const adminAuth = requireAdmin({
+    verifyAccessToken,
+    adminEmails: config.admin.emails,
+    devEmail: config.admin.devEmail,
+    logger,
+  });
+  app.use(createRoutes({ database, repositories, adminAuth, logger }));
 
   app.use(notFound);
   app.use(errorHandler({ logger }));

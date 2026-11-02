@@ -1,3 +1,5 @@
+import { toObjectId } from '../lib/objectId.js';
+
 export function createBundleRepository(db) {
   const collection = db.collection('bundles');
 
@@ -12,6 +14,23 @@ export function createBundleRepository(db) {
 
     findVisibleBySlugs(slugs) {
       return collection.find({ slug: { $in: slugs }, hidden: false }).toArray();
+    },
+
+    findAll() {
+      return collection.find({}).sort({ sortOrder: 1 }).toArray();
+    },
+
+    findById(id) {
+      return collection.findOne({ _id: toObjectId(id) });
+    },
+
+    /** Sets the given fields. Resolves to the updated bundle, or null if it does not exist. */
+    updateById(id, fields, now = new Date()) {
+      return collection.findOneAndUpdate(
+        { _id: toObjectId(id) },
+        { $set: { ...fields, updatedAt: now } },
+        { returnDocument: 'after' },
+      );
     },
 
     /** Inserts or replaces a bundle identified by its slug, keeping its original creation time. */

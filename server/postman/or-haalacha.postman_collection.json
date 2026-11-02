@@ -380,6 +380,231 @@
       ]
     },
     {
+      "name": "Admin",
+      "description": "Requires the server to run with ADMIN_DEV_EMAIL set in .env (development only). In production Cloudflare Access adds the Cf-Access-Jwt-Assertion header.",
+      "item": [
+        {
+          "name": "List all books",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "const { books } = pm.response.json();",
+                  "pm.test('includes hidden books and stock', () => {",
+                  "  pm.expect(books.some((b) => b.hidden)).to.be.true;",
+                  "  pm.expect(books[0]).to.have.property('stock');",
+                  "});",
+                  "pm.collectionVariables.set('bookIds', JSON.stringify(books.map((b) => b.id)));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "books"]
+            },
+            "description": "Every book, including hidden ones, with stock and low-stock threshold."
+          }
+        },
+        {
+          "name": "Create a book",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const { book } = pm.response.json();",
+                  "pm.test('created as sent', () => pm.expect(book.priceAgorot).to.eql(7000));",
+                  "pm.collectionVariables.set('newBookId', book.id);"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.collectionVariables.set('randomSuffix', Date.now().toString(36));"]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "books"]
+            },
+            "description": "Adds a book at the end of the display order. The address is random so the request can run again.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"slug\": \"test-book-{{randomSuffix}}\",\n  \"title\": \"ספר בדיקה\",\n  \"priceAgorot\": 7000,\n  \"stock\": 5,\n  \"hidden\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update a book",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('price changed', () => pm.expect(pm.response.json().book.priceAgorot).to.eql(7500));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/books/{{newBookId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "books", "{{newBookId}}"]
+            },
+            "description": "Changes the price of the book created above. The change is written to the audit log.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"priceAgorot\": 7500\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Changing the address is rejected",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('status is 400', () => pm.response.to.have.status(400));"]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/books/{{newBookId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "books", "{{newBookId}}"]
+            },
+            "description": "A book's address is fixed once it is created.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"slug\": \"another-address\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Taken address is rejected",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 409', () => pm.response.to.have.status(409));",
+                  "pm.test('error code', () => pm.expect(pm.response.json().error.code).to.eql('SLUG_TAKEN'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "books"]
+            },
+            "description": "Two books cannot share an address.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"slug\": \"or-haalacha-1\",\n  \"title\": \"כפול\",\n  \"priceAgorot\": 6500,\n  \"stock\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "List bundles",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('includes the full set', () => {",
+                  "  pm.expect(pm.response.json().bundles.map((b) => b.slug)).to.include('full-set');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/bundles",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "bundles"]
+            },
+            "description": "Every bundle, including hidden ones."
+          }
+        }
+      ]
+    },
+    {
       "name": "Unknown route",
       "event": [
         {

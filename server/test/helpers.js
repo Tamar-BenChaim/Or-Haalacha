@@ -3,6 +3,7 @@ import express from 'express';
 import pino from 'pino';
 import { afterAll, beforeAll, inject } from 'vitest';
 import { createApp } from '../src/app.js';
+import { rejectAllTokens } from '../src/lib/cloudflareAccess.js';
 import { loadConfig } from '../src/config/env.js';
 import { connectDatabase } from '../src/data/database.js';
 import { errorHandler } from '../src/middleware/errorHandler.js';
@@ -14,6 +15,8 @@ export function testConfig(overrides = {}) {
   return loadConfig({
     NODE_ENV: 'test',
     CORS_ORIGINS: 'http://localhost:5173',
+    ADMIN_ORIGIN: 'http://localhost:5174',
+    ADMIN_EMAILS: 'support@orhaalacha.org',
     MONGODB_URI: 'mongodb://localhost:27017',
     MONGODB_DB_NAME: 'test',
     ...overrides,
@@ -39,7 +42,21 @@ export const emptyRepositories = {
     findVisibleBySlugs: async () => [],
   },
   bundles: { findVisible: async () => [], findVisibleBySlugs: async () => [] },
+  auditLogs: { insert: async () => {} },
 };
+
+export const ADMIN_EMAIL = 'support@orhaalacha.org';
+
+/**
+ * Stands in for Cloudflare's signature check in route tests (the real check is
+ * covered in cloudflareAccess.test.js): "admin-token" belongs to the admin,
+ * "stranger-token" to an email that is not allowed, anything else is invalid.
+ */
+export async function fakeVerifyAccessToken(token) {
+  if (token === 'admin-token') return { email: ADMIN_EMAIL };
+  if (token === 'stranger-token') return { email: 'someone@example.com' };
+  throw Object.assign(new Error('invalid token'), { code: 'ERR_JWS_INVALID' });
+}
 
 export function buildApp({
   config = testConfig(),
@@ -47,8 +64,9 @@ export function buildApp({
   logStore = memoryLogStore(),
   database = healthyDatabase,
   repositories = emptyRepositories,
+  verifyAccessToken = rejectAllTokens,
 } = {}) {
-  return createApp({ config, logger, logStore, database, repositories });
+  return createApp({ config, logger, logStore, database, repositories, verifyAccessToken });
 }
 
 /**

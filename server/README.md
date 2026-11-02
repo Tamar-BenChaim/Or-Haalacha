@@ -30,6 +30,8 @@ docker run -d --name mongo -p 27017:27017 mongo:8.0
 
 כתובת השרת מוגדרת במשתנה `baseUrl` של האוסף (ברירת המחדל: `http://localhost:3000`).
 
+**נתיבי הניהול** בתיקייה "Admin" של האוסף דורשים להפעיל את השרת עם `ADMIN_DEV_EMAIL=support@orhaalacha.org` בקובץ `.env`. ההגדרה הזו מדלגת על Cloudflare Access, והיא לפיתוח מקומי בלבד. בקשת "Create a book" יוצרת בכל הרצה ספר חדש עם כתובת אקראית.
+
 ## בדיקות ומסד הנתונים
 
 בדיקות האינטגרציה רצות מול MongoDB אמיתי, ולא מול Atlas:
@@ -79,6 +81,7 @@ postman/           אוסף בקשות מוכן לבדיקה ב־Postman
 - כותרות אבטחה (helmet), ‏CORS רק לכתובות שב־`CORS_ORIGINS`, הגבלת קצב לכל כתובת IP.
 - גוף בקשה עד 100KB, ו־JSON בלבד.
 - דחיית שמות שדות שמתחילים ב־`$` או מכילים `.`, וגם `__proto__` ודומיו (NoSQL injection ו־prototype pollution).
+- נתיבי `/admin`: אימות האישור החתום של Cloudflare Access ומייל מורשה בכל בקשה, CORS רק לכתובת אזור הניהול, ו־JSON חובה בשינויים (החלטה [0010](../docs/decisions/0010-admin-api-auth.md)).
 - אימות קלט לכל נקודה עם `validate({ params, query, body })` וסכמות zod. הערכים המאומתים נמצאים ב־`req.validated`.
 - שגיאה לא צפויה מחזירה ללקוח הודעה כללית עם מזהה בקשה. הפרטים נשמרים רק בלוג.
 

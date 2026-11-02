@@ -3,6 +3,8 @@ import { loadConfig } from '../../src/config/env.js';
 
 const base = {
   CORS_ORIGINS: 'http://localhost:5173',
+  ADMIN_ORIGIN: 'http://localhost:5174/',
+  ADMIN_EMAILS: 'Support@OrHaalacha.org, second@example.com',
   MONGODB_URI: 'mongodb+srv://user:pass@cluster.example.net/',
   MONGODB_DB_NAME: 'or-haalacha-dev',
 };
@@ -43,6 +45,11 @@ describe('loadConfig', () => {
     ['MONGODB_URI', { MONGODB_URI: 'http://cluster.example.net' }],
     ['MONGODB_DB_NAME', { MONGODB_DB_NAME: undefined }],
     ['MONGODB_DB_NAME', { MONGODB_DB_NAME: 'bad name' }],
+    ['ADMIN_ORIGIN', { ADMIN_ORIGIN: undefined }],
+    ['ADMIN_EMAILS', { ADMIN_EMAILS: undefined }],
+    ['ADMIN_EMAILS', { ADMIN_EMAILS: 'not-an-email' }],
+    ['ADMIN_DEV_EMAIL', { ADMIN_DEV_EMAIL: 'nope' }],
+    ['CF_ACCESS_TEAM_DOMAIN', { CF_ACCESS_TEAM_DOMAIN: 'http://team.cloudflareaccess.com' }],
   ])('rejects an invalid %s', (name, overrides) => {
     expect(() => loadConfig({ ...base, ...overrides })).toThrow(name);
   });
@@ -57,6 +64,53 @@ describe('loadConfig', () => {
     expect(loadConfig(base).mongodb).toEqual({
       uri: 'mongodb+srv://user:pass@cluster.example.net/',
       dbName: 'or-haalacha-dev',
+    });
+  });
+
+  it('exposes admin settings with lowercase emails', () => {
+    expect(loadConfig({ ...base, ADMIN_DEV_EMAIL: 'Dev@Example.com' }).admin).toEqual({
+      origin: 'http://localhost:5174',
+      emails: ['support@orhaalacha.org', 'second@example.com'],
+      devEmail: 'dev@example.com',
+    });
+  });
+
+  it('enables Cloudflare Access only when both settings are present', () => {
+    expect(loadConfig(base).cloudflareAccess).toBeNull();
+    expect(
+      loadConfig({
+        ...base,
+        CF_ACCESS_TEAM_DOMAIN: 'https://orhaalacha.cloudflareaccess.com/',
+        CF_ACCESS_AUD: 'aud-tag',
+      }).cloudflareAccess,
+    ).toEqual({ teamDomain: 'https://orhaalacha.cloudflareaccess.com', audience: 'aud-tag' });
+  });
+
+  it('treats empty optional variables as unset', () => {
+    const config = loadConfig({ ...base, ADMIN_DEV_EMAIL: '', CF_ACCESS_AUD: '' });
+    expect(config.admin.devEmail).toBeNull();
+  });
+
+  describe('in production', () => {
+    const production = {
+      ...base,
+      NODE_ENV: 'production',
+      CF_ACCESS_TEAM_DOMAIN: 'https://orhaalacha.cloudflareaccess.com',
+      CF_ACCESS_AUD: 'aud-tag',
+    };
+
+    it('accepts a complete configuration', () => {
+      expect(loadConfig(production).env).toBe('production');
+    });
+
+    it.each(['CF_ACCESS_TEAM_DOMAIN', 'CF_ACCESS_AUD'])('requires %s', (name) => {
+      expect(() => loadConfig({ ...production, [name]: undefined })).toThrow(name);
+    });
+
+    it('refuses the development admin bypass', () => {
+      expect(() => loadConfig({ ...production, ADMIN_DEV_EMAIL: 'dev@example.com' })).toThrow(
+        'ADMIN_DEV_EMAIL',
+      );
     });
   });
 
