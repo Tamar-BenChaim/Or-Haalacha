@@ -5,8 +5,8 @@
 ## על הפרויקט
 
 אתר קטן למכירת ספרי אור ההלכה. מונו־ריפו:
-- `client/` – החנות, React + Vite
-- `admin/` – אזור הניהול, React + Vite, אפליקציה נפרדת בכתובת admin.orhaalacha.org
+- `client/` – החנות, Angular (Angular CLI), ראו החלטה 0009
+- `admin/` – אזור הניהול, Angular (Angular CLI), אפליקציה נפרדת בכתובת admin.orhaalacha.org
 - `server/` – Node.js
 - מסד נתונים – MongoDB Atlas
 

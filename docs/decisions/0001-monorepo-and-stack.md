@@ -7,8 +7,8 @@
 
 ## החלטה
 ריפו אחד (`Or-Haalacha`) עם שלוש תיקיות עבודה:
-- `client/` – החנות, React + Vite
-- `admin/` – אזור הניהול, React + Vite
+- `client/` – החנות, Angular (הוחלף מ־React, ראו 0009)
+- `admin/` – אזור הניהול, Angular (הוחלף מ־React, ראו 0009)
 - `server/` – Node.js
 - מסד נתונים: MongoDB Atlas
 
