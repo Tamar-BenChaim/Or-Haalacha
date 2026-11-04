@@ -1,0 +1,10 @@
+// Noto Serif Hebrew and IBM Plex Sans Hebrew come from @fontsource (see angular.json "styles").
+// The Stam font is used for the logo and main title only.
+// Its license must stay next to the file: public/fonts/LICENSE.
+@font-face {
+  font-family: 'StamAshkenaz';
+  src: url('/fonts/stam-ashkenaz-clm-medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
