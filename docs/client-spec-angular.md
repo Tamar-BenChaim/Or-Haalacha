@@ -45,23 +45,43 @@
 - TypeScript במצב `strict`.
 - אין לוגיקה עסקית ברכיבים: רכיב מציג וקורא ל־service או ל־store.
 
-**מבנה תיקיות מוצע:**
+**מבנה תיקיות** (נבנה כשלד ב־`client/src/app/`; הלוגיקה עדיין לא ממומשת):
 ```
 client/src/app/
-├─ core/            # singletons: api-client, interceptors, config, error mapping, seo, storage
-├─ shared/          # רכיבים ו־pipes לשימוש חוזר (ui)
-├─ features/
-│  ├─ catalog/      # רשימת ספרים, כרטיס, חיפוש, מדף
-│  ├─ book/         # דף ספר
-│  ├─ set/          # דף הסט המלא
-│  ├─ cart/         # store, drawer, דף עגלה
-│  ├─ checkout/     # טופס, סיכום, יצירת הזמנה
-│  ├─ order/        # הצלחה / כישלון
-│  ├─ content/      # אודות, משפטי, 404
-│  └─ contact/
-├─ layout/          # shell: skip-link, announcement-bar, header, footer
-└─ app.routes.ts
+├─ core/            # תשתית ונתונים משותפים, בלי UI
+│  ├─ models/       # Book, Bundle, CartLine, QuotedLine, ApiErrorBody
+│  ├─ http/         # ApiClient, interceptors, מיפוי שגיאות
+│  ├─ catalog/      # CatalogStore (GET /books, /bundles, נטען פעם אחת)
+│  ├─ cart/         # CartStore (מקור האמת לעגלה, localStorage)
+│  ├─ ui/           # UiStore (עגלה צדדית פתוחה, bump)
+│  ├─ settings/     # SiteSettingsStore (פס הודעה, משלוחים, טלפון)
+│  ├─ storage/      # עטיפה בטוחה ל־localStorage
+│  ├─ a11y/         # Announcer (aria-live), ניהול מיקוד
+│  ├─ seo/          # Seo (title/meta/og), Share
+│  └─ config/       # feature flags
+├─ shared/          # רכיבי תצוגה בלבד (input/output, בלי stores):
+│                   # book-cover, book-card, qty-stepper, cart-line,
+│                   # breadcrumbs, field, skeleton, empty-state
+├─ layout/          # shell, announcement-bar, site-header, site-footer, cart-drawer
+├─ features/        # כל feature נטען lazy
+│  ├─ home/         # home, hero, hero-title, books-section, set-teaser, about-teaser, why-here
+│  ├─ set/          # set, shelf
+│  ├─ book/         # book, book-gallery, book-nav
+│  ├─ cart/         # cart, set-upsell
+│  ├─ checkout/     # checkout, order-summary
+│  ├─ order/        # order-success, order-failed
+│  ├─ content/      # about, legal, not-found
+│  └─ contact/      # contact
+└─ app.routes.ts    # כל הנתיבים עם loadComponent
 ```
+
+**כללי תלות** (כיוון אחד בלבד): `app → layout → features → shared → core`.
+- feature לא מייבא feature אחר. מה שמשותף עובר ל־`shared/` (תצוגה) או ל־`core/` (נתונים).
+- דף (`features/*`) דק: מרכיב רכיבים ומחבר ל־store. רכיבי `shared/` לא מזריקים stores.
+- `CartDrawer` ב־`layout/` כי הוא חלק מהמעטפת, ומשתמש רק ב־`CartStore` וב־`shared/cart-line`.
+- לא מפרקים רכיב לקטנים מראש; מפרקים כשהוא גדל או נדרש בשני מקומות.
+- בלי NgRx, NgModules, Nx או Angular Material (`@angular/cdk` מספיק לנגישות).
+- קידומת הרכיבים: `oh-`. שמות הקבצים לפי ברירת המחדל של Angular CLI 21 (בלי סיומת `.component`).
 
 **חיבור לשרת:** שכבת `*.api.ts` לכל תחום (לדוגמה `BooksApi`), שמחזירה Observables מוקלדים. ה־DTO מהשרת ממופה למודל הלקוח במקום אחד.
 
