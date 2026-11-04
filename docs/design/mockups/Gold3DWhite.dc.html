@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>אור ההלכה – כותרת תלת־ממדית על לבן</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Hebrew:wght@400;500;600;700&amp;family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'StamAshkenaz';src:url(/_blob/b705e2679d219ef1d8613e0639e721ba) format('truetype');font-display:swap}
+body{margin:0;background:#FFFFFF}
+.site{--bur:#6B1F2A;--bur-d:#521620;--tint:#F8F3F3;--gold:#B8924A;--gold-l:#E6CD8E;--ink:#231C1D;--muted:#5F5658;--line:#E9E3E1;--card:#FBF9F9;--card-b:#EFE9E8;font-family:'IBM Plex Sans Hebrew',sans-serif;color:var(--ink);background:#FFFFFF;min-height:100vh;position:relative;font-size:17px;line-height:1.55}
+.site *{box-sizing:border-box}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+.serif{font-family:'Noto Serif Hebrew',serif}
+.stam{font-family:'StamAshkenaz','Noto Serif Hebrew',serif;font-weight:400;-webkit-text-stroke:.024em currentColor;paint-order:stroke fill}
+.site a{color:inherit;text-decoration:none}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;right:16px;top:-60px;background:var(--bur);color:#fff;padding:12px 16px; z-index:100}
+.skip:focus{top:12px}
+.muted{color:var(--muted)}
+.lnk{background:none;border:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-decoration:none;text-align:inherit}
+.nl{background:none;border:none;font:inherit;font-weight:500;color:var(--ink);cursor:pointer;padding:8px 12px; min-height:40px;transition:background .15s,color .15s}
+.nl:hover{background:var(--tint);color:var(--bur)}
+.nl.on{color:var(--bur);font-weight:700}
+.tl{background:none;border:none;padding:0;font:inherit;font-weight:700;color:var(--bur);cursor:pointer;text-decoration:none}
+.tl:hover,.tl:focus-visible{text-decoration:underline;text-underline-offset:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--bur);color:#fff;border:1.5px solid var(--bur); padding:0 26px;height:48px;font:inherit;font-weight:500;font-size:17px;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s}
+.btn:hover{background:var(--bur-d);border-color:var(--bur-d)}
+.btn-o{background:#fff;color:var(--bur)}
+.btn-o:hover{background:var(--tint);border-color:var(--bur)}
+.btn-sm{height:40px;padding:0 16px;font-size:15px}
+.btn[disabled]{background:#EFEAE8;border-color:#EFEAE8;color:#6F6567;cursor:default}
+.arrow{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--bur);background:none;border:none;font:inherit;font-weight:700;cursor:pointer;padding:8px 0;min-height:44px}
+.arrow svg{transition:transform .2s}
+.arrow:hover svg{transform:translateX(-4px)}
+.gold-rule{width:48px;height:2px;background:var(--gold);display:block}
+.eyebrow{font-size:15px;color:var(--muted);letter-spacing:.3px}
+.h2{font-family:'Noto Serif Hebrew',serif;font-weight:500;font-size:38px;line-height:1.2;margin:0;color:var(--ink)}
+.h1{font-family:'Noto Serif Hebrew',serif;font-weight:500;font-size:46px;line-height:1.15;margin:0;color:var(--ink)}
+.cover{container-type:inline-size;display:block;position:relative;z-index:1;width:100%;aspect-ratio:3/4;background:linear-gradient(100deg,#762230 0%,#6B1F2A 45%,#5B1825 100%); box-shadow:0 12px 24px rgba(35,28,29,.22),inset -7px 0 0 rgba(0,0,0,.24),inset -8px 0 0 rgba(255,255,255,.07)}
+.cv{display:flex;flex-direction:column;align-items:center;justify-content:space-between;height:100%;padding:12cqw 10cqw 11cqw 15cqw;text-align:center}
+.cv-logo{font-family:'StamAshkenaz','Noto Serif Hebrew',serif;font-size:15cqw;line-height:1;color:var(--gold-l);-webkit-text-stroke:.024em currentColor;paint-order:stroke fill}
+.cv-rule{display:block;width:18cqw;height:1px;background:var(--gold)}
+.cv-topic{font-family:'Noto Serif Hebrew',serif;font-weight:500;font-size:11cqw;line-height:1.25;color:#F6EBE4}
+.cv-n{font-size:7cqw;letter-spacing:.5px;color:var(--gold-l)}
+.cover-btn{display:block;width:100%;background:none;border:none;padding:0;cursor:pointer;font:inherit}
+.stage{display:block;position:relative;width:64%;margin:0 auto;perspective:900px}
+.pages{display:none;position:absolute;top:1.5%;bottom:1.5%;right:2%;left:0;background:#fff; box-shadow:0 3px 8px rgba(0,0,0,.18),inset 3px 0 0 #EFEAE6}
+.tile{background:var(--card);border:1px solid var(--card-b); padding:24px 22px 18px;display:flex;flex-direction:column;gap:16px}
+.books{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:24px}
+.tile-t{margin:0;font-family:'Noto Serif Hebrew',serif;font-weight:500;font-size:20px;line-height:1.3}
+.tile-t .lnk:hover{color:var(--bur)}
+.price{font-family:'Noto Serif Hebrew',serif;font-weight:600;font-size:22px;color:var(--bur);letter-spacing:.2px}
+.qa{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;min-width:44px;padding:0 12px; border:none;background:var(--bur);color:#fff;font:inherit;font-weight:500;font-size:15px;cursor:pointer;overflow:hidden;white-space:nowrap;transition:background .15s}
+.qa:hover{background:var(--bur-d)}
+.qa .qa-t{max-width:0;opacity:0;overflow:hidden;transition:max-width .25s ease,opacity .2s}
+.qa[disabled]{background:#EFEAE8;color:#6F6567;cursor:default;padding:0 16px}
+.qa[disabled] .qa-t{max-width:60px;opacity:1}
+@media (hover:hover){.tile:hover .qa .qa-t,.qa:focus-visible .qa-t{max-width:110px;opacity:1}}
+@media (hover:none){.qa .qa-t{max-width:110px;opacity:1}}
+.tag-out{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;background:rgba(255,255,255,.94);color:var(--bur);border:1px solid var(--bur);font-size:15px;font-weight:600;letter-spacing:.3px;padding:7px 18px;white-space:nowrap;pointer-events:none}
+.cover.out{filter:blur(1.3px) grayscale(.35);opacity:.6;box-shadow:0 6px 14px rgba(35,28,29,.12),inset -7px 0 0 rgba(0,0,0,.2)}
+.site .tile.is-out:hover .cover,.site .tile.is-out:focus-within .cover{transform:none !important}
+.m-none .cover,.m-none .tile,.m-none .qa .qa-t,.m-none .spine,.m-none .arrow svg{transition:none}
+.m-subtle .cover,.m-spring .cover,.m-book .cover{transition:transform .28s ease,box-shadow .28s ease}
+.m-subtle .tile{transition:background .25s}
+.m-subtle .tile:hover,.m-subtle .tile:focus-within{background:#F8F4F4}
+.m-subtle .tile:hover .cover,.m-subtle .tile:focus-within .cover{transform:translateY(-8px) scale(1.035);box-shadow:0 20px 32px rgba(35,28,29,.26),inset -7px 0 0 rgba(0,0,0,.24),inset -8px 0 0 rgba(255,255,255,.07)}
+.m-book .cover{transform-origin:right center}
+.m-book .pages{display:block}
+.m-book .tile:hover .cover,.m-book .tile:focus-within .cover{transform:rotateY(24deg) translateY(-4px);box-shadow:-10px 14px 26px rgba(35,28,29,.26),inset -7px 0 0 rgba(0,0,0,.24),inset -8px 0 0 rgba(255,255,255,.07)}
+.m-spring .cover{transition:transform .5s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+.m-spring .tile:hover .cover,.m-spring .tile:focus-within .cover{transform:translateY(-14px) rotate(-2deg);box-shadow:0 24px 34px rgba(35,28,29,.28),inset -7px 0 0 rgba(0,0,0,.24),inset -8px 0 0 rgba(255,255,255,.07)}
+.scene-row{display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:0 16px}
+.board{height:12px;background:linear-gradient(#DCCFC9,#CDBEB6); box-shadow:0 10px 16px rgba(35,28,29,.14);margin-top:-1px}
+.s-lg .spines{height:300px}
+.s-sm .spines{height:150px}
+.spines{display:flex;align-items:flex-end;gap:3px;padding:0 8px}
+.spine{flex:1 1 0;min-width:0;position:relative;border:none;padding:0;background:var(--bur); box-shadow:inset -3px 0 0 rgba(0,0,0,.22);cursor:pointer;transition:transform .2s;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.spine::before,.spine::after{content:'';position:absolute;left:0;right:0;height:2px;background:var(--gold)}
+.spine::before{top:9%}
+.spine::after{bottom:9%}
+.spine:hover,.spine:focus-visible,.spine.on{transform:translateY(-12px)}
+.spine-t{writing-mode:vertical-rl;font-family:'Noto Serif Hebrew',serif;font-size:13px;color:var(--gold-l);white-space:nowrap}
+.s-sm .spine-t{display:none}
+.shelf-scroll{overflow-x:auto;padding-top:16px}
+.shelf-in{min-width:700px}
+.crumbs{display:flex;gap:8px;align-items:center;font-size:15px;color:var(--muted);padding:22px 0}
+.crumbs .lnk:hover{color:var(--bur)}
+.panel{background:#fff;border:1px solid var(--line); padding:28px}
+.tinted{background:var(--card);border:1px solid var(--card-b); }
+.thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.thumb{aspect-ratio:3/4;border:1.5px solid var(--card-b); background:#fff;font:inherit;font-size:12px;color:var(--muted);cursor:pointer;padding:4px}
+.thumb.sel{border-color:var(--bur);box-shadow:0 0 0 1px var(--bur)}
+.ph{background:var(--card);border:1px dashed #CFC4BF; display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted);padding:12px}
+.qty{display:inline-flex;align-items:center;border:1.5px solid #D9D0CD; overflow:hidden;background:#fff}
+.qty button{width:44px;height:46px;border:none;background:#fff;font:inherit;font-size:20px;cursor:pointer;color:var(--bur)}
+.qty button:hover{background:var(--tint)}
+.qty span{min-width:38px;text-align:center;font-weight:700}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th,.tbl td{text-align:right;padding:12px 4px;border-bottom:1px solid var(--line)}
+.tbl th{color:var(--muted);font-weight:400;width:42%}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-weight:500;font-size:16px}
+.field input,.field textarea{font:inherit;padding:12px 14px;border:1.5px solid #D9D0CD; background:#fff;color:var(--ink);min-height:48px}
+.field input:focus,.field textarea:focus{border-color:var(--bur);outline:2px solid var(--bur);outline-offset:0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.opt{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line); padding:14px 16px;cursor:pointer;background:#fff}
+.opt input{width:20px;height:20px;accent-color:var(--bur)}
+.check{display:flex;align-items:flex-start;gap:10px;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:2px;accent-color:var(--bur);flex:0 0 auto}
+.err{color:#A12B2B;font-weight:700;font-size:15px}
+.sum-row{display:flex;justify-content:space-between;gap:12px;padding:7px 0}
+.line{display:flex;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.mini{width:58px;flex:0 0 58px;background:none;border:none;padding:0;cursor:pointer}
+.mini .cover{box-shadow:0 4px 10px rgba(35,28,29,.2),inset -4px 0 0 rgba(0,0,0,.24)}
+.line-t{background:none;border:none;padding:0;font:inherit;font-weight:700;font-size:18px;cursor:pointer;text-align:right;color:var(--ink)}
+.line-t:hover{color:var(--bur)}
+.rm{width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:var(--muted); }
+.rm:hover{background:var(--tint);color:#A12B2B}
+.search{position:relative;width:300px;max-width:100%}
+.search input{width:100%;height:44px;border:1.5px solid #D9D0CD; padding:0 44px 0 16px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}
+.search input:focus{border-color:var(--bur);outline:2px solid var(--bur);outline-offset:0}
+.search svg{position:absolute;right:15px;top:12px;color:var(--muted);pointer-events:none}
+.backdrop{position:fixed;inset:0;background:rgba(35,28,29,.45);z-index:40}
+.drawer{position:fixed;top:0;bottom:0;left:0;width:410px;max-width:92vw;background:#fff;z-index:41;display:flex;flex-direction:column;box-shadow:8px 0 30px rgba(0,0,0,.2)}
+.tabs{display:flex;flex-direction:column;gap:2px}
+.tab{text-align:right;padding:12px 16px; background:none;border:none;font:inherit;cursor:pointer;color:var(--ink)}
+.tab:hover{background:var(--tint)}
+.tab.sel{background:var(--bur);color:#fff;font-weight:700}
+.cart-btn{position:relative;display:inline-flex;align-items:center;gap:10px;background:var(--bur);border:1.5px solid var(--bur);color:#fff;height:44px;padding:0 18px;font:inherit;font-weight:600;cursor:pointer;transition:background .15s}
+.cart-btn:hover{background:var(--bur-d);border-color:var(--bur-d)}
+.cart-n{background:var(--bur);color:#fff;font-size:13px;font-weight:700;min-width:22px;height:22px; display:inline-flex;align-items:center;justify-content:center;padding:0 6px}
+.bump{animation:bump .45s ease}
+.sticky-buy{display:none;position:fixed;left:0;right:0;bottom:0;z-index:35;background:#fff;border-top:1px solid var(--line);padding:10px 16px;align-items:center;justify-content:space-between;gap:12px}
+.demo{position:fixed;right:16px;bottom:16px;z-index:60;background:#fff;border:1px solid #D9D0CD; padding:10px 12px;box-shadow:0 8px 24px rgba(35,28,29,.16);display:flex;flex-direction:column;gap:8px;max-width:300px}
+.demo-b{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid #D9D0CD;background:#fff; padding:5px 12px;min-height:32px;font:inherit;font-size:14px;cursor:pointer;color:var(--ink)}
+.chip:hover{background:var(--tint)}
+.chip.on{background:var(--bur);border-color:var(--bur);color:#fff}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.16)}100%{transform:scale(1)}}
+.hdr-nav .nl{padding:10px 16px;min-height:46px}
+.cart-btn{height:48px;padding:0 22px;font-size:19px}
+.btn-g{background:var(--gold-l);border-color:var(--gold-l);color:#3A0F16;font-weight:600}
+.btn-g:hover{background:#F2DDA8;border-color:#F2DDA8}
+.btn-ow{background:transparent;color:#F6EBE4;border-color:var(--gold-l)}
+.btn-ow:hover{background:rgba(255,255,255,.08);border-color:var(--gold-l)}
+.h3{--soft:.064em .092em .12em rgba(0,0,0,.55);position:relative;overflow:hidden}
+.h3.hb{background:radial-gradient(ellipse at 50% 40%,#7C2533 0%,#5C1926 58%,#40101A 100%);border-bottom:3px solid var(--gold);color:#F6EBE4;--h3bg:#4B1220}
+.h3.hw{background:#FFFFFF;border-bottom:1px solid var(--line);color:var(--ink);--h3bg:#FFFFFF;--soft:.064em .092em .106em rgba(90,60,10,.38)}
+.h3-in{max-width:1240px;margin:0 auto;padding:64px 28px}
+.h3-box{position:relative;padding:72px 40px 60px;text-align:center}
+.f-on .h3-box::before{content:'';position:absolute;inset:0;border:5px solid;border-image:linear-gradient(135deg,#FBEBB0,#D9A94B 28%,#8E6420 50%,#F0D487 74%,#B58330) 1;pointer-events:none}
+.f-on .h3-box::after{content:'';position:absolute;inset:20px;border:2px solid;border-image:linear-gradient(135deg,#F2D98F,#B58330 50%,#F2D98F) 1;pointer-events:none}
+.cn{display:none;position:absolute;width:28px;height:28px;background:linear-gradient(135deg,#FBEBB0,#B58330)}
+.cn::after{content:'';position:absolute;inset:8px;background:var(--h3bg)}
+.f-on .cn{display:block}
+.cn1{top:-12px;right:-12px}.cn2{top:-12px;left:-12px}.cn3{bottom:-12px;right:-12px}.cn4{bottom:-12px;left:-12px}
+.h3-eyebrow{font-size:17px;letter-spacing:1px;margin-bottom:18px}
+.hb .h3-eyebrow{color:#E3CBC5}
+.hw .h3-eyebrow{color:var(--muted)}
+.t3{position:relative;display:inline-block;font-family:'StamAshkenaz','Noto Serif Hebrew',serif;font-size:216px;line-height:1.08;white-space:nowrap}
+.t3 .ext{position:absolute;inset:0;color:#3a2508;text-shadow:0.0036em 0.0041em 0 #966d20,0.0072em 0.0082em 0 #91691e,0.0108em 0.0123em 0 #8c651d,0.0144em 0.0164em 0 #87611b,0.018em 0.0205em 0 #825d19,0.0216em 0.0246em 0 #7d5918,0.0252em 0.0287em 0 #785516,0.0288em 0.0328em 0 #735115,0.0324em 0.0369em 0 #6d4c13,0.036em 0.041em 0 #684811,0.0396em 0.0451em 0 #634410,0.0432em 0.0492em 0 #5e400e,0.0468em 0.0533em 0 #593c0c,0.0504em 0.0574em 0 #54380b,0.054em 0.0615em 0 #4f3409,0.0576em 0.0656em 0 #4a3008,var(--soft);-webkit-text-stroke:.024em #6b4a12}
+.t3 .face{position:relative;background-image:linear-gradient(180deg,#FFF4C9 0%,#F0D27F 22%,#D3A448 48%,#F4DB93 62%,#B98530 82%,#8B6120 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.026em #F7E2A0}
+.hw .t3 .face{-webkit-text-stroke:.026em #B58A2C}
+.h3-sub{font-family:'Noto Serif Hebrew',serif;font-size:28px;font-weight:500;margin:30px 0 10px;line-height:1.4}
+.h3-meta{font-size:18px;margin-bottom:34px;opacity:.88}
+.h3-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.spw{position:absolute;filter:drop-shadow(0 0 6px rgba(255,236,170,.95)) drop-shadow(0 0 14px rgba(255,220,130,.55));pointer-events:none}
+.sp{display:block;width:100%;height:100%;background:#fffbe8;clip-path:polygon(50% 0%,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0% 50%,40% 40%)}
+.hw .spw{filter:drop-shadow(0 0 5px rgba(240,200,110,.8))}
+.hw .sp{background:#E2B14A}
+.s1{right:9%;top:12%;width:46px;height:46px}
+.s2{right:13%;top:27%;width:24px;height:24px;animation-delay:.7s !important}
+.s3{left:20%;bottom:14%;width:34px;height:34px;animation-delay:1.4s !important}
+.s4{left:-10px;top:-10px;width:58px;height:58px;animation-delay:2.1s !important}
+.s5{left:47%;top:8%;width:22px;height:22px;animation-delay:.3s !important}
+@keyframes tw{0%,100%{opacity:.55;transform:scale(.82)}50%{opacity:1;transform:scale(1.08)}}
+.m-subtle .spw,.m-book .spw,.m-spring .spw{animation:tw 3.4s ease-in-out infinite}
+.demo-l{font-size:13px;color:#5F5658}
+.about-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
+@media (max-width:1100px){.t3{font-size:150px}}
+@media (max-width:760px){.t3{font-size:64px}.h3-box{padding:44px 18px 40px}.h3-in{padding:36px 18px}.h3-sub{font-size:22px}.f-on .h3-box::after{inset:12px}.hdr-nav .nl{padding:8px 10px;font-size:17px;min-height:44px}.cart-btn{font-size:17px;padding:0 16px}.about-row{grid-template-columns:1fr}}
+@keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes drawerIn{from{transform:translateX(-36px);opacity:0}to{transform:none;opacity:1}}
+.m-subtle .view,.m-book .view,.m-spring .view{animation:pageIn .35s ease-out}
+.m-subtle .drawer,.m-book .drawer,.m-spring .drawer{animation:drawerIn .28s ease-out}
+@media (prefers-reduced-motion:reduce){.site *,.site *::before,.site *::after{transition:none !important;animation:none !important}.site .tile:hover .cover,.site .tile:focus-within .cover{transform:none !important}}
+.site button:focus-visible,.site a:focus-visible,.site input:focus-visible,.site textarea:focus-visible{outline:3px solid var(--bur);outline-offset:3px}
+@media (max-width:760px){
+.wrap{padding:0 18px}
+.books{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tile{padding:16px 12px 14px}
+.tile-t{font-size:17px}
+.grid2{grid-template-columns:1fr}
+.two-col{flex-direction:column !important}
+.hero-title{font-size:76px !important}
+.hdr{flex-wrap:wrap;justify-content:space-between}
+.hdr-nav{order:3;width:100%;justify-content:center}
+.h1{font-size:34px}.h2{font-size:30px}
+.sticky-buy{display:flex}
+.demo{bottom:84px;right:10px}
+.footer-in{flex-direction:column;align-items:flex-start !important}
+}
+</style>
+</helmet>
+<div class="site m-{{motion}}" dir="rtl">
+<a class="skip" href="#main">דילוג לתוכן הראשי</a>
+
+<div style="background: #6B1F2A; color: #E6CD8E; text-align: center; font-size: 15px; padding: 8px 16px">משלוח חינם בהזמנה מעל [סכום] ₪</div>
+
+<header style="background: #FFFFFF; border-bottom: 1px solid #E9E3E1; position: sticky; top: 0; z-index: 30">
+<div class="wrap hdr" style="display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; padding-top: 12px; padding-bottom: 12px">
+<button class="lnk stam" onClick="{{goHome}}" aria-label="אור ההלכה – לדף הבית" style="font-size: 48px; line-height: 1; color: #6B1F2A; padding: 4px 0">אור ההלכה</button>
+<nav aria-label="ניווט ראשי" class="hdr-nav" style="display: flex; gap: 6px; font-size: 20px">
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="4"><button class="nl {{n.cls}}" onClick="{{n.go}}" aria-current="{{n.current}}">{{n.label}}</button></sc-for>
+</nav>
+<button class="cart-btn {{bumpCls}}" onClick="{{openDrawer}}" aria-label="{{cartLabel}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg>
+<span>עגלה ({{count}})</span>
+</button>
+</div>
+</header>
+
+<main id="main">
+
+<sc-if value="{{isHome}}" hint-placeholder-val="{{true}}">
+<div class="view">
+<section class="h3 {{heroCls}} {{frameCls}}" aria-labelledby="hero-title">
+<div class="h3-in">
+<div class="h3-box">
+<span class="cn cn1"></span><span class="cn cn2"></span><span class="cn cn3"></span><span class="cn cn4"></span>
+<div class="h3-eyebrow">סדרת ספרי הלכה</div>
+<h1 id="hero-title" class="vh">אור ההלכה</h1>
+<div class="t3" aria-hidden="true"><span class="ext">אור ההלכה</span><span class="face">אור ההלכה</span></div>
+<div class="h3-sub">[משפט משנה על הסדרה]</div>
+<div class="h3-meta">כ׳ כרכים · מאת הרב [שם המחבר]</div>
+<sc-if value="{{heroIsBur}}" hint-placeholder-val="{{true}}"><div class="h3-btns"><button class="btn btn-g" onClick="{{goBooks}}">לכל הספרים</button><button class="btn btn-ow" onClick="{{goSet}}">הסט המלא</button></div></sc-if>
+<sc-if value="{{heroIsWhite}}" hint-placeholder-val="{{false}}"><div class="h3-btns"><button class="btn" onClick="{{goBooks}}">לכל הספרים</button><button class="btn btn-o" onClick="{{goSet}}">הסט המלא</button></div></sc-if>
+<span class="spw s1" aria-hidden="true"><span class="sp"></span></span>
+<span class="spw s2" aria-hidden="true"><span class="sp"></span></span>
+<span class="spw s3" aria-hidden="true"><span class="sp"></span></span>
+<span class="spw s4" aria-hidden="true"><span class="sp"></span></span>
+<span class="spw s5" aria-hidden="true"><span class="sp"></span></span>
+</div>
+</div>
+</section>
+
+<section id="books" class="wrap" style="padding-top: 24px; padding-bottom: 72px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; margin-bottom: 32px">
+<div>
+<h2 class="h2" style="margin-bottom: 12px">ספרי הסדרה</h2>
+<span class="gold-rule"></span>
+</div>
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+<span class="muted" style="font-size: 15px" aria-live="polite">{{shownText}}</span>
+<div class="search"><label for="bsearch" class="vh">חיפוש ספר</label><input id="bsearch" type="search" placeholder="חיפוש ספר" onInput="{{setSearch}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg></div>
+</div>
+</div>
+<div class="books">
+<sc-for list="{{shown}}" as="b" hint-placeholder-count="20">
+<article class="tile {{b.tileCls}}">
+<div style="position: relative">
+<button class="cover-btn" onClick="{{b.open}}" aria-label="{{b.title}}">
+<span class="stage"><span class="pages" aria-hidden="true"></span><span class="cover {{b.outCls}}"><span class="cv"><span class="cv-logo">אור ההלכה</span><span class="cv-rule"></span><span class="cv-topic">{{b.topic}}</span><span class="cv-n">חלק {{b.n}}</span></span></span></span>
+</button>
+<sc-if value="{{b.soldOut}}" hint-placeholder-val="{{false}}"><span class="tag-out">אזל במלאי</span></sc-if>
+</div>
+<div>
+<h3 class="tile-t"><button class="lnk" onClick="{{b.open}}" style="text-align: right">{{b.title}}</button></h3>
+<div class="muted" style="font-size: 14px; margin-top: 2px">[תיאור קצר בשורה אחת]</div>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto">
+<span class="price">{{b.price}} ₪</span>
+<sc-if value="{{b.available}}" hint-placeholder-val="{{true}}"><button class="qa" onClick="{{b.add}}" aria-label="הוספת {{b.title}} לעגלה"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span class="qa-t">הוספה לעגלה</span></button></sc-if>
+<sc-if value="{{b.soldOut}}" hint-placeholder-val="{{false}}"><button class="qa" disabled="disabled"><span class="qa-t">אזל</span></button></sc-if>
+</div>
+</article>
+</sc-for>
+</div>
+<sc-if value="{{noResults}}" hint-placeholder-val="{{false}}"><div class="tinted" style="text-align: center; padding: 48px 24px"><div style="font-size: 20px; font-weight: 700; margin-bottom: 6px">לא נמצא ספר כזה</div><div class="muted">נסו מילה אחרת, או נקו את שדה החיפוש.</div></div></sc-if>
+</section>
+
+<section class="wrap" style="padding-bottom: 80px">
+<div class="tinted two-col" style="display: flex; align-items: center; gap: 40px; flex-wrap: wrap; padding: 44px">
+<div style="flex: 1 1 340px; min-width: 0">
+<div class="eyebrow" style="margin-bottom: 10px">הצעה מיוחדת</div>
+<h2 class="h2" style="margin-bottom: 12px">הסט המלא – 20 כרכים</h2>
+<p class="muted" style="margin: 0 0 22px; font-size: 18px">כל ספרי הסדרה יחד, במחיר מיוחד.</p>
+<div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 22px"><span class="serif" style="font-size: 38px; font-weight: 700; color: #6B1F2A">{{setPrice}} ₪</span><span class="muted" style="text-decoration: line-through; font-size: 18px">{{setFull}} ₪</span><span style="font-weight: 700; color: #2F6B3A; font-size: 15px">חיסכון של {{saving}} ₪</span></div>
+<div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap"><button class="btn" onClick="{{addSet}}">הוספת הסט לעגלה</button><button class="arrow" onClick="{{goSet}}">לדף הסט <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button></div>
+</div>
+<div style="flex: 1 1 340px; min-width: 0">
+<div class="shelf s-sm" role="group" aria-label="ספרי הסדרה על המדף">
+<div class="spines"><sc-for list="{{spines}}" as="s" hint-placeholder-count="20"><button class="spine" style="height: {{s.hp}}" onClick="{{s.open}}" aria-label="{{s.title}}"></button></sc-for></div>
+<div class="board"></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="wrap" style="padding-bottom: 72px">
+<div class="two-col" style="display: flex; gap: 48px; flex-wrap: wrap; align-items: flex-start">
+<div style="flex: 1 1 280px"><h2 class="h2" style="margin-bottom: 12px">על הסדרה</h2><span class="gold-rule"></span></div>
+<div style="flex: 2 1 420px"><p class="muted" style="font-size: 20px; line-height: 1.8; margin: 0 0 14px">[כמה משפטים על הסדרה ועל הרב המחבר.]</p><button class="arrow" onClick="{{goAbout}}">לקריאה נוספת <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button></div>
+</div>
+</section>
+
+<section style="border-top: 1px solid #E9E3E1">
+<div class="wrap" style="display: flex; flex-wrap: wrap; gap: 10px 40px; justify-content: center; padding-top: 22px; padding-bottom: 22px; font-size: 15px">
+<sc-for list="{{perks}}" as="p" hint-placeholder-count="3"><span class="muted">{{p}}</span></sc-for>
+</div>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{isSet}}" hint-placeholder-val="{{false}}">
+<div class="view wrap" style="padding-bottom: 72px">
+<nav aria-label="פירורי לחם" class="crumbs"><button class="lnk" onClick="{{goHome}}">דף הבית</button><span aria-hidden="true">›</span><span aria-current="page">הסט המלא</span></nav>
+<div class="two-col" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-wrap: wrap; margin-bottom: 36px">
+<div style="flex: 1 1 380px; min-width: 0">
+<div class="eyebrow" style="margin-bottom: 10px">הצעה מיוחדת</div>
+<h1 class="h1" style="margin-bottom: 14px">הסט המלא – 20 כרכים</h1>
+<span class="gold-rule" style="margin-bottom: 18px"></span>
+<p class="muted" style="margin: 0; font-size: 19px; max-width: 520px">כל ספרי סדרת אור ההלכה יחד, במחיר מיוחד. לחצו על ספר במדף כדי לראות אותו.</p>
+</div>
+<div class="tinted" style="flex: 0 1 380px; padding: 24px">
+<div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px"><span class="serif" style="font-size: 40px; font-weight: 700; color: #6B1F2A">{{setPrice}} ₪</span><span class="muted" style="text-decoration: line-through; font-size: 18px">{{setFull}} ₪</span></div>
+<div style="font-weight: 700; color: #2F6B3A; font-size: 15px; margin-bottom: 16px">חיסכון של {{saving}} ₪ לעומת קנייה בנפרד</div>
+<button class="btn" onClick="{{addSet}}" style="width: 100%">הוספת הסט לעגלה</button>
+</div>
+</div>
+<div class="shelf-scroll">
+<div class="shelf-in">
+<div class="shelf s-lg" role="group" aria-label="ספרי הסדרה על המדף">
+<div class="spines"><sc-for list="{{spines}}" as="s" hint-placeholder-count="20"><button class="spine {{s.cls}}" style="height: {{s.hp}}" onClick="{{s.open}}" onMouseEnter="{{s.hover}}" onFocus="{{s.hover}}" onMouseLeave="{{clearShelf}}" onBlur="{{clearShelf}}" aria-label="{{s.title}}"><span class="spine-t">{{s.topic}}</span></button></sc-for></div>
+<div class="board"></div>
+</div>
+</div>
+</div>
+<div class="muted" style="text-align: center; min-height: 28px; margin-top: 14px; font-size: 16px" aria-live="polite">{{shelfCaption}}</div>
+<section style="margin-top: 40px">
+<h2 class="h2" style="font-size: 30px; margin-bottom: 20px">הספרים בסט</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0 40px">
+<sc-for list="{{books}}" as="b" hint-placeholder-count="20"><div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid #E9E3E1"><span style="display: flex; gap: 14px; align-items: baseline"><span class="muted" style="min-width: 26px; font-family: 'Noto Serif Hebrew', serif">{{b.n}}</span><button class="lnk" onClick="{{b.openFromSet}}" style="font-weight: 500; text-align: right">{{b.title}}</button></span><span class="muted">{{b.price}} ₪</span></div></sc-for>
+</div>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{isBook}}" hint-placeholder-val="{{false}}">
+<div class="view wrap">
+<nav aria-label="פירורי לחם" class="crumbs"><button class="lnk" onClick="{{crumbGo}}">{{crumbLabel}}</button><span aria-hidden="true">›</span><span aria-current="page">{{cur.title}}</span></nav>
+<div class="two-col" style="display: flex; gap: 56px; align-items: flex-start; padding-bottom: 56px">
+<div style="flex: 0 0 420px; max-width: 100%">
+<div class="tinted" style="padding: 40px 24px">
+<sc-if value="{{mainIsCover}}" hint-placeholder-val="{{true}}"><div style="width: 66%; margin: 0 auto; position: relative"><span class="cover {{cur.outCls}}"><span class="cv"><span class="cv-logo">אור ההלכה</span><span class="cv-rule"></span><span class="cv-topic">{{cur.topic}}</span><span class="cv-n">חלק {{cur.n}}</span></span></span><sc-if value="{{cur.soldOut}}" hint-placeholder-val="{{false}}"><span class="tag-out">אזל במלאי</span></sc-if></div></sc-if>
+<sc-if value="{{mainNotCover}}" hint-placeholder-val="{{false}}"><div class="ph" style="aspect-ratio: 3 / 4; width: 66%; margin: 0 auto; background: #fff">[{{mainLabel}}]</div></sc-if>
+</div>
+<div class="thumbs"><sc-for list="{{thumbs}}" as="t" hint-placeholder-count="4"><button class="thumb {{t.cls}}" onClick="{{t.pick}}" aria-pressed="{{t.pressed}}">{{t.label}}</button></sc-for></div>
+</div>
+<div style="flex: 1 1 0; min-width: 0">
+<div class="eyebrow" style="margin-bottom: 10px">חלק {{cur.n}}</div>
+<h1 class="h1" style="margin-bottom: 14px">{{cur.title}}</h1>
+<span class="gold-rule" style="margin-bottom: 18px"></span>
+<p class="muted" style="font-size: 19px; margin: 0 0 22px">[תיאור קצר בשורה אחת]</p>
+<div class="serif" style="font-size: 36px; font-weight: 700; color: #6B1F2A; margin-bottom: 8px">{{cur.price}} ₪</div>
+<sc-if value="{{cur.available}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px; font-weight: 500"><span style="width: 9px; height: 9px;   background: #2F6B3A" aria-hidden="true"></span>במלאי</div>
+<div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-bottom: 24px">
+<div class="qty"><button onClick="{{qtyInc}}" aria-label="הוספת עותק">+</button><span aria-live="polite">{{qty}}</span><button onClick="{{qtyDec}}" aria-label="הפחתת עותק">−</button></div>
+<button class="btn" onClick="{{addCur}}" style="min-width: 200px">הוספה לעגלה</button>
+</div>
+</sc-if>
+<sc-if value="{{cur.soldOut}}" hint-placeholder-val="{{false}}"><div style="color: #A12B2B; font-weight: 700; margin-bottom: 24px">הספר אזל במלאי כרגע</div></sc-if>
+<div class="tinted" style="padding: 14px 18px; margin-bottom: 18px; font-size: 16px">הספר כלול גם <button class="tl" onClick="{{goSet}}">בסט המלא</button> במחיר מיוחד.</div>
+<button class="arrow" onClick="{{share}}" style="gap: 10px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path></svg>שיתוף הספר</button>
+<sc-if value="{{copied}}" hint-placeholder-val="{{false}}"><span role="status" style="margin-right: 12px; color: #2F6B3A; font-weight: 700">הקישור הועתק</span></sc-if>
+</div>
+</div>
+
+<div class="two-col" style="display: flex; gap: 56px; align-items: flex-start; padding-bottom: 48px">
+<section style="flex: 1 1 0; min-width: 0">
+<h2 class="h2" style="font-size: 30px; margin-bottom: 14px">על הספר</h2>
+<p class="muted" style="font-size: 18px; line-height: 1.8; margin: 0 0 22px">[תיאור מלא של הספר: אילו הלכות הוא מקיף, איך הוא בנוי, ולמי הוא מתאים.]</p>
+<button class="btn btn-o" onClick="{{togglePreview}}" aria-expanded="{{previewExpanded}}">עיון בספר – עמודים לדוגמה</button>
+<sc-if value="{{preview}}" hint-placeholder-val="{{false}}"><div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 18px"><div class="ph" style="aspect-ratio: 3 / 4">[תוכן עניינים]</div><div class="ph" style="aspect-ratio: 3 / 4">[עמוד א׳]</div><div class="ph" style="aspect-ratio: 3 / 4">[עמוד ב׳]</div></div></sc-if>
+</section>
+<section style="flex: 0 0 400px; max-width: 100%">
+<h2 class="h2" style="font-size: 30px; margin-bottom: 14px">פרטי הספר</h2>
+<table class="tbl"><tbody><tr><th scope="row">מספר עמודים</th><td>[—]</td></tr><tr><th scope="row">גודל</th><td>[—]</td></tr><tr><th scope="row">כריכה</th><td>[קשה / רכה]</td></tr><tr><th scope="row">שנת הוצאה</th><td>[—]</td></tr></tbody></table>
+<div class="tinted" style="margin-top: 22px; padding: 20px 22px">
+<div style="font-weight: 700; margin-bottom: 4px">הזמנה לבית כנסת או ישיבה?</div>
+<div class="muted" style="font-size: 15px; margin-bottom: 10px">[הנחת כמות / טופס הזמנה מוסדית]</div>
+<button class="tl" onClick="{{goContact}}">צרו קשר להזמנה מוסדית</button>
+</div>
+</section>
+</div>
+
+<div style="display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid #E9E3E1; border-bottom: 1px solid #E9E3E1; padding: 14px 0; flex-wrap: wrap">
+<button class="arrow" onClick="{{prevBook}}">→ הכרך הקודם: {{prevTitle}}</button>
+<button class="arrow" onClick="{{nextBook}}">הכרך הבא: {{nextTitle}} ←</button>
+</div>
+
+<section style="padding: 56px 0 96px">
+<h2 class="h2" style="font-size: 30px; margin-bottom: 24px">עוד מהסדרה</h2>
+<div class="books">
+<sc-for list="{{related}}" as="b" hint-placeholder-count="4">
+<article class="tile">
+<button class="cover-btn" onClick="{{b.open}}" aria-label="{{b.title}}"><span class="stage"><span class="pages" aria-hidden="true"></span><span class="cover {{b.outCls}}"><span class="cv"><span class="cv-logo">אור ההלכה</span><span class="cv-rule"></span><span class="cv-topic">{{b.topic}}</span><span class="cv-n">חלק {{b.n}}</span></span></span></span></button>
+<h3 class="tile-t"><button class="lnk" onClick="{{b.open}}" style="text-align: right">{{b.topic}}</button></h3>
+<span class="price">{{b.price}} ₪</span>
+</article>
+</sc-for>
+</div>
+</section>
+</div>
+<sc-if value="{{cur.available}}" hint-placeholder-val="{{true}}"><div class="sticky-buy"><span class="price">{{cur.price}} ₪</span><button class="btn" onClick="{{addCur}}" style="flex: 1 1 0; max-width: 240px">הוספה לעגלה</button></div></sc-if>
+</sc-if>
+
+<sc-if value="{{isCart}}" hint-placeholder-val="{{false}}">
+<div class="view wrap" style="padding-top: 48px; padding-bottom: 96px">
+<h1 class="h1" style="margin-bottom: 32px">עגלת הקניות</h1>
+<sc-if value="{{cartEmpty}}" hint-placeholder-val="{{false}}">
+<div class="tinted" style="text-align: center; padding: 64px 24px"><div class="serif" style="font-size: 26px; margin-bottom: 8px">העגלה ריקה</div><p class="muted" style="margin: 0 0 24px">עדיין לא נבחרו ספרים</p><button class="btn" onClick="{{goBooks}}">לכל הספרים</button></div>
+</sc-if>
+<sc-if value="{{cartHas}}" hint-placeholder-val="{{true}}">
+<div class="tinted" style="padding: 12px 18px; margin-bottom: 20px; font-size: 15px">אם מחיר השתנה או שספר אזל מאז שהוספתם אותו, תופיע כאן הודעה.</div>
+<sc-if value="{{showUpsell}}" hint-placeholder-val="{{false}}">
+<div style="background: #6B1F2A; color: #fff;   padding: 16px 22px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap"><span>יש בעגלה {{bookLineCount}} ספרים בודדים. הסט המלא (20 כרכים) ב־{{setPrice}} ₪ משתלם יותר.</span><button class="btn btn-sm" onClick="{{toSet}}" style="background: #E6CD8E; border-color: #E6CD8E; color: #3A0F16">להחליף לסט המלא</button></div>
+</sc-if>
+<div class="two-col" style="display: flex; gap: 48px; align-items: flex-start">
+<div style="flex: 1 1 0; min-width: 0">
+<sc-for list="{{lines}}" as="l" hint-placeholder-count="2">
+<div class="line">
+<button class="mini" onClick="{{l.open}}" aria-label="{{l.openLabel}}"><span class="cover"><span class="cv" style="padding: 8cqw 6cqw 8cqw 10cqw"><span class="cv-logo" style="font-size: 18cqw">אור ההלכה</span></span></span></button>
+<div style="flex: 1 1 0; min-width: 0"><button class="line-t" onClick="{{l.open}}">{{l.title}}</button><div class="muted" style="font-size: 15px">{{l.price}} ₪ ליחידה</div></div>
+<div class="qty"><button onClick="{{l.inc}}" aria-label="הוספת עותק">+</button><span>{{l.qty}}</span><button onClick="{{l.dec}}" aria-label="הפחתת עותק">−</button></div>
+<div style="font-weight: 700; min-width: 84px; text-align: left">{{l.total}} ₪</div>
+<button class="rm" onClick="{{l.remove}}" aria-label="הסרה מהעגלה"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"></path></svg></button>
+</div>
+</sc-for>
+</div>
+<aside class="tinted" style="flex: 0 0 350px; max-width: 100%; padding: 26px">
+<h2 class="serif" style="margin: 0 0 16px; font-size: 26px; font-weight: 500">סיכום</h2>
+<div class="field" style="margin-bottom: 16px"><label for="coupon">קוד קופון</label><div style="display: flex; gap: 8px"><input id="coupon" type="text" style="flex: 1 1 0; min-width: 0"><button class="btn btn-o btn-sm" style="height: 48px">החלה</button></div></div>
+<div class="sum-row"><span>סכום ביניים</span><strong>{{subtotal}} ₪</strong></div>
+<div class="sum-row muted" style="font-size: 15px"><span>משלוח</span><span>יחושב בשלב הבא</span></div>
+<button class="btn" onClick="{{goCheckout}}" style="width: 100%; margin-top: 16px">להמשך לתשלום</button>
+<button class="arrow" onClick="{{goBooks}}" style="margin-top: 8px">להמשך קנייה</button>
+</aside>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{isCheckout}}" hint-placeholder-val="{{false}}">
+<div class="view wrap" style="padding-top: 48px; padding-bottom: 96px">
+<h1 class="h1" style="margin-bottom: 32px">פרטים להזמנה</h1>
+<div class="two-col" style="display: flex; gap: 48px; align-items: flex-start">
+<div style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<section class="panel">
+<h2 class="serif" style="margin: 0 0 20px; font-size: 24px; font-weight: 500">פרטי המזמין</h2>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div class="field"><label for="name">שם מלא *</label><input id="name" type="text" autocomplete="name"></div>
+<div class="grid2"><div class="field"><label for="phone">טלפון *</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel"></div><div class="field"><label for="mail">מייל *</label><input id="mail" type="email" autocomplete="email"></div></div>
+</div>
+</section>
+<section class="panel">
+<h2 class="serif" style="margin: 0 0 20px; font-size: 24px; font-weight: 500">משלוח</h2>
+<div role="radiogroup" aria-label="אופן משלוח" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px">
+<label class="opt"><input type="radio" name="ship" checked="{{shipHome}}" onChange="{{setShipHome}}"><span style="flex: 1 1 0">משלוח עד הבית</span><strong>{{costHome}} ₪</strong></label>
+<label class="opt"><input type="radio" name="ship" checked="{{shipPoint}}" onChange="{{setShipPoint}}"><span style="flex: 1 1 0">נקודת איסוף</span><strong>{{costPoint}} ₪</strong></label>
+<label class="opt"><input type="radio" name="ship" checked="{{shipPickup}}" onChange="{{setShipPickup}}"><span style="flex: 1 1 0">איסוף עצמי – [כתובת]</span><strong>חינם</strong></label>
+</div>
+<sc-if value="{{needsAddress}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div class="grid2"><div class="field"><label for="city">עיר *</label><input id="city" type="text" autocomplete="address-level2"></div><div class="field"><label for="street">רחוב *</label><input id="street" type="text" autocomplete="address-line1"></div></div>
+<div class="grid2"><div class="grid2"><div class="field"><label for="num">מספר *</label><input id="num" type="text" inputmode="numeric"></div><div class="field"><label for="apt">דירה</label><input id="apt" type="text" inputmode="numeric"></div></div><div class="field"><label for="zip">מיקוד</label><input id="zip" type="text" inputmode="numeric" autocomplete="postal-code"></div></div>
+</div>
+</sc-if>
+<div class="field" style="margin-top: 16px"><label for="notes">הערות להזמנה</label><textarea id="notes" rows="3"></textarea></div>
+</section>
+<section class="panel">
+<label class="check"><input type="checkbox" checked="{{inst}}" onChange="{{toggleInst}}"><span>קבלה על שם מוסד או עסק</span></label>
+<sc-if value="{{inst}}" hint-placeholder-val="{{false}}"><div class="grid2" style="margin-top: 16px"><div class="field"><label for="org">שם המוסד / העסק</label><input id="org" type="text"></div><div class="field"><label for="orgid">ח"פ / ע"מ</label><input id="orgid" type="text" inputmode="numeric"></div></div></sc-if>
+</section>
+<section style="display: flex; flex-direction: column; gap: 14px">
+<label class="check"><input type="checkbox" checked="{{terms}}" onChange="{{toggleTerms}}" aria-describedby="terms-err"><span>קראתי ואני מסכים/ה <button class="tl" onClick="{{openTerms}}">לתקנון</button> <button class="tl" onClick="{{openPrivacy}}">ולמדיניות הפרטיות</button> *</span></label>
+<sc-if value="{{termsError}}" hint-placeholder-val="{{false}}"><div id="terms-err" class="err" role="alert">כדי להמשיך יש לאשר את התקנון ואת מדיניות הפרטיות</div></sc-if>
+<label class="check"><input type="checkbox" checked="{{news}}" onChange="{{toggleNews}}"><span>אשמח לקבל במייל עדכונים על ספרים חדשים</span></label>
+</section>
+</div>
+<aside class="tinted" style="flex: 0 0 370px; max-width: 100%; padding: 26px">
+<h2 class="serif" style="margin: 0 0 16px; font-size: 26px; font-weight: 500">ההזמנה שלך</h2>
+<sc-for list="{{lines}}" as="l" hint-placeholder-count="2"><div class="sum-row" style="font-size: 16px"><span>{{l.title}} × {{l.qty}}</span><span>{{l.total}} ₪</span></div></sc-for>
+<div style="border-top: 1px solid #E1D8D4; margin: 12px 0"></div>
+<div class="sum-row"><span>סכום ביניים</span><span>{{subtotal}} ₪</span></div>
+<div class="sum-row"><span>משלוח</span><span>{{shipCost}} ₪</span></div>
+<div class="sum-row serif" style="font-size: 24px; font-weight: 700; color: #6B1F2A"><span>סה"כ לתשלום</span><span>{{total}} ₪</span></div>
+<button class="btn" onClick="{{pay}}" style="width: 100%; margin-top: 16px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>לתשלום מאובטח</button>
+<p class="muted" style="font-size: 14px; margin: 12px 0 0; text-align: center">התשלום מתבצע בדף המאובטח של חברת הסליקה. פרטי האשראי לא נשמרים באתר.</p>
+<button class="lnk muted" onClick="{{fail}}" style="width: 100%; margin-top: 10px; font-size: 13px; text-align: center">(להדמיה: מה רואים כשהתשלום לא הושלם)</button>
+</aside>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isSuccess}}" hint-placeholder-val="{{false}}">
+<div class="view wrap" style="max-width: 720px; padding-top: 88px; padding-bottom: 104px; text-align: center">
+<div style="width: 68px; height: 68px;   border: 2px solid #2F6B3A; color: #2F6B3A; display: flex; align-items: center; justify-content: center; margin: 0 auto 26px" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></div>
+<h1 class="h1" style="margin-bottom: 12px">תודה, ההזמנה התקבלה</h1>
+<p class="muted" style="font-size: 19px; margin: 0 0 28px">שלחנו אישור הזמנה וקבלה למייל שלכם.</p>
+<div class="tinted" style="text-align: right; padding: 22px 26px; margin-bottom: 28px">
+<div class="sum-row"><span>מספר הזמנה</span><strong>{{orderNo}}</strong></div>
+<div class="sum-row"><span>מספר פריטים</span><span>{{lastCount}}</span></div>
+<div class="sum-row"><span>סה"כ שולם</span><strong>{{lastTotal}} ₪</strong></div>
+</div>
+<button class="btn" onClick="{{goHome}}">חזרה לדף הבית</button>
+</div>
+</sc-if>
+
+<sc-if value="{{isFailed}}" hint-placeholder-val="{{false}}">
+<div class="view wrap" style="max-width: 720px; padding-top: 88px; padding-bottom: 104px; text-align: center">
+<div style="width: 68px; height: 68px;   border: 2px solid #A12B2B; color: #A12B2B; display: flex; align-items: center; justify-content: center; margin: 0 auto 26px" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></div>
+<h1 class="h1" style="margin-bottom: 12px">התשלום לא הושלם</h1>
+<p class="muted" style="font-size: 19px; margin: 0 0 28px">לא חויבתם. הספרים עדיין שמורים בעגלה, ואפשר לנסות שוב.</p>
+<div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap"><button class="btn" onClick="{{goCheckout}}">לנסות שוב</button><button class="btn btn-o" onClick="{{goContact}}">צריכים עזרה?</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{isAbout}}" hint-placeholder-val="{{false}}">
+<div class="view wrap" style="padding-top: 64px; padding-bottom: 96px">
+<div class="two-col" style="display: flex; gap: 56px; align-items: flex-start; flex-wrap: wrap">
+<div style="flex: 1 1 380px; min-width: 0">
+<div class="eyebrow" style="margin-bottom: 12px">אודות</div>
+<h1 class="h1" style="font-size: 56px; margin-bottom: 18px">על הסדרה</h1>
+<span class="gold-rule" style="margin-bottom: 26px"></span>
+<p class="muted" style="font-size: 20px; line-height: 1.8; margin: 0 0 16px">[כמה משפטים על הסדרה: איך נולדה, מה היא מקיפה ולמי היא מיועדת.]</p>
+<p class="muted" style="font-size: 20px; line-height: 1.8; margin: 0 0 28px">[כמה משפטים על הרב המחבר ועל השיעורים שלו.]</p>
+<button class="btn" onClick="{{goBooks}}">לכל הספרים</button>
+</div>
+</div>
+<h2 class="h2" style="font-size: 30px; margin: 56px 0 20px">מהשיעורים</h2>
+<div class="about-row">
+<div class="ph" style="aspect-ratio: 4 / 3">[תמונה משיעור]</div>
+<div class="ph" style="aspect-ratio: 4 / 3">[תמונה משיעור]</div>
+<div class="ph" style="aspect-ratio: 4 / 3">[תמונה משיעור]</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isContact}}" hint-placeholder-val="{{false}}">
+<div class="view wrap" style="padding-top: 64px; padding-bottom: 96px">
+<div class="two-col" style="display: flex; gap: 56px; align-items: flex-start">
+<div style="flex: 0 0 360px; max-width: 100%">
+<div class="eyebrow" style="margin-bottom: 12px">נשמח לעזור</div>
+<h1 class="h1" style="font-size: 56px; margin-bottom: 18px">צור קשר</h1>
+<span class="gold-rule" style="margin-bottom: 22px"></span>
+<p class="muted" style="font-size: 18px; margin: 0 0 28px">שאלות על הספרים, על הזמנה קיימת או על הזמנה מוסדית.</p>
+<div style="border-top: 1px solid #E9E3E1">
+<a href="mailto:support@orhaalacha.org" style="display: flex; justify-content: space-between; gap: 12px; padding: 16px 0; border-bottom: 1px solid #E9E3E1"><span class="muted">מייל</span><span style="font-weight: 500">support@orhaalacha.org</span></a>
+<a href="tel:0000000000" style="display: flex; justify-content: space-between; gap: 12px; padding: 16px 0; border-bottom: 1px solid #E9E3E1"><span class="muted">טלפון</span><span style="font-weight: 500">[מספר טלפון]</span></a>
+</div>
+</div>
+<section class="tinted" style="flex: 1 1 0; min-width: 0; padding: 34px">
+<sc-if value="{{notSent}}" hint-placeholder-val="{{true}}">
+<h2 class="serif" style="margin: 0 0 20px; font-size: 26px; font-weight: 500">שליחת הודעה</h2>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div class="grid2"><div class="field"><label for="cname">שם *</label><input id="cname" type="text" autocomplete="name"></div><div class="field"><label for="ccontact">מייל או טלפון *</label><input id="ccontact" type="text"></div></div>
+<div class="field"><label for="csubj">נושא</label><input id="csubj" type="text"></div>
+<div class="field"><label for="cmsg">הודעה *</label><textarea id="cmsg" rows="5"></textarea></div>
+<div><button class="btn" onClick="{{send}}">שליחה</button></div>
+</div>
+</sc-if>
+<sc-if value="{{sent}}" hint-placeholder-val="{{false}}"><div role="status" style="text-align: center; padding: 40px 0"><div class="serif" style="font-size: 30px; color: #2F6B3A; margin-bottom: 8px">ההודעה נשלחה</div><div class="muted">נחזור אליכם בהקדם.</div></div></sc-if>
+</section>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isLegal}}" hint-placeholder-val="{{false}}">
+<div class="view wrap" style="padding-top: 56px; padding-bottom: 96px">
+<div class="two-col" style="display: flex; gap: 56px; align-items: flex-start">
+<nav aria-label="מסמכים" style="flex: 0 0 250px; max-width: 100%"><div class="tabs"><sc-for list="{{docs}}" as="d" hint-placeholder-count="4"><button class="tab {{d.cls}}" onClick="{{d.open}}">{{d.title}}</button></sc-for></div></nav>
+<article style="flex: 1 1 0; min-width: 0; max-width: 760px">
+<h1 class="h1" style="margin-bottom: 8px">{{docTitle}}</h1>
+<div class="muted" style="margin-bottom: 36px">עודכן לאחרונה: [תאריך]</div>
+<sc-for list="{{docSections}}" as="s" hint-placeholder-count="5"><section style="margin-bottom: 28px"><h2 class="serif" style="font-size: 22px; font-weight: 700; margin: 0 0 8px">{{s.title}}</h2><p class="muted" style="margin: 0; line-height: 1.8">[נוסח הסעיף – ייכתב ויאושר על ידי עורך דין]</p></section></sc-for>
+</article>
+</div>
+</div>
+</sc-if>
+</main>
+
+<footer style="border-top: 1px solid #E3D3D3; background: #FFFFFF">
+<div class="wrap footer-in" style="display: flex; align-items: center; justify-content: space-between; gap: 12px 32px; flex-wrap: wrap; padding-top: 18px; padding-bottom: 18px; font-size: 14px; color: #5A1A24">
+<div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap"><span class="stam" style="font-size: 24px; line-height: 1; color: #6B1F2A">אור ההלכה</span><span>© כל הזכויות שמורות</span></div>
+<nav aria-label="מידע משפטי" style="display: flex; gap: 6px 4px; flex-wrap: wrap"><sc-for list="{{docs}}" as="d" hint-placeholder-count="4"><button class="lnk" onClick="{{d.open}}" style="padding: 8px 10px; min-height: 36px;   color: #5A1A24">{{d.title}}</button></sc-for></nav>
+<div style="direction: ltr; text-align: left">support@orhaalacha.org · [טלפון]</div>
+</div>
+</footer>
+
+<sc-if value="{{drawer}}" hint-placeholder-val="{{false}}">
+<div class="backdrop" onClick="{{closeDrawer}}"></div>
+<aside class="drawer" role="dialog" aria-modal="true" aria-label="עגלת קניות">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid #E9E3E1">
+<h2 class="serif" style="margin: 0; font-size: 26px; font-weight: 500">העגלה שלך</h2>
+<button class="rm" onClick="{{closeDrawer}}" aria-label="סגירת העגלה"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div style="flex: 1 1 auto; overflow: auto; padding: 0 24px">
+<sc-if value="{{cartEmpty}}" hint-placeholder-val="{{false}}"><p class="muted" style="text-align: center; padding: 40px 0">העגלה ריקה</p></sc-if>
+<sc-for list="{{lines}}" as="l" hint-placeholder-count="2"><div class="line" style="gap: 12px"><div style="flex: 1 1 0; min-width: 0"><button class="line-t" onClick="{{l.open}}" style="font-size: 16px">{{l.title}}</button><div class="muted" style="font-size: 15px">{{l.qty}} × {{l.price}} ₪</div></div><div style="font-weight: 700">{{l.total}} ₪</div></div></sc-for>
+</div>
+<div style="padding: 20px 24px; border-top: 1px solid #E9E3E1">
+<div class="sum-row" style="font-size: 19px"><span>סכום ביניים</span><strong>{{subtotal}} ₪</strong></div>
+<div style="display: flex; gap: 10px; margin-top: 12px"><button class="btn btn-o" onClick="{{goCart}}" style="flex: 1 1 0; padding: 0 10px">לעגלה המלאה</button><button class="btn" onClick="{{goCheckout}}" style="flex: 1 1 0; padding: 0 10px">לתשלום</button></div>
+<button class="arrow" onClick="{{closeDrawer}}" style="margin-top: 6px">להמשך קנייה</button>
+</div>
+</aside>
+</sc-if>
+
+<div class="demo" role="group" aria-label="אפשרויות להדמיה">
+<div style="font-size: 13px; font-weight: 700; color: #5F5658">להדמיה בלבד</div>
+<div class="demo-l">רקע הכותרת</div>
+<div class="demo-b"><sc-for list="{{heroBgs}}" as="m" hint-placeholder-count="2"><button class="chip {{m.cls}}" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}">{{m.label}}</button></sc-for></div>
+<div class="demo-l">מסגרת זהב</div>
+<div class="demo-b"><sc-for list="{{frames}}" as="m" hint-placeholder-count="2"><button class="chip {{m.cls}}" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}">{{m.label}}</button></sc-for></div>
+<div class="demo-l">סגנון תנועה</div>
+<div class="demo-b"><sc-for list="{{motions}}" as="m" hint-placeholder-count="4"><button class="chip {{m.cls}}" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}">{{m.label}}</button></sc-for></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"heroBg":{"editor":"enum","options":["burgundy","white"],"default":"white","section":"כותרת"},"frame":{"editor":"boolean","default":false,"section":"כותרת"},"motion":{"editor":"enum","options":["none","subtle","book","spring"],"default":"subtle","section":"תנועה"},"$preview":{"width":1280,"height":3500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { page: 'home', book: 0, thumb: 0, qty: 1, cart: {}, drawer: false, ship: 'home', inst: false, terms: false, termsError: false, news: false, legal: 'terms', preview: false, copied: false, sent: false, last: null, from: 'home', q: '', motion: null, heroBg: null, frame: null, bump: false, shelfHover: -1 };
+  }
+  go(page, extra) {
+    this.setState(Object.assign({ page: page, drawer: false, copied: false, sent: false, termsError: false, preview: false, shelfHover: -1 }, extra || {}));
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+  scrollTo(id) {
+    this.go('home');
+    setTimeout(function () { var el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 80);
+  }
+  addItem(id, q) {
+    var self = this;
+    var cart = Object.assign({}, this.state.cart);
+    cart[id] = (cart[id] || 0) + q;
+    this.setState({ cart: cart, drawer: true, bump: true });
+    clearTimeout(this._b);
+    this._b = setTimeout(function () { self.setState({ bump: false }); }, 500);
+  }
+  setQty(id, q) {
+    var cart = Object.assign({}, this.state.cart);
+    if (q <= 0) { delete cart[id]; } else { cart[id] = q; }
+    this.setState({ cart: cart });
+  }
+  renderVals() {
+    var self = this;
+    var st = this.state;
+    var motion = st.motion || this.props.motion || 'subtle';
+    var heroBg = st.heroBg || this.props.heroBg || 'white';
+    var frame = st.frame !== null ? st.frame : (this.props.frame !== undefined ? this.props.frame : false);
+    var heroBgs = [['burgundy', 'בורדו'], ['white', 'לבן']].map(function (m) {
+      return { label: m[1], cls: heroBg === m[0] ? 'on' : '', pressed: heroBg === m[0] ? 'true' : 'false', pick: function () { self.setState({ heroBg: m[0] }); } };
+    });
+    var frames = [[true, 'יש'], [false, 'אין']].map(function (m) {
+      return { label: m[1], cls: frame === m[0] ? 'on' : '', pressed: frame === m[0] ? 'true' : 'false', pick: function () { self.setState({ frame: m[0] }); } };
+    });
+    var PRICE = 59, SET_PRICE = 890, SET_FULL = 1180, COST_HOME = 30, COST_POINT = 20;
+    var topics = ['הלכות שבת','הלכות ברכות','הלכות תפילה','הלכות כשרות','הלכות פסח','הלכות סוכות','הלכות חנוכה ופורים','הלכות ימים נוראים','הלכות תפילין','הלכות מזוזה','הלכות כיבוד הורים','הלכות לשון הרע','הלכות צדקה','הלכות ציצית','הלכות ראש חודש','הלכות תעניות','הלכות בין המצרים','הלכות שמיטה','הלכות ספירת העומר','הלכות נטילת ידיים'];
+    var nums = ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ז׳','ח׳','ט׳','י׳','י״א','י״ב','י״ג','י״ד','ט״ו','ט״ז','י״ז','י״ח','י״ט','כ׳'];
+    var hp = [92,100,96,88,98,94,90,100,86,97,93,99,89,95,91,100,87,96,92,98];
+    var books = topics.map(function (t, i) {
+      var soldOut = i === 6;
+      return { i: i, topic: t, n: nums[i], title: 'אור ההלכה – ' + t, soldOut: soldOut, available: !soldOut, price: PRICE, outCls: soldOut ? 'out' : '', tileCls: soldOut ? 'is-out' : '',
+        open: function () { self.go('book', { book: i, thumb: 0, qty: 1, from: 'home' }); },
+        openFromSet: function () { self.go('book', { book: i, thumb: 0, qty: 1, from: 'set' }); },
+        add: function () { self.addItem('b' + i, 1); } };
+    });
+    var q = st.q.trim();
+    var shown = books.filter(function (b) { return !q || b.title.indexOf(q) >= 0; });
+    var spines = books.map(function (b) {
+      return { i: b.i, title: b.title, topic: b.topic, hp: hp[b.i] + '%', cls: st.shelfHover === b.i ? 'on' : '',
+        open: b.openFromSet,
+        hover: function () { self.setState({ shelfHover: b.i }); } };
+    });
+    var lines = Object.keys(st.cart).map(function (id) {
+      var isSet = id === 'set';
+      var i = isSet ? -1 : Number(id.slice(1));
+      var b = isSet ? null : books[i];
+      var n = st.cart[id];
+      var price = isSet ? SET_PRICE : PRICE;
+      return { id: id, isSet: isSet, isBook: !isSet, title: isSet ? 'הסט המלא – 20 כרכים' : b.title, qty: n, price: price, total: price * n,
+        openLabel: 'מעבר לדף ' + (isSet ? 'הסט המלא' : b.title),
+        open: function () { if (isSet) { self.go('set'); } else { self.go('book', { book: i, thumb: 0, qty: 1, from: 'cart' }); } },
+        inc: function () { self.setQty(id, n + 1); },
+        dec: function () { self.setQty(id, n - 1); },
+        remove: function () { self.setQty(id, 0); } };
+    });
+    var count = lines.reduce(function (a, l) { return a + l.qty; }, 0);
+    var subtotal = lines.reduce(function (a, l) { return a + l.total; }, 0);
+    var bookLineCount = lines.filter(function (l) { return l.isBook; }).length;
+    var shipCost = st.ship === 'home' ? COST_HOME : (st.ship === 'point' ? COST_POINT : 0);
+    var cur = books[st.book];
+    var thumbLabels = ['כריכה קדמית', 'כריכה אחורית', 'תוכן עניינים', 'עמוד לדוגמה'];
+    var thumbs = thumbLabels.map(function (l, i) {
+      return { label: l, cls: i === st.thumb ? 'sel' : '', pressed: i === st.thumb ? 'true' : 'false', pick: function () { self.setState({ thumb: i }); } };
+    });
+    var related = [1, 2, 3, 4].map(function (k) { return books[(st.book + k) % 20]; });
+    var prev = books[(st.book + 19) % 20];
+    var next = books[(st.book + 1) % 20];
+    var crumbs = { home: ['דף הבית', 'home'], cart: ['עגלת הקניות', 'cart'], set: ['הסט המלא', 'set'] };
+    var crumb = crumbs[st.from] || crumbs.home;
+    var legal = {
+      terms: { title: 'תקנון האתר', sections: ['פרטי העסק', 'תהליך ההזמנה', 'מחירים ותשלום', 'משלוחים וזמני אספקה', 'ביטולים והחזרות', 'אחריות', 'יצירת קשר'] },
+      privacy: { title: 'מדיניות פרטיות', sections: ['איזה מידע אנחנו אוספים', 'למה אנחנו משתמשים במידע', 'למי המידע מועבר', 'היכן המידע נשמר וכמה זמן', 'הזכויות שלך', 'אחסון בדפדפן', 'פניות בנושא פרטיות'] },
+      returns: { title: 'ביטולים והחזרות', sections: ['ביטול הזמנה לפני משלוח', 'ביטול לאחר קבלת הספרים', 'ספר פגום או שגוי', 'אופן ההחזר הכספי'] },
+      a11y: { title: 'הצהרת נגישות', sections: ['רמת הנגישות באתר', 'מה הונגש', 'מגבלות ידועות', 'פרטי רכז הנגישות', 'תאריך עדכון ההצהרה'] }
+    };
+    var docs = ['terms', 'privacy', 'returns', 'a11y'].map(function (k) {
+      return { title: legal[k].title, cls: k === st.legal ? 'sel' : '', open: function () { self.go('legal', { legal: k }); } };
+    });
+    var setShip = function (v) { return function () { self.setState({ ship: v }); }; };
+    var p = st.page;
+    var navDefs = [['הספרים', 'books', function () { self.scrollTo('books'); }], ['הסט המלא', 'set', function () { self.go('set'); }], ['אודות', 'about', function () { self.go('about'); }], ['צור קשר', 'contact', function () { self.go('contact'); }]];
+    var nav = navDefs.map(function (n) {
+      var on = n[1] === p;
+      return { label: n[0], cls: on ? 'on' : '', current: on ? 'page' : 'false', go: n[2] };
+    });
+    var motions = [['none', 'ללא'], ['subtle', 'עדין'], ['book', 'ספר נפתח'], ['spring', 'קפיצה']].map(function (m) {
+      return { label: m[1], cls: motion === m[0] ? 'on' : '', pressed: motion === m[0] ? 'true' : 'false', pick: function () { self.setState({ motion: m[0] }); } };
+    });
+    return {
+      motion: motion, motions: motions, nav: nav,
+      heroCls: heroBg === 'white' ? 'hw' : 'hb', frameCls: frame ? 'f-on' : '', heroIsBur: heroBg !== 'white', heroIsWhite: heroBg === 'white', heroBgs: heroBgs, frames: frames,
+      books: books, shown: shown, noResults: shown.length === 0,
+      shownText: shown.length === 20 ? '20 כרכים' : 'מוצגים ' + shown.length + ' מתוך 20',
+      setSearch: function (e) { self.setState({ q: e.target.value }); },
+      spines: spines, clearShelf: function () { self.setState({ shelfHover: -1 }); },
+      shelfCaption: st.shelfHover >= 0 ? books[st.shelfHover].title + ' · ' + PRICE + ' ₪' : 'מעבר על ספר במדף מציג את שמו; לחיצה פותחת את דף הספר',
+      lines: lines, count: count, subtotal: subtotal, shipCost: shipCost, total: subtotal + shipCost,
+      bookLineCount: bookLineCount, cartEmpty: count === 0, cartHas: count > 0,
+      showUpsell: bookLineCount >= 5 && !st.cart.set,
+      toSet: function () { self.setState({ cart: { set: 1 } }); },
+      cartLabel: 'עגלת קניות, ' + count + ' פריטים',
+      bumpCls: st.bump && motion !== 'none' ? 'bump' : '',
+      drawer: st.drawer,
+      openDrawer: function () { self.setState({ drawer: true }); },
+      closeDrawer: function () { self.setState({ drawer: false }); },
+      isHome: p === 'home', isSet: p === 'set', isBook: p === 'book', isCart: p === 'cart', isCheckout: p === 'checkout', isSuccess: p === 'success', isFailed: p === 'failed', isAbout: p === 'about', isContact: p === 'contact', isLegal: p === 'legal',
+      goHome: function () { self.go('home'); },
+      goBooks: function () { self.scrollTo('books'); },
+      goSet: function () { self.go('set'); },
+      goCart: function () { self.go('cart'); },
+      goCheckout: function () { self.go('checkout'); },
+      goAbout: function () { self.go('about'); },
+      goContact: function () { self.go('contact'); },
+      openTerms: function () { self.go('legal', { legal: 'terms' }); },
+      openPrivacy: function () { self.go('legal', { legal: 'privacy' }); },
+      addSet: function () { self.addItem('set', 1); },
+      cur: cur, thumbs: thumbs, mainLabel: thumbLabels[st.thumb], mainIsCover: st.thumb === 0, mainNotCover: st.thumb !== 0,
+      crumbLabel: crumb[0], crumbGo: function () { self.go(crumb[1]); },
+      qty: st.qty,
+      qtyInc: function () { self.setState({ qty: st.qty + 1 }); },
+      qtyDec: function () { self.setState({ qty: Math.max(1, st.qty - 1) }); },
+      addCur: function () { self.addItem('b' + st.book, st.qty); },
+      prevTitle: prev.topic, nextTitle: next.topic,
+      prevBook: function () { self.go('book', { book: prev.i, thumb: 0, qty: 1 }); },
+      nextBook: function () { self.go('book', { book: next.i, thumb: 0, qty: 1 }); },
+      related: related,
+      preview: st.preview, previewExpanded: st.preview ? 'true' : 'false',
+      togglePreview: function () { self.setState({ preview: !st.preview }); },
+      copied: st.copied, share: function () { self.setState({ copied: true }); },
+      shipHome: st.ship === 'home', shipPoint: st.ship === 'point', shipPickup: st.ship === 'pickup', needsAddress: st.ship !== 'pickup',
+      setShipHome: setShip('home'), setShipPoint: setShip('point'), setShipPickup: setShip('pickup'),
+      costHome: COST_HOME, costPoint: COST_POINT,
+      inst: st.inst, toggleInst: function () { self.setState({ inst: !st.inst }); },
+      terms: st.terms, toggleTerms: function () { self.setState({ terms: !st.terms, termsError: false }); },
+      termsError: st.termsError,
+      news: st.news, toggleNews: function () { self.setState({ news: !st.news }); },
+      pay: function () {
+        if (!st.terms) { self.setState({ termsError: true }); return; }
+        self.go('success', { last: { count: count, total: subtotal + shipCost }, cart: {}, terms: false });
+      },
+      fail: function () { self.go('failed'); },
+      orderNo: 'OH-10482', lastCount: st.last ? st.last.count : 0, lastTotal: st.last ? st.last.total : 0,
+      docs: docs, docTitle: legal[st.legal].title, docSections: legal[st.legal].sections.map(function (s) { return { title: s }; }),
+      sent: st.sent, notSent: !st.sent, send: function () { self.setState({ sent: true }); },
+      setPrice: SET_PRICE, setFull: SET_FULL, saving: SET_FULL - SET_PRICE,
+      perks: ['תשלום מאובטח דרך חברת סליקה', 'קבלה אוטומטית למייל', 'משלוח עד הבית – [זמני משלוח]']
+    };
+  }
+}
+</script>
+</body>
+</html>

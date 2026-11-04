@@ -28,7 +28,13 @@ Or-Haalacha/
 
 ## תיעוד
 
+- [docs/handoff.md](docs/handoff.md) – **נקודת כניסה:** מצב, מה נשאר, שאלות פתוחות ולקחים
 - [docs/planning.md](docs/planning.md) – אפיון, החלטות ושאלות פתוחות
+- [docs/client-spec-angular.md](docs/client-spec-angular.md) – אפיון מלא לבניית החנות ב־Angular
+- [docs/design-notes.md](docs/design-notes.md) – החלטות עיצוב ונימוקים, וגיבוי ההדמיות ב־[docs/design/](docs/design/README.md)
+- [docs/accounts-checklist.md](docs/accounts-checklist.md) – חשבונות ושירותים
+- [docs/client-message.md](docs/client-message.md) – ההודעה והשאלות ללקוח
+- [docs/progress.md](docs/progress.md) – יומן עבודה
 - [docs/decisions/](docs/decisions/) – החלטות ארכיטקטורה
 - [docs/api.md](docs/api.md) – תיעוד ה־API
 - [server/README.md](server/README.md) – הרצת השרת

@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>אור ההלכה – ניהול</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F7F9}
+a{color:#2F5D8A}a:hover{color:#1F4268}
+.app{font-family:'Heebo',sans-serif;color:#1B1F24;background:#F6F7F9;min-height:100vh;display:flex;flex-wrap:wrap;font-size:15px}
+.side{flex:1 1 230px;max-width:100%;background:#FFFFFF;border-left:1px solid #E3E6EB;padding:20px 14px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
+.content{flex:999 1 560px;min-width:0;padding:28px 32px 48px;box-sizing:border-box}
+.nav{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;min-height:44px;border:none;background:none;border-radius:8px;font:inherit;color:#3B424C;cursor:pointer;text-align:right;box-sizing:border-box}
+.nav:hover{background:#F1F3F6}
+.nav.on{background:#E8EFF7;color:#1F4268;font-weight:700}
+.nav-badge{margin-right:auto;background:#2F5D8A;color:#fff;font-size:12px;font-weight:700;min-width:22px;height:22px;border-radius:999px;display:flex;align-items:center;justify-content:center}
+.card{background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:20px}
+.card-h{font-size:16px;font-weight:700;margin:0 0 14px}
+.muted{color:#59616C}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#2F5D8A;color:#fff;border:none;border-radius:8px;padding:9px 16px;min-height:40px;font:inherit;font-weight:500;cursor:pointer;box-sizing:border-box;white-space:nowrap}
+.btn:hover{background:#1F4268}
+.btn-sec{background:#fff;color:#1B1F24;border:1px solid #CDD2D9}
+.btn-sec:hover{background:#F1F3F6}
+.btn-danger{background:#fff;color:#A12B2B;border:1px solid #E7B9B9}
+.btn-danger:hover{background:#FBE7E7}
+.lnk{background:none;border:none;padding:0;font:inherit;color:#2F5D8A;cursor:pointer;text-decoration:underline}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}
+.kpi-l{color:#59616C;font-size:14px;margin-bottom:6px}
+.kpi-v{font-size:30px;font-weight:700;letter-spacing:-.5px}
+.kpi-s{font-size:13px;color:#59616C;margin-top:4px}
+.tbl-box{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;min-width:640px}
+.tbl th{text-align:right;font-weight:500;color:#59616C;font-size:13px;padding:10px 12px;border-bottom:1px solid #E3E6EB;white-space:nowrap}
+.tbl td{padding:12px;border-bottom:1px solid #EEF0F3;white-space:nowrap}
+.tbl tr.click:hover td{background:#F8FAFC}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.chip::before{content:'';width:7px;height:7px;border-radius:999px;background:currentColor}
+.st-pending{background:#EEF0F3;color:#4A5260}
+.st-paid{background:#FFF2D6;color:#7A4B00}
+.st-shipped{background:#E3F2E8;color:#1E6B3A}
+.st-cancelled{background:#FBE7E7;color:#A12B2B}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fchip{border:1px solid #CDD2D9;background:#fff;border-radius:999px;padding:7px 14px;min-height:36px;font:inherit;font-size:14px;cursor:pointer;color:#3B424C}
+.fchip.on{background:#1B1F24;color:#fff;border-color:#1B1F24}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:14px;font-weight:500}
+.field input,.field textarea,.field select{font:inherit;padding:9px 12px;border:1px solid #CDD2D9;border-radius:8px;background:#fff;color:#1B1F24;min-height:40px;box-sizing:border-box}
+.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid #2F5D8A;outline-offset:0;border-color:#2F5D8A}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.sw{position:relative;width:44px;height:26px;border-radius:999px;border:none;background:#CDD2D9;cursor:pointer;flex:0 0 auto;padding:0}
+.sw::after{content:'';position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:999px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:right .15s}
+.sw.on{background:#2F5D8A}
+.sw.on::after{right:21px}
+.mini-cover{width:30px;height:40px;border-radius:2px 4px 4px 2px;background:#1B2A4A;display:inline-block;vertical-align:middle;box-shadow:inset 3px 0 0 rgba(0,0,0,.25)}
+.low{color:#7A4B00;background:#FFF2D6;border-radius:6px;padding:2px 8px;font-size:13px;font-weight:500}
+.out{color:#A12B2B;background:#FBE7E7;border-radius:6px;padding:2px 8px;font-size:13px;font-weight:500}
+.ph{border:1px dashed #B9C0CA;border-radius:8px;background:#F8FAFC;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#59616C;font-size:13px;aspect-ratio:3/4;text-align:center;padding:8px}
+.toast{position:fixed;bottom:24px;left:24px;background:#1B1F24;color:#fff;padding:12px 18px;border-radius:10px;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,.2);font-weight:500}
+.modal-bg{position:fixed;inset:0;background:rgba(15,20,28,.45);z-index:40}
+.modal{position:fixed;top:5vh;left:50%;transform:translateX(-50%);width:640px;max-width:92vw;max-height:90vh;overflow:auto;background:#fff;border-radius:12px;z-index:41;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.chart{display:flex;align-items:flex-end;gap:2px;height:200px;border-bottom:1px solid #CDD2D9;position:relative}
+.bar{flex:1 1 0;background:#7FA3C8;border-radius:4px 4px 0 0;min-width:4px;cursor:pointer;border:none;padding:0;position:relative;z-index:1}
+.bar.on,.bar:hover{background:#2F5D8A}
+.gridl{position:absolute;left:0;right:0;border-top:1px solid #EEF0F3;z-index:0}
+.gridl span{position:absolute;left:-46px;top:-9px;font-size:12px;color:#59616C;width:40px;text-align:right}
+.hbar{height:14px;background:#2F5D8A;border-radius:0 4px 4px 0}
+.tl{display:flex;gap:12px;align-items:flex-start;padding:8px 0}
+.tl-dot{width:10px;height:10px;border-radius:999px;background:#2F5D8A;margin-top:5px;flex:0 0 auto}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #2F5D8A;outline-offset:2px}
+@media (max-width:760px){.side{flex-direction:row;flex-wrap:wrap;border-left:none;border-bottom:1px solid #E3E6EB}.side .nav{width:auto}.side-foot{display:none !important}.content{padding:20px 16px 40px}.grid2,.grid3{grid-template-columns:1fr}}
+</style>
+</helmet>
+<div class="app" dir="rtl">
+
+<aside class="side" aria-label="תפריט ניהול">
+<div style="padding: 6px 12px 18px; display: flex; flex-direction: column; gap: 2px; width: 100%">
+<div style="font-weight: 700; font-size: 20px">אור ההלכה</div>
+<div class="muted" style="font-size: 13px">אזור ניהול</div>
+</div>
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="6">
+<button class="nav {{n.cls}}" onClick="{{n.go}}" aria-current="{{n.current}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{n.icon}}"></path></svg>
+<span>{{n.label}}</span>
+<sc-if value="{{n.hasBadge}}" hint-placeholder-val="{{false}}"><span class="nav-badge" aria-label="{{n.badgeLabel}}">{{n.badge}}</span></sc-if>
+</button>
+</sc-for>
+<div class="side-foot" style="margin-top: auto; border-top: 1px solid #E3E6EB; padding: 16px 12px 0; display: flex; flex-direction: column; gap: 8px; width: 100%; box-sizing: border-box">
+<div style="font-size: 13px" class="muted">מחובר כ־</div>
+<div style="font-size: 14px; font-weight: 500; direction: ltr; text-align: right">support@orhaalacha.org</div>
+<div style="display: flex; gap: 16px; margin-top: 4px"><a href="#" style="font-size: 14px">לאתר החנות ↗</a><button class="lnk" style="font-size: 14px">יציאה</button></div>
+</div>
+</aside>
+
+<main class="content">
+
+<sc-if value="{{isDash}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px">
+<div><h1 style="margin: 0; font-size: 26px">לוח בקרה</h1><div class="muted" style="margin-top: 4px">יום שלישי, 21.10</div></div>
+<button class="btn" onClick="{{goOrdersToShip}}">3 הזמנות ממתינות להכנה</button>
+</div>
+<div class="kpis" style="margin-bottom: 20px">
+<div class="card"><div class="kpi-l">הזמנות היום</div><div class="kpi-v">3</div><div class="kpi-s">1,206 ₪</div></div>
+<div class="card"><div class="kpi-l">הזמנות השבוע</div><div class="kpi-v">12</div><div class="kpi-s">4,184 ₪</div></div>
+<div class="card"><div class="kpi-l">הכנסות החודש</div><div class="kpi-v">20,518 ₪</div><div class="kpi-s">68 הזמנות</div></div>
+<div class="card"><div class="kpi-l">ממתינות להכנה</div><div class="kpi-v">3</div><div class="kpi-s">הישנה ביותר מהבוקר</div></div>
+</div>
+<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start">
+<section class="card" style="flex: 999 1 520px; min-width: 0">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px"><h2 class="card-h" style="margin: 0">הזמנות אחרונות</h2><button class="lnk" onClick="{{goOrders}}">לכל ההזמנות</button></div>
+<div class="tbl-box"><table class="tbl"><thead><tr><th scope="col">מספר</th><th scope="col">תאריך</th><th scope="col">לקוח</th><th scope="col">סכום</th><th scope="col">סטטוס</th></tr></thead><tbody>
+<sc-for list="{{recent}}" as="o" hint-placeholder-count="5"><tr class="click"><td><button class="lnk" onClick="{{o.open}}" style="font-weight: 500">{{o.id}}</button></td><td class="muted">{{o.date}}</td><td>{{o.name}}</td><td>{{o.total}} ₪</td><td><span class="chip {{o.stCls}}">{{o.stLabel}}</span></td></tr></sc-for>
+</tbody></table></div>
+</section>
+<section class="card" style="flex: 1 1 280px; min-width: 0">
+<h2 class="card-h">התראות מלאי</h2>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{alerts}}" as="a" hint-placeholder-count="3">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><button class="lnk" onClick="{{a.edit}}" style="text-decoration: none; color: #1B1F24; text-align: right">{{a.topic}}</button><span class="{{a.cls}}">{{a.text}}</span></div>
+</sc-for>
+</div>
+<button class="btn btn-sec" onClick="{{goBooks}}" style="width: 100%; margin-top: 18px">לניהול הספרים</button>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{isOrders}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px">
+<h1 style="margin: 0; font-size: 26px">הזמנות</h1>
+<button class="btn btn-sec"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg>ייצוא לאקסל</button>
+</div>
+<div class="card" style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 14px">
+<div class="filters" role="group" aria-label="סינון לפי סטטוס">
+<sc-for list="{{statusFilters}}" as="f" hint-placeholder-count="5"><button class="fchip {{f.cls}}" onClick="{{f.pick}}" aria-pressed="{{f.pressed}}">{{f.label}} ({{f.count}})</button></sc-for>
+</div>
+<div style="display: flex; gap: 12px; flex-wrap: wrap">
+<div class="field" style="flex: 2 1 260px"><label for="osearch">חיפוש</label><input id="osearch" type="search" placeholder="מספר הזמנה, שם או טלפון" onInput="{{setQ}}"></div>
+<div class="field" style="flex: 1 1 160px"><label for="ofrom">מתאריך</label><input id="ofrom" type="date"></div>
+<div class="field" style="flex: 1 1 160px"><label for="oto">עד תאריך</label><input id="oto" type="date"></div>
+</div>
+</div>
+<div class="card" style="padding: 8px 8px 0">
+<div class="tbl-box"><table class="tbl"><thead><tr><th scope="col">מספר</th><th scope="col">תאריך</th><th scope="col">לקוח</th><th scope="col">יישוב</th><th scope="col">משלוח</th><th scope="col">פריטים</th><th scope="col">סכום</th><th scope="col">סטטוס</th></tr></thead><tbody>
+<sc-for list="{{filtered}}" as="o" hint-placeholder-count="10"><tr class="click"><td><button class="lnk" onClick="{{o.open}}" style="font-weight: 500">{{o.id}}</button></td><td class="muted">{{o.date}}</td><td>{{o.name}}</td><td>{{o.city}}</td><td class="muted">{{o.methodLabel}}</td><td>{{o.count}}</td><td>{{o.total}} ₪</td><td><span class="chip {{o.stCls}}">{{o.stLabel}}</span></td></tr></sc-for>
+</tbody></table></div>
+<sc-if value="{{noResults}}" hint-placeholder-val="{{false}}"><p class="muted" style="text-align: center; padding: 24px">לא נמצאו הזמנות</p></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{isOrder}}" hint-placeholder-val="{{false}}">
+<button class="lnk" onClick="{{goOrders}}" style="margin-bottom: 14px; display: inline-block">→ חזרה להזמנות</button>
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 20px">
+<div>
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap"><h1 style="margin: 0; font-size: 26px">הזמנה {{ord.id}}</h1><span class="chip {{ord.stCls}}">{{ord.stLabel}}</span></div>
+<div class="muted" style="margin-top: 4px">התקבלה {{ord.date}}</div>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<sc-if value="{{ord.canShip}}" hint-placeholder-val="{{true}}"><button class="btn" onClick="{{openShip}}">סימון כנשלחה</button></sc-if>
+<button class="btn btn-sec" onClick="{{openSlip}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v7H7z"></path></svg>תעודת משלוח</button>
+<sc-if value="{{ord.canCancel}}" hint-placeholder-val="{{true}}"><button class="btn btn-danger" onClick="{{askCancel}}">ביטול הזמנה</button></sc-if>
+</div>
+</div>
+
+<sc-if value="{{shipForm}}" hint-placeholder-val="{{false}}">
+<div class="card" style="margin-bottom: 16px; border-color: #2F5D8A; display: flex; gap: 14px; align-items: flex-end; flex-wrap: wrap">
+<div class="field" style="flex: 1 1 260px"><label for="track">מספר מעקב (לא חובה)</label><input id="track" type="text" style="direction: ltr; text-align: right"></div>
+<div class="muted" style="flex: 2 1 260px; font-size: 14px; padding-bottom: 10px">הקונה יקבל מייל שההזמנה נשלחה, עם מספר המעקב אם הוזן.</div>
+<div style="display: flex; gap: 8px"><button class="btn" onClick="{{confirmShip}}">אישור ושליחת מייל</button><button class="btn btn-sec" onClick="{{closeShip}}">ביטול</button></div>
+</div>
+</sc-if>
+<sc-if value="{{cancelAsk}}" hint-placeholder-val="{{false}}">
+<div class="card" style="margin-bottom: 16px; border-color: #E7B9B9; background: #FFF8F8">
+<div style="font-weight: 700; margin-bottom: 6px">לבטל את ההזמנה?</div>
+<div class="muted" style="margin-bottom: 14px; font-size: 14px">אם שולם, את ההחזר הכספי מבצעים בממשק של חברת הסליקה. הספרים יחזרו למלאי.</div>
+<div style="display: flex; gap: 8px"><button class="btn" style="background: #A12B2B" onClick="{{confirmCancel}}">כן, לבטל</button><button class="btn btn-sec" onClick="{{closeCancel}}">חזרה</button></div>
+</div>
+</sc-if>
+
+<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start">
+<div style="flex: 999 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<section class="card">
+<h2 class="card-h">פריטים</h2>
+<div class="tbl-box"><table class="tbl" style="min-width: 420px"><thead><tr><th scope="col">ספר</th><th scope="col">כמות</th><th scope="col">מחיר</th><th scope="col">סה"כ</th></tr></thead><tbody>
+<sc-for list="{{ord.lines}}" as="l" hint-placeholder-count="2"><tr><td><span class="mini-cover" aria-hidden="true"></span> <span style="margin-right: 8px">{{l.title}}</span></td><td>{{l.qty}}</td><td>{{l.price}} ₪</td><td>{{l.total}} ₪</td></tr></sc-for>
+</tbody></table></div>
+<div style="display: flex; flex-direction: column; gap: 6px; margin-top: 14px; max-width: 280px; margin-right: auto">
+<div style="display: flex; justify-content: space-between"><span class="muted">סכום ביניים</span><span>{{ord.subtotal}} ₪</span></div>
+<div style="display: flex; justify-content: space-between"><span class="muted">משלוח ({{ord.methodLabel}})</span><span>{{ord.shipCost}} ₪</span></div>
+<div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 17px"><span>סה"כ</span><span>{{ord.total}} ₪</span></div>
+</div>
+</section>
+<section class="card">
+<h2 class="card-h">הערות פנימיות</h2>
+<div class="field"><label for="inote" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">הערה פנימית</label><textarea id="inote" rows="3" placeholder="הערות לשימוש פנימי בלבד – הקונה לא רואה אותן"></textarea></div>
+<button class="btn btn-sec" style="margin-top: 10px" onClick="{{saveNote}}">שמירת הערה</button>
+</section>
+<section class="card">
+<h2 class="card-h">היסטוריה</h2>
+<sc-for list="{{ord.events}}" as="e" hint-placeholder-count="2"><div class="tl"><span class="tl-dot" aria-hidden="true"></span><div><div style="font-weight: 500">{{e.text}}</div><div class="muted" style="font-size: 13px">{{e.when}}</div></div></div></sc-for>
+</section>
+</div>
+<div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<section class="card">
+<h2 class="card-h">פרטי הקונה</h2>
+<sc-if value="{{ord.hasPersonal}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div><div class="muted" style="font-size: 13px">שם</div><div>{{ord.name}}</div></div>
+<div><div class="muted" style="font-size: 13px">טלפון</div><div style="direction: ltr; text-align: right">050-0000000</div></div>
+<div><div class="muted" style="font-size: 13px">מייל</div><div>[מייל הקונה]</div></div>
+</div>
+</sc-if>
+<sc-if value="{{ord.anon}}" hint-placeholder-val="{{false}}"><div class="muted">הפרטים האישיים נמחקו לבקשת הקונה.</div></sc-if>
+</section>
+<section class="card">
+<h2 class="card-h">משלוח</h2>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div><div class="muted" style="font-size: 13px">אופן משלוח</div><div>{{ord.methodLabel}}</div></div>
+<sc-if value="{{ord.hasPersonal}}" hint-placeholder-val="{{true}}"><div><div class="muted" style="font-size: 13px">כתובת</div><div>[רחוב ומספר], {{ord.city}}</div></div></sc-if>
+<sc-if value="{{ord.hasTrack}}" hint-placeholder-val="{{false}}"><div><div class="muted" style="font-size: 13px">מספר מעקב</div><div style="direction: ltr; text-align: right">{{ord.track}}</div></div></sc-if>
+</div>
+</section>
+<section class="card">
+<h2 class="card-h">תשלום</h2>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div><div class="muted" style="font-size: 13px">סטטוס תשלום</div><div>{{ord.payLabel}}</div></div>
+<div><div class="muted" style="font-size: 13px">מספר אישור בחברת הסליקה</div><div style="direction: ltr; text-align: right">[אסמכתא]</div></div>
+<sc-if value="{{ord.paidOnce}}" hint-placeholder-val="{{true}}"><a href="#">צפייה בקבלה ↗</a></sc-if>
+</div>
+</section>
+<section class="card">
+<h2 class="card-h">פרטיות</h2>
+<sc-if value="{{ord.hasPersonal}}" hint-placeholder-val="{{true}}">
+<p class="muted" style="margin: 0 0 12px; font-size: 14px">לבקשת הקונה: מחיקת השם, הטלפון, המייל והכתובת. נתוני המכירה נשמרים לדוחות.</p>
+<button class="btn btn-danger" onClick="{{anonymize}}">מחיקת פרטים אישיים</button>
+</sc-if>
+<sc-if value="{{ord.anon}}" hint-placeholder-val="{{false}}"><p class="muted" style="margin: 0; font-size: 14px">הפרטים נמחקו.</p></sc-if>
+</section>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isBooks}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px">
+<h1 style="margin: 0; font-size: 26px">ספרים</h1>
+<button class="btn" onClick="{{newBook}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>ספר חדש</button>
+</div>
+<div class="card" style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+<div style="display: flex; gap: 14px; align-items: center"><span style="display: flex; gap: 2px" aria-hidden="true"><span class="mini-cover"></span><span class="mini-cover"></span><span class="mini-cover"></span></span><div><div style="font-weight: 700">הסט המלא – 20 כרכים</div><div class="muted" style="font-size: 14px">890 ₪ · כולל את כל הספרים בסדרה · מלאי לפי הספר עם המלאי הנמוך</div></div></div>
+<button class="btn btn-sec">עריכת הסט</button>
+</div>
+<div class="card" style="padding: 8px 8px 0">
+<div class="muted" style="font-size: 13px; padding: 6px 12px 0">גוררים שורה כדי לשנות את סדר הספרים באתר.</div>
+<div class="tbl-box"><table class="tbl"><thead><tr><th scope="col"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">סידור</span></th><th scope="col">ספר</th><th scope="col">כרך</th><th scope="col">מחיר</th><th scope="col">מלאי</th><th scope="col">מוצג באתר</th><th scope="col"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">פעולות</span></th></tr></thead><tbody>
+<sc-for list="{{bookRows}}" as="b" hint-placeholder-count="20">
+<tr>
+<td style="width: 32px; color: #8A929C; cursor: grab"><button class="lnk" aria-label="גרירה לשינוי סדר" style="color: #6B737E; text-decoration: none; cursor: grab"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg></button></td>
+<td><span class="mini-cover" aria-hidden="true"></span><span style="margin-right: 10px; font-weight: 500">{{b.topic}}</span></td>
+<td class="muted">{{b.n}}</td>
+<td>{{b.price}} ₪</td>
+<td><span style="display: inline-flex; gap: 8px; align-items: center">{{b.stock}}<sc-if value="{{b.isLow}}" hint-placeholder-val="{{false}}"><span class="low">מלאי נמוך</span></sc-if><sc-if value="{{b.isOut}}" hint-placeholder-val="{{false}}"><span class="out">אזל</span></sc-if></span></td>
+<td><button class="sw {{b.swCls}}" role="switch" aria-checked="{{b.visibleStr}}" aria-label="{{b.swLabel}}" onClick="{{b.toggle}}"></button></td>
+<td><button class="btn btn-sec" onClick="{{b.edit}}" style="min-height: 34px; padding: 5px 12px">עריכה</button></td>
+</tr>
+</sc-for>
+</tbody></table></div>
+</div>
+</sc-if>
+
+<sc-if value="{{isBookEdit}}" hint-placeholder-val="{{false}}">
+<button class="lnk" onClick="{{goBooks}}" style="margin-bottom: 14px; display: inline-block">→ חזרה לספרים</button>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px">
+<h1 style="margin: 0; font-size: 26px">{{eb.heading}}</h1>
+<div style="display: flex; gap: 8px"><button class="btn" onClick="{{saveBook}}">שמירה</button><button class="btn btn-sec" onClick="{{goBooks}}">ביטול</button></div>
+</div>
+<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start">
+<div style="flex: 999 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<section class="card">
+<h2 class="card-h">פרטי הספר</h2>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div class="grid2"><div class="field"><label for="b-title">שם הספר</label><input id="b-title" type="text" defaultValue="{{eb.topic}}"></div><div class="field"><label for="b-vol">כרך</label><input id="b-vol" type="text" defaultValue="{{eb.n}}"></div></div>
+<div class="field"><label for="b-short">תיאור קצר (שורה אחת)</label><input id="b-short" type="text" placeholder="יופיע בכרטיס הספר"></div>
+<div class="field"><label for="b-long">תיאור מלא</label><textarea id="b-long" rows="6" placeholder="יופיע בדף הספר"></textarea></div>
+</div>
+</section>
+<section class="card">
+<h2 class="card-h">תמונות</h2>
+<div class="grid3" style="grid-template-columns: repeat(4, minmax(0, 1fr))">
+<sc-for list="{{imgSlots}}" as="s" hint-placeholder-count="4"><button class="ph" style="cursor: pointer; font: inherit; font-size: 13px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"></path></svg>{{s}}</button></sc-for>
+</div>
+<div class="muted" style="font-size: 13px; margin-top: 10px">JPG או PNG. התמונות יוקטנו ויותאמו אוטומטית.</div>
+</section>
+<section class="card">
+<h2 class="card-h">פרטים טכניים</h2>
+<div class="grid2"><div class="field"><label for="b-pages">מספר עמודים</label><input id="b-pages" type="number"></div><div class="field"><label for="b-size">גודל</label><input id="b-size" type="text"></div><div class="field"><label for="b-bind">כריכה</label><select id="b-bind"><option>קשה</option><option>רכה</option></select></div><div class="field"><label for="b-year">שנת הוצאה</label><input id="b-year" type="text"></div></div>
+</section>
+</div>
+<div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<section class="card">
+<h2 class="card-h">מחיר ומלאי</h2>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div class="field"><label for="b-price">מחיר (₪)</label><input id="b-price" type="number" defaultValue="{{eb.price}}"></div>
+<div class="field"><label for="b-stock">כמות במלאי</label><input id="b-stock" type="number" defaultValue="{{eb.stock}}"></div>
+<div class="field"><label for="b-th">התראה כשהמלאי יורד מתחת ל־</label><input id="b-th" type="number" defaultValue="5"></div>
+<div class="muted" style="font-size: 13px">המלאי יורד אוטומטית עם כל הזמנה ששולמה. במלאי 0 הספר מסומן באתר "אזל".</div>
+</div>
+</section>
+<section class="card">
+<h2 class="card-h">תצוגה</h2>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px"><span id="vis-l">מוצג באתר</span><button class="sw on" role="switch" aria-checked="true" aria-labelledby="vis-l"></button></div>
+<div class="muted" style="font-size: 13px; margin-top: 10px">ספר מוסתר לא מופיע באתר, אבל לא נמחק.</div>
+</section>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isReports}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px">
+<h1 style="margin: 0; font-size: 26px">דוחות</h1>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><button class="btn btn-sec">ייצוא מכירות לאקסל</button><button class="btn btn-sec">ייצוא הזמנות לאקסל</button></div>
+</div>
+<div class="filters" role="group" aria-label="תקופה" style="margin-bottom: 20px">
+<sc-for list="{{periods}}" as="p" hint-placeholder-count="5"><button class="fchip {{p.cls}}" onClick="{{p.pick}}" aria-pressed="{{p.pressed}}">{{p.label}}</button></sc-for>
+</div>
+<div class="kpis" style="margin-bottom: 20px">
+<div class="card"><div class="kpi-l">הכנסות</div><div class="kpi-v">20,518 ₪</div><div class="kpi-s">30 הימים האחרונים</div></div>
+<div class="card"><div class="kpi-l">הזמנות</div><div class="kpi-v">68</div><div class="kpi-s">מתוכן 2 בוטלו</div></div>
+<div class="card"><div class="kpi-l">ממוצע להזמנה</div><div class="kpi-v">302 ₪</div><div class="kpi-s">כולל משלוח</div></div>
+<div class="card"><div class="kpi-l">כניסות לאתר</div><div class="kpi-v" style="font-size: 20px; padding-top: 8px">[אם יוחלט]</div><div class="kpi-s">Cloudflare Web Analytics</div></div>
+</div>
+<section class="card" style="margin-bottom: 20px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px">
+<h2 class="card-h" style="margin: 0">הכנסות לפי יום</h2>
+<button class="lnk" onClick="{{toggleTable}}" aria-expanded="{{tableExpanded}}">{{tableToggleLabel}}</button>
+</div>
+<div aria-live="polite" style="min-height: 24px; margin-bottom: 12px; font-size: 14px"><span class="muted">{{hoverText}}</span></div>
+<sc-if value="{{showChart}}" hint-placeholder-val="{{true}}">
+<div dir="ltr" style="padding-left: 52px; padding-bottom: 28px">
+<div class="chart" role="img" aria-label="גרף עמודות: הכנסות לפי יום ב־30 הימים האחרונים">
+<sc-for list="{{gridLines}}" as="g" hint-placeholder-count="4"><div class="gridl" style="bottom: {{g.bottom}}"><span>{{g.label}}</span></div></sc-for>
+<sc-for list="{{days}}" as="d" hint-placeholder-count="30"><button class="bar {{d.cls}}" style="height: {{d.h}}" onMouseEnter="{{d.hover}}" onFocus="{{d.hover}}" onMouseLeave="{{clearHover}}" aria-label="{{d.aria}}"></button></sc-for>
+</div>
+<div style="display: flex; justify-content: space-between; font-size: 12px; margin-top: 6px" class="muted"><span>22.9</span><span>29.9</span><span>6.10</span><span>13.10</span><span>21.10</span></div>
+</div>
+</sc-if>
+<sc-if value="{{showTable}}" hint-placeholder-val="{{false}}">
+<div class="tbl-box" style="max-height: 320px; overflow-y: auto"><table class="tbl" style="min-width: 360px"><thead><tr><th scope="col">תאריך</th><th scope="col">הזמנות</th><th scope="col">הכנסות</th></tr></thead><tbody><sc-for list="{{days}}" as="d" hint-placeholder-count="30"><tr><td>{{d.label}}</td><td>{{d.orders}}</td><td>{{d.value}} ₪</td></tr></sc-for></tbody></table></div>
+</sc-if>
+</section>
+<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start">
+<section class="card" style="flex: 999 1 460px; min-width: 0">
+<h2 class="card-h">הספרים הנמכרים ביותר</h2>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{top}}" as="t" hint-placeholder-count="8">
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) 70px; align-items: center; gap: 12px">
+<span style="font-size: 14px">{{t.topic}}</span>
+<div style="background: #F1F3F6; border-radius: 4px"><div class="hbar" style="width: {{t.w}}; border-radius: 4px"></div></div>
+<span style="font-size: 14px; font-weight: 500; text-align: left">{{t.qty}} עותקים</span>
+</div>
+</sc-for>
+</div>
+</section>
+<section class="card" style="flex: 1 1 280px; min-width: 0">
+<h2 class="card-h">סט מלא מול ספרים בודדים</h2>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div><div class="kpi-l">סטים מלאים</div><div style="font-size: 24px; font-weight: 700">9 סטים</div><div class="kpi-s">8,010 ₪ · 39% מההכנסות</div></div>
+<div style="border-top: 1px solid #EEF0F3"></div>
+<div><div class="kpi-l">ספרים בודדים</div><div style="font-size: 24px; font-weight: 700">212 עותקים</div><div class="kpi-s">12,508 ₪ · 61% מההכנסות</div></div>
+</div>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{isSettings}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px">
+<h1 style="margin: 0; font-size: 26px">הגדרות</h1>
+<button class="btn" onClick="{{saveSettings}}">שמירת שינויים</button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 20px; max-width: 860px">
+<section class="card">
+<h2 class="card-h">משלוחים</h2>
+<div class="tbl-box"><table class="tbl" style="min-width: 480px"><thead><tr><th scope="col">אפשרות</th><th scope="col">מחיר (₪)</th><th scope="col">פעיל</th></tr></thead><tbody>
+<tr><td>משלוח עד הבית</td><td><input aria-label="מחיר משלוח עד הבית" type="number" value="30" readOnly="readOnly" style="width: 90px; font: inherit; padding: 6px 10px; border: 1px solid #CDD2D9; border-radius: 6px"></td><td><button class="sw on" role="switch" aria-checked="true" aria-label="משלוח עד הבית פעיל"></button></td></tr>
+<tr><td>נקודת איסוף</td><td><input aria-label="מחיר נקודת איסוף" type="number" value="20" readOnly="readOnly" style="width: 90px; font: inherit; padding: 6px 10px; border: 1px solid #CDD2D9; border-radius: 6px"></td><td><button class="sw on" role="switch" aria-checked="true" aria-label="נקודת איסוף פעילה"></button></td></tr>
+<tr><td>איסוף עצמי</td><td><input aria-label="מחיר איסוף עצמי" type="number" value="0" readOnly="readOnly" style="width: 90px; font: inherit; padding: 6px 10px; border: 1px solid #CDD2D9; border-radius: 6px"></td><td><button class="sw on" role="switch" aria-checked="true" aria-label="איסוף עצמי פעיל"></button></td></tr>
+</tbody></table></div>
+<div class="field" style="margin-top: 14px; max-width: 280px"><label for="free">משלוח חינם בהזמנה מעל (₪)</label><input id="free" type="number" placeholder="ריק = ללא משלוח חינם"></div>
+</section>
+<section class="card">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px"><h2 class="card-h" style="margin: 0" id="ann-l">פס הודעה עליון באתר</h2><button class="sw {{annCls}}" role="switch" aria-checked="{{annStr}}" aria-labelledby="ann-l" onClick="{{toggleAnn}}"></button></div>
+<div class="field"><label for="ann">טקסט ההודעה</label><input id="ann" type="text" defaultValue="משלוח חינם בהזמנה מעל 200 ₪"></div>
+</section>
+<section class="card">
+<h2 class="card-h">פרטי קשר שמוצגים באתר</h2>
+<div class="grid2"><div class="field"><label for="s-phone">טלפון</label><input id="s-phone" type="tel" style="direction: ltr; text-align: right"></div><div class="field"><label for="s-mail">מייל</label><input id="s-mail" type="email" defaultValue="support@orhaalacha.org" style="direction: ltr; text-align: right"></div></div>
+</section>
+<section class="card">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px"><h2 class="card-h" style="margin: 0">קופונים</h2><span class="chip st-pending">אם יוחלט</span></div>
+<div class="muted" style="font-size: 14px; margin-bottom: 12px">קוד, סוג הנחה (אחוז או סכום), תוקף, ומספר שימושים מקסימלי.</div>
+<button class="btn btn-sec">קופון חדש</button>
+</section>
+<section class="card">
+<h2 class="card-h">פרטיות</h2>
+<div class="field" style="max-width: 360px"><label for="ret">מחיקה אוטומטית של פרטים אישיים בהזמנות ישנות מ־</label><select id="ret"><option>[לפי המלצת עורך הדין]</option><option>שנה</option><option>3 שנים</option><option>7 שנים</option></select></div>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{isLog}}" hint-placeholder-val="{{false}}">
+<h1 style="margin: 0 0 20px; font-size: 26px">יומן פעולות</h1>
+<div class="card" style="padding: 8px 8px 0">
+<div class="tbl-box"><table class="tbl"><thead><tr><th scope="col">מתי</th><th scope="col">פעולה</th><th scope="col">פרטים</th></tr></thead><tbody>
+<sc-for list="{{log}}" as="l" hint-placeholder-count="8"><tr><td class="muted">{{l.when}}</td><td style="font-weight: 500">{{l.action}}</td><td style="white-space: normal">{{l.details}}</td></tr></sc-for>
+</tbody></table></div>
+</div>
+</sc-if>
+
+</main>
+
+<sc-if value="{{slip}}" hint-placeholder-val="{{false}}">
+<div class="modal-bg" onClick="{{closeSlip}}"></div>
+<div class="modal" role="dialog" aria-modal="true" aria-label="תעודת משלוח">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #E3E6EB"><strong>תצוגה מקדימה – תעודת משלוח</strong><div style="display: flex; gap: 8px"><button class="btn">הדפסה</button><button class="btn btn-sec" onClick="{{closeSlip}}">סגירה</button></div></div>
+<div style="padding: 32px; font-size: 15px">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #1B1F24; padding-bottom: 16px; margin-bottom: 20px"><div><div style="font-size: 22px; font-weight: 700">אור ההלכה</div><div class="muted">support@orhaalacha.org</div></div><div style="text-align: left"><div style="font-weight: 700">הזמנה {{ord.id}}</div><div class="muted">{{ord.date}}</div></div></div>
+<div style="margin-bottom: 20px"><div class="muted" style="font-size: 13px">לכבוד</div><div style="font-size: 18px; font-weight: 700">{{ord.name}}</div><div>[רחוב ומספר], {{ord.city}}</div><div style="direction: ltr; text-align: right">050-0000000</div></div>
+<table class="tbl" style="min-width: 0"><thead><tr><th scope="col">✓</th><th scope="col">ספר</th><th scope="col">כמות</th></tr></thead><tbody><sc-for list="{{ord.lines}}" as="l" hint-placeholder-count="2"><tr><td style="width: 30px"><span style="display: inline-block; width: 16px; height: 16px; border: 1.5px solid #1B1F24; border-radius: 3px"></span></td><td>{{l.title}}</td><td>{{l.qty}}</td></tr></sc-for></tbody></table>
+<div class="muted" style="margin-top: 20px; font-size: 13px">אופן משלוח: {{ord.methodLabel}}</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}"><div class="toast" role="status">{{toast}}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { page: 'dash', order: 0, status: {}, tracks: {}, anon: {}, extraEvents: {}, filter: 'all', q: '', shipForm: false, cancelAsk: false, slip: false, toast: '', hidden: { 17: true }, edit: 0, period: '30', hover: -1, table: false, ann: true };
+  }
+  go(page, extra) {
+    this.setState(Object.assign({ page: page, shipForm: false, cancelAsk: false, slip: false }, extra || {}));
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+  flash(msg) {
+    var self = this;
+    this.setState({ toast: msg });
+    clearTimeout(this._t);
+    this._t = setTimeout(function () { self.setState({ toast: '' }); }, 2600);
+  }
+  renderVals() {
+    var self = this;
+    var st = this.state;
+    var PRICE = 59, SET = 890;
+    var COST = { home: 30, point: 20, pickup: 0 };
+    var METHOD = { home: 'משלוח עד הבית', point: 'נקודת איסוף', pickup: 'איסוף עצמי' };
+    var ST = { pending: 'ממתינה לתשלום', paid: 'שולמה – להכנה', shipped: 'נשלחה', cancelled: 'בוטלה' };
+    var topics = ['הלכות שבת','הלכות ברכות','הלכות תפילה','הלכות כשרות','הלכות פסח','הלכות סוכות','הלכות חנוכה ופורים','הלכות ימים נוראים','הלכות תפילין','הלכות מזוזה','הלכות כיבוד הורים','הלכות לשון הרע','הלכות צדקה','הלכות ציצית','הלכות ראש חודש','הלכות תעניות','הלכות בין המצרים','הלכות שמיטה','הלכות ספירת העומר','הלכות נטילת ידיים'];
+    var nums = ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ז׳','ח׳','ט׳','י׳','י״א','י״ב','י״ג','י״ד','ט״ו','ט״ז','י״ז','י״ח','י״ט','כ׳'];
+    var stock = [42, 35, 28, 19, 3, 2, 0, 25, 30, 22, 18, 15, 12, 27, 9, 11, 14, 8, 20, 16];
+    var raw = [
+      ['OH-10482', '21.10 10:42', 'י. כהן', 'בני ברק', 'home', [['הלכות שבת', 2], ['הלכות ברכות', 1]], 'paid'],
+      ['OH-10481', '21.10 09:15', 'מ. לוי', 'ירושלים', 'home', [['הסט המלא – 20 כרכים', 1]], 'paid'],
+      ['OH-10480', '21.10 08:03', 'א. פרידמן', 'אלעד', 'point', [['הלכות תפילה', 1]], 'paid'],
+      ['OH-10479', '20.10 21:50', 'ש. גולדברג', 'בית שמש', 'home', [['הלכות פסח', 3]], 'pending'],
+      ['OH-10478', '20.10 17:22', 'ד. רוזנברג', 'מודיעין עילית', 'pickup', [['הלכות כשרות', 1], ['הלכות שבת', 1]], 'shipped'],
+      ['OH-10477', '20.10 12:05', 'ח. שפירא', 'ביתר עילית', 'home', [['הסט המלא – 20 כרכים', 1]], 'shipped'],
+      ['OH-10476', '19.10 19:40', 'ב. וייס', 'אשדוד', 'home', [['הלכות סוכות', 2]], 'shipped'],
+      ['OH-10475', '19.10 11:12', 'ר. קליין', 'בני ברק', 'home', [['הלכות ברכות', 1]], 'cancelled'],
+      ['OH-10474', '18.10 22:31', 'צ. הורוביץ', 'ירושלים', 'point', [['הלכות תפילין', 1], ['הלכות מזוזה', 1]], 'shipped'],
+      ['OH-10473', '18.10 14:09', 'נ. אדלר', 'צפת', 'home', [['הלכות שבת', 1]], 'shipped'],
+      ['OH-10472', '17.10 16:45', 'ע. ברגר', 'חיפה', 'home', [['הלכות לשון הרע', 2]], 'shipped'],
+      ['OH-10471', '17.10 09:30', 'ק. שטרן', 'רכסים', 'home', [['הסט המלא – 20 כרכים', 1], ['הלכות שבת', 1]], 'shipped']
+    ];
+    var orders = raw.map(function (r, i) {
+      var status = st.status[i] || r[6];
+      var lines = r[5].map(function (it) {
+        var price = it[0].indexOf('הסט המלא') === 0 ? SET : PRICE;
+        return { title: it[0], qty: it[1], price: price, total: price * it[1] };
+      });
+      var subtotal = lines.reduce(function (a, l) { return a + l.total; }, 0);
+      var count = lines.reduce(function (a, l) { return a + l.qty; }, 0);
+      var anon = !!st.anon[i];
+      var events = [{ text: 'ההזמנה נוצרה', when: r[1] }];
+      if (r[6] !== 'pending') events.push({ text: 'התשלום אושר בחברת הסליקה', when: r[1] });
+      if (r[6] === 'shipped') events.push({ text: 'סומנה כנשלחה · נשלח מייל לקונה', when: 'יום למחרת' });
+      if (r[6] === 'cancelled') events.push({ text: 'ההזמנה בוטלה', when: r[1] });
+      (st.extraEvents[i] || []).forEach(function (e) { events.push(e); });
+      return {
+        i: i, id: r[0], date: r[1], name: anon ? '[נמחק]' : r[2], city: r[3], method: r[4], methodLabel: METHOD[r[4]],
+        lines: lines, subtotal: subtotal, shipCost: COST[r[4]], total: subtotal + COST[r[4]], count: count,
+        status: status, stLabel: ST[status], stCls: 'st-' + status,
+        canShip: status === 'paid', canCancel: status === 'paid' || status === 'pending',
+        payLabel: status === 'pending' ? 'טרם שולם' : (status === 'cancelled' ? 'בוטל' : 'שולם'),
+        paidOnce: status !== 'pending',
+        track: st.tracks[i] || '', hasTrack: !!st.tracks[i],
+        anon: anon, hasPersonal: !anon, events: events,
+        open: function () { self.go('order', { order: i }); }
+      };
+    });
+    var counts = { all: orders.length, pending: 0, paid: 0, shipped: 0, cancelled: 0 };
+    orders.forEach(function (o) { counts[o.status] += 1; });
+    var q = st.q.trim();
+    var filtered = orders.filter(function (o) {
+      if (st.filter !== 'all' && o.status !== st.filter) return false;
+      if (!q) return true;
+      return o.id.indexOf(q) >= 0 || o.name.indexOf(q) >= 0 || o.city.indexOf(q) >= 0;
+    });
+    var statusFilters = [['all', 'הכל'], ['paid', 'להכנה'], ['pending', 'ממתינות לתשלום'], ['shipped', 'נשלחו'], ['cancelled', 'בוטלו']].map(function (f) {
+      return { label: f[1], count: counts[f[0]], cls: st.filter === f[0] ? 'on' : '', pressed: st.filter === f[0] ? 'true' : 'false', pick: function () { self.setState({ filter: f[0] }); } };
+    });
+    var ord = orders[st.order];
+    var navDefs = [
+      ['dash', 'לוח בקרה', 'M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z', 0],
+      ['orders', 'הזמנות', 'M6 3h12l2 4v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7l2-4zM4 7h16M9 11h6', counts.paid],
+      ['books', 'ספרים', 'M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4zM20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z', 0],
+      ['reports', 'דוחות', 'M4 20V10M10 20V4M16 20v-7M22 20H2', 0],
+      ['settings', 'הגדרות', 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z', 0],
+      ['log', 'יומן פעולות', 'M12 8v4l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z', 0]
+    ];
+    var activeNav = st.page === 'order' ? 'orders' : (st.page === 'bookEdit' ? 'books' : st.page);
+    var nav = navDefs.map(function (n) {
+      return { label: n[1], icon: n[2], cls: activeNav === n[0] ? 'on' : '', current: activeNav === n[0] ? 'page' : 'false', hasBadge: n[3] > 0, badge: n[3], badgeLabel: n[3] + ' הזמנות להכנה', go: function () { self.go(n[0]); } };
+    });
+    var books = topics.map(function (t, i) {
+      var visible = !st.hidden[i];
+      return {
+        i: i, topic: t, n: nums[i], price: PRICE, stock: stock[i], isLow: stock[i] > 0 && stock[i] <= 5, isOut: stock[i] === 0,
+        swCls: visible ? 'on' : '', visibleStr: visible ? 'true' : 'false', swLabel: (visible ? 'הסתרת ' : 'הצגת ') + t,
+        toggle: function () { var h = Object.assign({}, st.hidden); h[i] = visible; self.setState({ hidden: h }); self.flash(visible ? t + ' הוסתר מהאתר' : t + ' מוצג באתר'); },
+        edit: function () { self.go('bookEdit', { edit: i }); }
+      };
+    });
+    var alerts = books.filter(function (b) { return b.isLow || b.isOut; }).map(function (b) {
+      return { topic: b.topic, cls: b.isOut ? 'out' : 'low', text: b.isOut ? 'אזל' : 'נותרו ' + b.stock, edit: b.edit };
+    });
+    var eb = st.edit === 'new'
+      ? { heading: 'ספר חדש', topic: '', n: '', price: PRICE, stock: 0 }
+      : { heading: 'עריכת ספר – ' + topics[st.edit], topic: topics[st.edit], n: nums[st.edit], price: PRICE, stock: stock[st.edit] };
+    var dayVals = [410, 620, 280, 900, 1530, 350, 0, 480, 760, 1210, 300, 560, 690, 0, 950, 410, 1180, 640, 230, 870, 1490, 0, 520, 380, 780, 1040, 610, 1360, 420, 1206];
+    var dayOrders = dayVals.map(function (v) { return v === 0 ? 0 : Math.max(1, Math.round(v / 300)); });
+    var MAX = 1600;
+    var labelFor = function (k) { var d = new Date(2026, 8, 22 + k); return d.getDate() + '.' + (d.getMonth() + 1); };
+    var days = dayVals.map(function (v, k) {
+      return {
+        h: Math.max(v === 0 ? 0 : 3, Math.round(v / MAX * 200)) + 'px', cls: st.hover === k ? 'on' : '', value: v.toLocaleString('he-IL'), orders: dayOrders[k], label: labelFor(k),
+        aria: labelFor(k) + ': ' + v + ' ₪, ' + dayOrders[k] + ' הזמנות',
+        hover: function () { self.setState({ hover: k }); }
+      };
+    });
+    var hoverText = st.hover >= 0 ? labelFor(st.hover) + ' · ' + dayVals[st.hover].toLocaleString('he-IL') + ' ₪ · ' + dayOrders[st.hover] + ' הזמנות' : 'מעבר עם העכבר על עמודה מציג את הערכים';
+    var gridLines = [0, 500, 1000, 1500].map(function (v) { return { bottom: Math.round(v / MAX * 200) + 'px', label: v === 0 ? '0' : v.toLocaleString('he-IL') }; });
+    var topData = [['הלכות שבת', 41], ['הלכות ברכות', 29], ['הלכות פסח', 24], ['הלכות תפילה', 19], ['הלכות סוכות', 16], ['הלכות כשרות', 14], ['הלכות חנוכה ופורים', 12], ['הלכות תפילין', 9]];
+    var top = topData.map(function (t) { return { topic: t[0], qty: t[1], w: Math.round(t[1] / 41 * 100) + '%' }; });
+    var periods = [['7', '7 ימים'], ['30', '30 יום'], ['month', 'החודש'], ['year', 'השנה'], ['custom', 'טווח מותאם']].map(function (p) {
+      return { label: p[1], cls: st.period === p[0] ? 'on' : '', pressed: st.period === p[0] ? 'true' : 'false', pick: function () { self.setState({ period: p[0] }); } };
+    });
+    var log = [
+      { when: '21.10 10:44', action: 'הזמנה חדשה', details: 'OH-10482 · 207 ₪' },
+      { when: '21.10 08:30', action: 'כניסה למערכת', details: 'support@orhaalacha.org' },
+      { when: '20.10 18:02', action: 'הזמנה סומנה כנשלחה', details: 'OH-10477 · נשלח מייל לקונה' },
+      { when: '20.10 17:40', action: 'שינוי מחיר', details: 'הלכות שבת: 55 ₪ ← 59 ₪' },
+      { when: '19.10 12:15', action: 'הזמנה בוטלה', details: 'OH-10475 · החזר כספי בחברת הסליקה' },
+      { when: '18.10 09:05', action: 'ספר הוסתר', details: 'הלכות שמיטה' },
+      { when: '16.10 11:20', action: 'עדכון מלאי', details: 'הלכות חנוכה ופורים: 4 ← 0' },
+      { when: '12.10 14:48', action: 'מחיקת פרטים אישיים', details: 'OH-09812 · לבקשת הקונה' }
+    ];
+    var setOrd = function (patch, ev, msg) {
+      var s = Object.assign({}, st.status); s[st.order] = patch;
+      var ex = Object.assign({}, st.extraEvents); ex[st.order] = (ex[st.order] || []).concat([ev]);
+      return { status: s, extraEvents: ex };
+    };
+    var p = st.page;
+    return {
+      nav: nav,
+      isDash: p === 'dash', isOrders: p === 'orders', isOrder: p === 'order', isBooks: p === 'books', isBookEdit: p === 'bookEdit', isReports: p === 'reports', isSettings: p === 'settings', isLog: p === 'log',
+      goOrders: function () { self.go('orders'); },
+      goOrdersToShip: function () { self.go('orders', { filter: 'paid' }); },
+      goBooks: function () { self.go('books'); },
+      recent: orders.slice(0, 5), alerts: alerts,
+      statusFilters: statusFilters, filtered: filtered, noResults: filtered.length === 0,
+      setQ: function (e) { self.setState({ q: e.target.value }); },
+      ord: ord,
+      shipForm: st.shipForm, cancelAsk: st.cancelAsk,
+      openShip: function () { self.setState({ shipForm: true, cancelAsk: false }); },
+      closeShip: function () { self.setState({ shipForm: false }); },
+      confirmShip: function () {
+        var el = document.getElementById('track');
+        var tr = el ? el.value.trim() : '';
+        var t = Object.assign({}, st.tracks); if (tr) t[st.order] = tr;
+        var upd = setOrd('shipped', { text: 'סומנה כנשלחה · נשלח מייל לקונה', when: 'עכשיו' });
+        self.setState(Object.assign(upd, { tracks: t, shipForm: false }));
+        self.flash('ההזמנה סומנה כנשלחה ונשלח מייל לקונה');
+      },
+      askCancel: function () { self.setState({ cancelAsk: true, shipForm: false }); },
+      closeCancel: function () { self.setState({ cancelAsk: false }); },
+      confirmCancel: function () {
+        var upd = setOrd('cancelled', { text: 'ההזמנה בוטלה', when: 'עכשיו' });
+        self.setState(Object.assign(upd, { cancelAsk: false }));
+        self.flash('ההזמנה בוטלה');
+      },
+      anonymize: function () {
+        var a = Object.assign({}, st.anon); a[st.order] = true;
+        var ex = Object.assign({}, st.extraEvents); ex[st.order] = (ex[st.order] || []).concat([{ text: 'הפרטים האישיים נמחקו', when: 'עכשיו' }]);
+        self.setState({ anon: a, extraEvents: ex });
+        self.flash('הפרטים האישיים נמחקו');
+      },
+      saveNote: function () { self.flash('ההערה נשמרה'); },
+      slip: st.slip,
+      openSlip: function () { self.setState({ slip: true }); },
+      closeSlip: function () { self.setState({ slip: false }); },
+      bookRows: books,
+      newBook: function () { self.go('bookEdit', { edit: 'new' }); },
+      eb: eb,
+      imgSlots: ['כריכה קדמית', 'כריכה אחורית', 'עמוד לדוגמה', 'עמוד לדוגמה'],
+      saveBook: function () { self.go('books'); self.flash('השינויים נשמרו'); },
+      periods: periods, days: days, gridLines: gridLines, top: top, hoverText: hoverText,
+      clearHover: function () { self.setState({ hover: -1 }); },
+      showChart: !st.table, showTable: st.table,
+      tableExpanded: st.table ? 'true' : 'false',
+      tableToggleLabel: st.table ? 'הצגה כגרף' : 'הצגה כטבלה',
+      toggleTable: function () { self.setState({ table: !st.table }); },
+      annCls: st.ann ? 'on' : '', annStr: st.ann ? 'true' : 'false',
+      toggleAnn: function () { self.setState({ ann: !st.ann }); },
+      saveSettings: function () { self.flash('ההגדרות נשמרו'); },
+      log: log,
+      toast: st.toast, hasToast: !!st.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
