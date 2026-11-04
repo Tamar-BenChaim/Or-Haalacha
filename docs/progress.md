@@ -2,6 +2,15 @@
 
 מה נעשה בכל שלב, ומה הלאה. הרשומה החדשה ביותר למעלה.
 
+## 2026-11-05 – שלד `client/` (Angular 21)
+
+ענף: `feat/client-skeleton`
+
+- נוצר הפרויקט עם Angular CLI 21 (SCSS, routing, ESLint, בדיקות Vitest), קידומת `oh-`, `OnPush` כברירת מחדל, `lang="he" dir="rtl"`.
+- שלד לפי סעיף 2 ב־client-spec-angular: `core/` (models אמיתיים, stores ו־services ריקים), `shared/`, `layout/` (מעטפת עם skip-link), `features/` עם 11 נתיבים lazy.
+- `src/environments/` עם כתובת ה־API. `CORS_ORIGINS` ב־`server/.env.example` עודכן ל־4200 ו־4201.
+- lint, בדיקה ו־build עוברים. אין עדיין לוגיקה, עיצוב או בדיקות לפיצ'רים.
+
 ## 2026-11-04 – עיצוב: כותרת תלת־ממדית ומסמך העברה
 
 ענף: `main` (מסמכים בלבד, לפי החריג ב־`CLAUDE.md`)
