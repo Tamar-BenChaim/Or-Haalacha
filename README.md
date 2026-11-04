@@ -8,8 +8,7 @@
 
 | שכבה | טכנולוגיה |
 |------|-----------|
-| צד לקוח – החנות (Frontend) | Angular |
-| צד לקוח – אזור הניהול | React + Vite |
+| צד לקוח (Frontend) – החנות ואזור הניהול | Angular |
 | צד שרת (Backend) | Node.js |
 | מסד נתונים | MongoDB Atlas |
 
@@ -18,7 +17,7 @@
 ```
 Or-Haalacha/
 ├── client/   # החנות – Angular
-├── admin/    # אזור הניהול – React (Vite), אפליקציה נפרדת
+├── admin/    # אזור הניהול – Angular, אפליקציה נפרדת
 ├── server/   # שרת Node.js
 └── README.md
 ```
@@ -34,3 +33,4 @@ Or-Haalacha/
 - [docs/api.md](docs/api.md) – תיעוד ה־API
 - [server/README.md](server/README.md) – הרצת השרת
 - [client/README.md](client/README.md) – הרצת החנות (Angular)
+- [admin/README.md](admin/README.md) – הרצת אזור הניהול (Angular)

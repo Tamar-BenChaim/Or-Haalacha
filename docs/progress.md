@@ -2,13 +2,13 @@
 
 מה נעשה בכל שלב, ומה הלאה. הרשומה החדשה ביותר למעלה.
 
-## 2026-11-04 – מעבר צד הלקוח של החנות מ־React ל־Angular
+## 2026-11-04 – מעבר החנות והניהול מ־React ל־Angular
 
 ענף: `docs/client-angular`
 
-- החלטה 0009: `client/` ב־Angular. `admin/` נשאר React + Vite.
+- החלטה 0009: `client/` ו־`admin/` ב־Angular, כשתי אפליקציות נפרדות.
 - עודכנו: `CLAUDE.md`, ‏`README.md`, החלטות 0001 ו־0006 ואינדקס ההחלטות.
-- נוסף `client/README.md`. הוסר `client/.env.example`, כי Angular משתמש בקבצי `src/environments/`.
+- נוספו `client/README.md` ו־`admin/README.md`. הוסרו `client/.env.example` ו־`admin/.env.example`, כי Angular משתמש בקבצי `src/environments/`.
 - שלד הפרויקט עדיין לא נוצר.
 
 ## 2026-10-26 – שכבת הנתונים והלוגים במסד
