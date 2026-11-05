@@ -1,1 +1,23 @@
-<p>site-footer works!</p>
+<footer class="footer">
+  <div class="inner container">
+    <p class="brand">
+      <span class="logo" aria-hidden="true">אור ההלכה</span>
+      <span>© {{ year }} כל הזכויות שמורות</span>
+    </p>
+    <nav aria-label="מידע משפטי">
+      <ul class="legal">
+        <li><a routerLink="/legal/terms">תקנון האתר</a></li>
+        <li><a routerLink="/legal/privacy">מדיניות פרטיות</a></li>
+        <li><a routerLink="/legal/returns">ביטולים והחזרות</a></li>
+        <li><a routerLink="/legal/a11y">הצהרת נגישות</a></li>
+      </ul>
+    </nav>
+    <p class="contact" dir="ltr">
+      <a [href]="'mailto:' + email()">{{ email() }}</a>
+      @if (phone(); as number) {
+        <span aria-hidden="true"> · </span>
+        <a [href]="'tel:' + number">{{ number }}</a>
+      }
+    </p>
+  </div>
+</footer>
