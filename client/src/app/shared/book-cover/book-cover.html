@@ -2,14 +2,15 @@
   <img class="image" [src]="image.url" alt="" width="300" height="400" loading="lazy" />
 } @else {
   <div class="cover">
-    <span class="logo">אור ההלכה</span>
-    <span class="rule"></span>
-    @if (book().topic) {
-      <span class="topic">{{ book().topic }}</span>
-    }
-    <span class="title">{{ book().title }}</span>
-    @if (book().volume !== null) {
-      <span class="volume">כרך {{ book().volume }}</span>
-    }
+    <span class="cv">
+      <span class="cv-logo">אור ההלכה</span>
+      <span class="cv-rule"></span>
+      <span class="cv-topic">{{ book().topic || book().title }}</span>
+      @if (book().volume !== null) {
+        <span class="cv-n">חלק {{ book().volume }}</span>
+      } @else {
+        <span class="cv-n"></span>
+      }
+    </span>
   </div>
 }

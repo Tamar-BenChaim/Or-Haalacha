@@ -46,6 +46,21 @@ describe('BookCard', () => {
     expect(emitted).toEqual([]);
   });
 
+  it('shows the short description', () => {
+    expect(render(sampleBook).el.querySelector('.desc')!.textContent).toContain(
+      sampleBook.shortDescription,
+    );
+  });
+
+  it('hides the description line when it is empty', () => {
+    expect(render({ ...sampleBook, shortDescription: '' }).el.querySelector('.desc')).toBeNull();
+  });
+
+  it('labels the disabled button "אזל" for a sold out book', () => {
+    const { el } = render(sampleSoldOutBook);
+    expect(el.querySelector('button.add')!.textContent!.trim()).toBe('אזל');
+  });
+
   it('does not show the sold out label for an available book', () => {
     expect(render(sampleBook).el.querySelector('.soldout-label')).toBeNull();
   });
