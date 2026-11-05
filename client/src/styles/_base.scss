@@ -6,6 +6,8 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  // Jumps to a section (#books) are instant, with no scrolling animation.
+  scroll-behavior: auto;
 }
 
 body {

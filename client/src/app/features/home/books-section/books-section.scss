@@ -1,0 +1,12 @@
+.books {
+  // Keeps the title visible below the sticky header after the jump.
+  scroll-margin-block-start: var(--header-offset);
+  // Temporary height so the jump is visible until the book list exists.
+  min-block-size: 80vh;
+  padding-block: var(--space-5);
+}
+
+h2 {
+  padding-block-end: var(--space-3);
+  border-block-end: 1px solid var(--gold);
+}

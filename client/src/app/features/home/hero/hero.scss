@@ -1,0 +1,34 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-block-size: 70vh;
+  padding: var(--space-6) var(--space-3);
+  background: var(--tint);
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-stam);
+  font-size: clamp(56px, 12vw, 128px);
+  line-height: 1.1;
+  color: var(--bur);
+  -webkit-text-stroke: 0.024em currentcolor;
+  paint-order: stroke fill;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
