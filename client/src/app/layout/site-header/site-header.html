@@ -1,1 +1,25 @@
-<p>site-header works!</p>
+<header class="header">
+  <div class="inner container">
+    <a class="logo" routerLink="/" aria-label="אור ההלכה – לדף הבית">אור ההלכה</a>
+    <nav class="nav" aria-label="ניווט ראשי">
+      <a
+        routerLink="/"
+        fragment="books"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="booksMatch"
+        ariaCurrentWhenActive="location"
+        >הספרים</a
+      >
+      <a routerLink="/set" routerLinkActive="active" ariaCurrentWhenActive="page">הסט המלא</a>
+      <a routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page">אודות</a>
+      <a routerLink="/contact" routerLinkActive="active" ariaCurrentWhenActive="page">צור קשר</a>
+    </nav>
+    <a
+      class="btn cart"
+      routerLink="/cart"
+      [attr.aria-label]="'עגלת קניות, ' + cartCount() + ' פריטים'"
+    >
+      עגלה ({{ cartCount() }})
+    </a>
+  </div>
+</header>

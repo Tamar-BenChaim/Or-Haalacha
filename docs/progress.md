@@ -2,6 +2,16 @@
 
 מה נעשה בכל שלב, ומה הלאה. הרשומה החדשה ביותר למעלה.
 
+## 2026-11-05 – יסודות עיצוב ומעטפת ב־`client/`
+
+ענפים: `feat/client-foundation` (מוזג), `feat/client-shell`
+
+- **יסודות:** טוקני עיצוב, פונטים עצמאיים (`@fontsource` + כתב הסת"ם עם הרישיון של Culmus ב־`client/public/fonts/`), כללי בסיס (RTL, קישורים, מיקוד, `prefers-reduced-motion`).
+- **רכיבי UI:** כפתורים (מחלקות גלובליות), `agorotToShekels`, `Field`, `BookCover`, `BookCard`. נתוני דוגמה פיקטיביים רק ב־`core/testing`, ושדה `topic` אופציונלי ב־`Book` עד שהשרת יוסיף אותו.
+- **מעטפת:** skip-link, פס הודעה (מוצג רק כשיש הודעה), כותרת עליונה עם `aria-current`, כותרת תחתונה (הטלפון מוסתר עד שהלקוח ימסור), מעבר מיקוד ל־`<main>` אחרי כל ניווט, וגלילה לראש.
+- `CartStore` ו־`SiteSettingsStore` הם שלדים עם ערכי ברירת מחדל. העגלה הצדדית עוד לא נבנתה.
+- לקח: קובץ `package-lock.json` שנוצר עם npm 11 גרם לכשל `npm ci` ב־CI (Node 22 עם npm 10). אחרי כל התקנת חבילה בודקים עם `npx npm@10 ci --dry-run`.
+
 ## 2026-11-05 – שלד `client/` (Angular 21)
 
 ענף: `feat/client-skeleton`

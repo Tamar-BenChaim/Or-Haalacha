@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100vh;
+}
+
+main {
+  flex: 1;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// Visible only while focused by keyboard.
+.skip {
+  position: absolute;
+  inset-inline-start: var(--space-3);
+  inset-block-start: -100px;
+  z-index: 20;
+  padding: var(--space-2) var(--space-3);
+  background: var(--bur);
+  color: #fff;
+  font-weight: 600;
+
+  &:focus {
+    inset-block-start: var(--space-2);
+  }
+}

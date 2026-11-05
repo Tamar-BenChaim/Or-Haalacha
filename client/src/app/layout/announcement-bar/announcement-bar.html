@@ -1,1 +1,3 @@
-<p>announcement-bar works!</p>
+@if (message(); as text) {
+  <p class="bar">{{ text }}</p>
+}

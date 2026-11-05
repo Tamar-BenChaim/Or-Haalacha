@@ -1,8 +1,7 @@
-<a class="skip" href="#main">דילוג לתוכן הראשי</a>
-<oh-announcement-bar />
+<a class="skip" href="#main" (click)="skipToContent($event)">דילוג לתוכן הראשי</a>
+<oh-announcement-bar [message]="announcement()" />
 <oh-site-header />
-<main id="main" tabindex="-1">
+<main id="main" #main tabindex="-1">
   <router-outlet />
 </main>
 <oh-site-footer />
-<oh-cart-drawer />

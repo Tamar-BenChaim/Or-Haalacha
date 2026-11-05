@@ -1,0 +1,67 @@
+.header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 10;
+  background: var(--bg);
+  border-block-end: 1px solid var(--line);
+}
+
+.inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  // More room above, so the logo does not touch the top edge of the window.
+  padding-block: var(--space-4) var(--space-3);
+}
+
+.logo {
+  font-family: var(--font-stam);
+  font-size: 48px;
+  line-height: 1.1;
+  color: var(--bur);
+  -webkit-text-stroke: 0.024em currentcolor;
+  paint-order: stroke fill;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin-inline-end: auto;
+  font-size: 20px;
+  font-weight: 500;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding-inline: var(--space-2);
+    color: var(--ink);
+
+    &:hover {
+      background: var(--tint);
+    }
+
+    &.active {
+      color: var(--bur);
+      font-weight: 600;
+    }
+  }
+}
+
+@media (width <= 640px) {
+  .logo {
+    font-size: 36px;
+  }
+
+  .nav {
+    order: 3;
+    inline-size: 100%;
+    font-size: 18px;
+  }
+
+  .cart {
+    margin-inline-start: auto;
+  }
+}
