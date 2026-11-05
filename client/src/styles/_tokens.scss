@@ -37,10 +37,10 @@
   --btn-h: 48px;
   --btn-h-sm: 40px;
   --page-max: 1200px;
-  // Approximate height of the sticky header (taller on phones, where the menu wraps).
+  // Approximate height of the sticky header (taller on narrow screens, where the nav has its own row).
   --header-offset: 112px;
 
-  @media (width <= 640px) {
-    --header-offset: 190px;
+  @media (width <= 900px) {
+    --header-offset: 165px;
   }
 }
