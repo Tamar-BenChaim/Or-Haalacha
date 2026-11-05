@@ -8,7 +8,9 @@
   display: block;
   width: 100%;
   aspect-ratio: 3 / 4;
-  box-shadow: 0 12px 24px rgb(35 28 29 / 22%);
+  // The card raises the shadow on hover by setting --cover-shadow.
+  box-shadow: var(--cover-shadow, 0 12px 24px rgb(35 28 29 / 22%));
+  transition: box-shadow 0.28s ease;
 }
 
 .image {
@@ -21,7 +23,7 @@
   container-type: inline-size;
   background: linear-gradient(100deg, #762230 0%, var(--bur) 45%, #5b1825 100%);
   box-shadow:
-    0 12px 24px rgb(35 28 29 / 22%),
+    var(--cover-shadow, 0 12px 24px rgb(35 28 29 / 22%)),
     inset -7px 0 0 rgb(0 0 0 / 24%),
     inset -8px 0 0 rgb(255 255 255 / 7%);
 }

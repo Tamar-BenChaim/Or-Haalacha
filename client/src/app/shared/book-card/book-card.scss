@@ -13,6 +13,30 @@
   background: var(--card);
   border: 1px solid var(--card-b);
   border-radius: var(--radius);
+  transition: background-color 0.25s;
+}
+
+// Subtle motion (the style chosen by the client): the cover lifts and grows a little,
+// the card gets a faint tint. Sold out books do not react. Motion is switched off for
+// people who prefer reduced motion (global rule in styles/_base.scss).
+@media (hover: hover) {
+  .card:not(.soldout):hover {
+    background: #f8f4f4;
+    --cover-shadow: 0 20px 32px rgb(35 28 29 / 26%);
+
+    .stage {
+      transform: translateY(-8px) scale(1.035);
+    }
+  }
+}
+
+.card:not(.soldout):focus-within {
+  background: #f8f4f4;
+  --cover-shadow: 0 20px 32px rgb(35 28 29 / 26%);
+
+  .stage {
+    transform: translateY(-8px) scale(1.035);
+  }
 }
 
 @media (width <= 640px) {
@@ -34,6 +58,7 @@
   display: block;
   width: 64%;
   margin-inline: auto;
+  transition: transform 0.28s ease;
 }
 
 .name {
