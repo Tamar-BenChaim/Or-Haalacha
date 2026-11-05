@@ -11,7 +11,8 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-3) var(--space-4);
-  padding-block: var(--space-2);
+  // More room above, so the logo does not touch the top edge of the window.
+  padding-block: var(--space-4) var(--space-3);
 }
 
 .logo {
