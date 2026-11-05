@@ -1,12 +1,57 @@
 .books {
   // Keeps the title visible below the sticky header after the jump.
   scroll-margin-block-start: var(--header-offset);
-  // Temporary height so the jump is visible until the book list exists.
-  min-block-size: 80vh;
+  min-block-size: 60vh;
   padding-block: var(--space-5);
 }
 
 h2 {
   padding-block-end: var(--space-3);
   border-block-end: 1px solid var(--gold);
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-block: var(--space-4);
+}
+
+input[type='search'] {
+  flex: 1 1 260px;
+  max-inline-size: 420px;
+  min-height: var(--tap);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--muted);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+}
+
+.count {
+  margin: 0;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skeleton {
+  aspect-ratio: 3 / 5;
+  background: var(--card);
+  border: 1px solid var(--card-b);
+}
+
+.state {
+  padding-block: var(--space-5);
+  text-align: center;
 }

@@ -1,11 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
 
+import { BOOKS_SOURCE } from '../../../core/catalog/books-source';
 import { Home } from './home';
 
 describe('Home', () => {
   function render() {
-    TestBed.configureTestingModule({ providers: [provideRouter([])] });
+    TestBed.configureTestingModule({
+      providers: [provideRouter([]), { provide: BOOKS_SOURCE, useValue: { list: () => of([]) } }],
+    });
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     return fixture.nativeElement as HTMLElement;
