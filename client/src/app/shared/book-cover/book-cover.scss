@@ -1,0 +1,59 @@
+:host {
+  display: block;
+}
+
+.image,
+.cover {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 18%);
+}
+
+.image {
+  object-fit: cover;
+  height: auto;
+}
+
+// Sizes use container query units, so the cover scales with its container.
+.cover {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4cqw;
+  padding: 8cqw;
+  background: linear-gradient(160deg, var(--bur) 0%, var(--bur-d) 100%);
+  color: var(--gold-l);
+  text-align: center;
+}
+
+.logo {
+  font-family: var(--font-stam);
+  font-size: 13cqw;
+  line-height: 1.1;
+  -webkit-text-stroke: 0.024em currentcolor;
+  paint-order: stroke fill;
+}
+
+.rule {
+  width: 40%;
+  height: 1px;
+  background: var(--gold);
+}
+
+.topic {
+  font-size: 7cqw;
+}
+
+.title {
+  font-family: var(--font-head);
+  font-size: 9cqw;
+  line-height: 1.25;
+  color: #fff;
+}
+
+.volume {
+  font-size: 7cqw;
+}

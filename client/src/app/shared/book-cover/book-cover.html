@@ -1,1 +1,15 @@
-<p>book-cover works!</p>
+@if (book().coverImage; as image) {
+  <img class="image" [src]="image.url" alt="" width="300" height="400" loading="lazy" />
+} @else {
+  <div class="cover">
+    <span class="logo">אור ההלכה</span>
+    <span class="rule"></span>
+    @if (book().topic) {
+      <span class="topic">{{ book().topic }}</span>
+    }
+    <span class="title">{{ book().title }}</span>
+    @if (book().volume !== null) {
+      <span class="volume">כרך {{ book().volume }}</span>
+    }
+  </div>
+}

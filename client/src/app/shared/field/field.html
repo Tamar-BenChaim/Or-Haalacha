@@ -1,1 +1,15 @@
-<p>field works!</p>
+<div class="field">
+  <label [attr.for]="controlId()">
+    {{ label() }}
+    @if (required()) {
+      <span aria-hidden="true"> *</span>
+    }
+  </label>
+  <ng-content />
+  @if (hint(); as hint) {
+    <p class="hint" [id]="controlId() + '-hint'">{{ hint }}</p>
+  }
+  @if (error(); as error) {
+    <p class="error" role="alert" [id]="controlId() + '-error'">{{ error }}</p>
+  }
+</div>

@@ -9,6 +9,8 @@ export interface Book {
   slug: string;
   title: string;
   volume: number | null;
+  /** Not in the API yet (see docs/client-spec-angular.md section 9). Shown only when present. */
+  topic?: string | null;
   shortDescription: string;
   priceAgorot: number;
   inStock: boolean;

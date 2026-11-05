@@ -1,0 +1,40 @@
+// Design tokens (docs/client-spec-angular.md section 3, docs/design-notes.md).
+// Gold is decoration only: never use it for text on a white background.
+:root {
+  // Colors
+  --bur: #6b1f2a;
+  --bur-d: #521620;
+  --tint: #f8f3f3;
+  --gold: #b8924a;
+  --gold-l: #e6cd8e;
+  --ink: #231c1d;
+  --muted: #5f5658;
+  --line: #e9e3e1;
+  --card: #fbf9f9;
+  --card-b: #efe9e8;
+  --bg: #ffffff;
+  --ok: #2f6b3a;
+  --err: #a12b2b;
+
+  // Typography
+  --font-body: 'IBM Plex Sans Hebrew', system-ui, sans-serif;
+  --font-head: 'Noto Serif Hebrew', Georgia, serif;
+  --font-stam: 'StamAshkenaz', 'Noto Serif Hebrew', serif;
+  --fs-body: 17px;
+  --fs-h1: 46px;
+  --fs-h2: 38px;
+  --fs-h2-sm: 30px;
+
+  // Shape and spacing: all corners are square
+  --radius: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --space-6: 64px;
+  --tap: 44px;
+  --btn-h: 48px;
+  --btn-h-sm: 40px;
+  --page-max: 1200px;
+}

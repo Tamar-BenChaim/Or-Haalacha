@@ -1,0 +1,55 @@
+// Buttons are global classes so they work on both <button> and <a>.
+.btn,
+.btn-o {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--btn-h);
+  min-width: var(--tap);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--bur);
+  border-radius: var(--radius);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.btn {
+  background: var(--bur);
+  color: #fff;
+
+  &:hover {
+    background: var(--bur-d);
+    border-color: var(--bur-d);
+  }
+}
+
+.btn-o {
+  background: transparent;
+  color: var(--bur);
+
+  &:hover {
+    background: var(--tint);
+  }
+}
+
+.btn-sm {
+  min-height: var(--btn-h-sm);
+  padding: 0 var(--space-3);
+}
+
+.btn:disabled,
+.btn[aria-disabled='true'],
+.btn-o:disabled,
+.btn-o[aria-disabled='true'] {
+  background: var(--line);
+  border-color: var(--line);
+  color: var(--muted);
+  cursor: not-allowed;
+}

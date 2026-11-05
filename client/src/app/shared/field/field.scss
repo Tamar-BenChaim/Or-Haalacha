@@ -1,0 +1,37 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+label {
+  font-weight: 600;
+}
+
+// Style for the projected control (native input, select or textarea).
+:host ::ng-deep :is(input, select, textarea) {
+  min-height: var(--tap);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--muted);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+}
+
+:host ::ng-deep :is(input, select, textarea)[aria-invalid='true'] {
+  border-color: var(--err);
+}
+
+.hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9em;
+}
+
+.error {
+  margin: 0;
+  color: var(--err);
+  font-size: 0.9em;
+  font-weight: 600;
+}
