@@ -1,16 +1,18 @@
 <article class="line">
-  <a class="mini" [routerLink]="link()" tabindex="-1" aria-hidden="true">
-    @if (item().book; as book) {
-      <oh-book-cover [book]="book" [decorative]="true" />
-    } @else {
-      <span class="placeholder"></span>
-    }
-  </a>
+  @if (showCover()) {
+    <a class="mini" [routerLink]="link()" tabindex="-1" aria-hidden="true">
+      @if (item().book; as book) {
+        <oh-book-cover [book]="book" [decorative]="true" />
+      } @else {
+        <span class="placeholder"></span>
+      }
+    </a>
+  }
 
   <div class="info">
     <a class="title" [routerLink]="link()">{{ title() }}</a>
     @if (item().unitPriceAgorot !== null) {
-      <p class="unit">{{ item().unitPriceAgorot | agorotToShekels }}</p>
+      <p class="unit">{{ item().unitPriceAgorot | agorotToShekels }} ליחידה</p>
     }
     @if (item().status === 'out_of_stock') {
       <p class="warn">אזל במלאי. אפשר להסיר מהעגלה.</p>
@@ -38,11 +40,11 @@
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
+      stroke-width="1.7"
       stroke-linecap="round"
       aria-hidden="true"
     >
-      <path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12" />
+      <path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" />
     </svg>
   </button>
 </article>

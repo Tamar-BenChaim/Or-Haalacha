@@ -13,10 +13,11 @@ const base: CartItemView = {
   book: { title: 'ספר לדוגמה', volume: 3, topic: 'נושא לדוגמה', coverImage: null },
 };
 
-function render(item: CartItemView) {
+function render(item: CartItemView, showCover = false) {
   TestBed.configureTestingModule({ providers: [provideRouter([])] });
   const fixture = TestBed.createComponent(CartLineRow);
   fixture.componentRef.setInput('item', item);
+  fixture.componentRef.setInput('showCover', showCover);
   fixture.detectChanges();
   const quantities: number[] = [];
   let removed = 0;
@@ -35,8 +36,18 @@ describe('CartLineRow', () => {
     expect(el.querySelector('.total')!.textContent).toContain('130');
   });
 
-  it('shows the book cover as a small picture that links to the book', () => {
+  it('shows the unit price with "per unit"', () => {
     const { el } = render(base);
+    expect(el.querySelector('.unit')!.textContent).toContain('ליחידה');
+  });
+
+  it('shows no cover unless asked to (the side cart has none)', () => {
+    const { el } = render(base);
+    expect(el.querySelector('a.mini')).toBeNull();
+  });
+
+  it('shows the book cover as a small picture that links to the book', () => {
+    const { el } = render(base, true);
     const cover = el.querySelector('a.mini')!;
     expect(cover.querySelector('oh-book-cover')).toBeTruthy();
     expect(cover.getAttribute('href')).toBe('/book/a');
@@ -44,7 +55,7 @@ describe('CartLineRow', () => {
   });
 
   it('keeps an empty box where the cover goes while the book is not known yet', () => {
-    const { el } = render({ ...base, book: null });
+    const { el } = render({ ...base, book: null }, true);
     expect(el.querySelector('a.mini oh-book-cover')).toBeNull();
     expect(el.querySelector('a.mini .placeholder')).toBeTruthy();
   });

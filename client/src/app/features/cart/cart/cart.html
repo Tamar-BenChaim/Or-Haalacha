@@ -2,56 +2,80 @@
   <h1>עגלת הקניות</h1>
 
   @if (cart.isEmpty()) {
-    <div class="empty">
-      <p>העגלה ריקה</p>
+    <div class="empty tinted">
+      <div class="empty-title">העגלה ריקה</div>
+      <p class="muted">עדיין לא נבחרו ספרים</p>
       <a class="btn" routerLink="/" fragment="books">לכל הספרים</a>
     </div>
   } @else {
-    @if (cart.notices().length > 0) {
-      <ul class="notices" aria-live="polite">
+    <div class="info tinted" aria-live="polite">
+      @if (cart.notices().length > 0) {
         @for (notice of cart.notices(); track notice) {
-          <li>{{ notice }}</li>
+          <p>{{ notice }}</p>
         }
-      </ul>
-    }
+      } @else {
+        <p>אם מחיר השתנה או שספר אזל מאז שהוספתם אותו, תופיע כאן הודעה.</p>
+      }
+    </div>
+
     @if (cart.quoteState() === 'error') {
       <p class="error" role="alert">לא הצלחנו לעדכן מחירים. נסו לרענן את הדף.</p>
     }
 
-    <ul class="lines">
-      @for (item of cart.items(); track key(item.line.ref)) {
-        <li>
-          <oh-cart-line
-            [item]="item"
-            (quantityChange)="cart.setQuantity(item.line.ref, $event)"
-            (removed)="cart.remove(item.line.ref)"
-          />
-        </li>
-      }
-    </ul>
+    <div class="cols">
+      <ul class="lines">
+        @for (item of cart.items(); track key(item.line.ref)) {
+          <li>
+            <oh-cart-line
+              [item]="item"
+              [showCover]="true"
+              (quantityChange)="cart.setQuantity(item.line.ref, $event)"
+              (removed)="cart.remove(item.line.ref)"
+            />
+          </li>
+        }
+      </ul>
 
-    <section class="summary" aria-label="סיכום">
-      <p class="subtotal">
-        <span>סכום ביניים</span>
-        <strong>
-          @if (cart.subtotalAgorot() !== null) {
-            {{ cart.subtotalAgorot() | agorotToShekels }}
-          } @else {
-            מחשב…
-          }
-        </strong>
-      </p>
-      <p class="note">דמי משלוח יחושבו בשלב הבא.</p>
-      <div class="actions">
+      <aside class="summary tinted" aria-labelledby="summary-title">
+        <h2 id="summary-title">סיכום</h2>
+
+        @if (showCoupon) {
+          <div class="coupon">
+            <label for="coupon">קוד קופון</label>
+            <div class="coupon-row">
+              <input id="coupon" type="text" autocomplete="off" />
+              <button type="button" class="btn-o" (click)="applyCoupon()">החלה</button>
+            </div>
+            @if (couponMessage()) {
+              <p class="coupon-message" role="status">{{ couponMessage() }}</p>
+            }
+          </div>
+        }
+
+        <p class="row">
+          <span>סכום ביניים</span>
+          <strong>
+            @if (cart.subtotalAgorot() !== null) {
+              {{ cart.subtotalAgorot() | agorotToShekels }}
+            } @else {
+              מחשב…
+            }
+          </strong>
+        </p>
+        <p class="row muted">
+          <span>משלוח</span>
+          <span>יחושב בשלב הבא</span>
+        </p>
+
         <a
-          class="btn"
+          class="btn checkout"
           [routerLink]="cart.canCheckout() ? '/checkout' : null"
           [attr.aria-disabled]="cart.canCheckout() ? null : 'true'"
         >
-          לתשלום
+          להמשך לתשלום
         </a>
-        <a class="btn-o" routerLink="/" fragment="books">להמשך קנייה</a>
-      </div>
-    </section>
+        <a class="arrow" routerLink="/" fragment="books">להמשך קנייה</a>
+      </aside>
+    </div>
   }
 </div>

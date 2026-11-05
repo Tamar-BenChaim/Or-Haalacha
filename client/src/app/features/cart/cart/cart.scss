@@ -1,22 +1,30 @@
+// Laid out like the design mockup (docs/design/mockups): lines on one side, a framed summary on the other.
 .page {
-  padding-block: var(--space-5);
+  padding-block: 48px 96px;
 }
 
 h1 {
-  margin-block-end: var(--space-4);
+  margin-block-end: 32px;
 }
 
-.lines,
-.notices {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.tinted {
+  background: var(--card);
+  border: 1px solid var(--card-b);
 }
 
-.notices {
-  margin-block-end: var(--space-3);
-  padding: var(--space-2) var(--space-3);
-  background: var(--tint);
+.muted {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.info {
+  margin-block-end: 20px;
+  padding: 12px 18px;
+  font-size: 15px;
+
+  p {
+    margin: 0;
+  }
 }
 
 .error {
@@ -24,39 +32,121 @@ h1 {
   font-weight: 600;
 }
 
-.empty {
+.cols {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-3);
-  padding-block: var(--space-6);
+  align-items: flex-start;
+  gap: 48px;
+}
+
+.lines {
+  flex: 1 1 0;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .summary {
-  max-inline-size: 420px;
-  margin-block-start: var(--space-4);
-  margin-inline-start: auto;
+  flex: 0 0 350px;
+  max-inline-size: 100%;
+  padding: 26px;
 }
 
-.subtotal {
+h2 {
+  margin: 0 0 16px;
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.coupon {
   display: flex;
-  justify-content: space-between;
-  margin: 0;
-  font-size: 20px;
+  flex-direction: column;
+  gap: 6px;
+  margin-block-end: 16px;
+
+  label {
+    font-weight: 500;
+    font-size: 16px;
+  }
 }
 
-.note {
-  margin: var(--space-1) 0 var(--space-3);
+.coupon-row {
+  display: flex;
+  gap: 8px;
+
+  input {
+    flex: 1 1 0;
+    min-inline-size: 0;
+    min-block-size: 48px;
+    padding: 12px 14px;
+    border: 1.5px solid #d9d0cd;
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+
+    &:focus {
+      border-color: var(--bur);
+    }
+  }
+}
+
+.coupon-message {
+  margin: 0;
   color: var(--muted);
   font-size: 15px;
 }
 
-.actions {
+.row {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  padding: 7px 0;
+}
 
-  a {
-    flex: 1 1 140px;
+.checkout {
+  inline-size: 100%;
+  margin-block-start: 16px;
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--tap);
+  margin-block-start: 8px;
+  padding-block: 8px;
+  font-weight: 700;
+  color: var(--bur);
+}
+
+.empty {
+  padding: 64px 24px;
+  text-align: center;
+
+  .empty-title {
+    margin-block-end: 8px;
+    font-family: var(--font-head);
+    font-size: 26px;
+  }
+
+  .muted {
+    margin: 0 0 24px;
+  }
+}
+
+@media (width <= 760px) {
+  .cols {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .summary {
+    flex-basis: auto;
+  }
+
+  h1 {
+    font-size: 34px;
   }
 }

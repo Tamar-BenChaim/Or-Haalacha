@@ -53,12 +53,11 @@
 }
 
 .total {
-  min-inline-size: 72px;
+  min-inline-size: 84px;
   margin: 0;
-  font-family: var(--font-head);
-  font-weight: 600;
-  color: var(--bur);
-  text-align: end;
+  font-weight: 700;
+  // Physical "left" on purpose: in the mockup the amount sits at the left end of the row.
+  text-align: left;
 }
 
 .remove {

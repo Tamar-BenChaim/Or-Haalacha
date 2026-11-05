@@ -16,6 +16,8 @@ import { QtyStepper } from '../qty-stepper/qty-stepper';
 })
 export class CartLineRow {
   readonly item = input.required<CartItemView>();
+  /** The small cover before the title (shown on the cart page, not in the side cart). */
+  readonly showCover = input(false);
   readonly quantityChange = output<number>();
   readonly removed = output<void>();
 
