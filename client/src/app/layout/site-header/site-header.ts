@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { IsActiveMatchOptions, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { CartStore } from '../../core/cart/cart-store';
 
@@ -12,4 +12,12 @@ import { CartStore } from '../../core/cart/cart-store';
 })
 export class SiteHeader {
   protected readonly cartCount = inject(CartStore).count;
+
+  /** "Books" is active only on the home page at #books (the fragment must match). */
+  protected readonly booksMatch: IsActiveMatchOptions = {
+    paths: 'exact',
+    queryParams: 'ignored',
+    matrixParams: 'ignored',
+    fragment: 'exact',
+  };
 }

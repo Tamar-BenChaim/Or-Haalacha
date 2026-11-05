@@ -50,6 +50,24 @@ describe('SiteHeader', () => {
     expect(current[0].getAttribute('href')).toBe('/about');
   });
 
+  it('highlights "Books" only when the URL points at #books', async () => {
+    const { router, fixture, el } = await render();
+    const books = el.querySelector<HTMLAnchorElement>('nav a[href="/#books"]')!;
+
+    await router.navigateByUrl('/');
+    fixture.detectChanges();
+    expect(books.classList.contains('active')).toBe(false);
+
+    await router.navigateByUrl('/#books');
+    fixture.detectChanges();
+    expect(books.classList.contains('active')).toBe(true);
+    expect(books.getAttribute('aria-current')).toBe('location');
+
+    await router.navigateByUrl('/about');
+    fixture.detectChanges();
+    expect(books.classList.contains('active')).toBe(false);
+  });
+
   it('shows the cart count and a matching accessible name', async () => {
     const { el } = await render();
     const cart = el.querySelector('a.cart')!;
