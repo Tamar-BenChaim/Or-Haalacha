@@ -1,21 +1,48 @@
 <article class="card" [class.soldout]="!book().inStock">
-  <a class="cover-link" [routerLink]="['/book', book().slug]" tabindex="-1" aria-hidden="true">
-    <oh-book-cover [book]="book()" [decorative]="true" />
+  <div class="media">
+    <a class="cover-link" [routerLink]="['/book', book().slug]" tabindex="-1" aria-hidden="true">
+      <span class="stage"><oh-book-cover [book]="book()" [decorative]="true" /></span>
+    </a>
     @if (!book().inStock) {
       <span class="soldout-label">אזל במלאי</span>
     }
-  </a>
-  <h3 class="name">
-    <a [routerLink]="['/book', book().slug]">{{ book().title }}</a>
-  </h3>
-  <p class="price">{{ book().priceAgorot | agorotToShekels }}</p>
-  <button
-    type="button"
-    class="btn btn-sm add"
-    [disabled]="!book().inStock"
-    [attr.aria-label]="'הוספה לעגלה: ' + book().title"
-    (click)="add()"
-  >
-    הוספה לעגלה
-  </button>
+  </div>
+
+  <div class="text">
+    <h3 class="name">
+      <a [routerLink]="['/book', book().slug]">{{ book().title }}</a>
+    </h3>
+    @if (book().shortDescription) {
+      <p class="desc">{{ book().shortDescription }}</p>
+    }
+  </div>
+
+  <div class="buy">
+    <span class="price">{{ book().priceAgorot | agorotToShekels }}</span>
+    <button
+      type="button"
+      class="add"
+      [disabled]="!book().inStock"
+      [attr.aria-label]="'הוספה לעגלה: ' + book().title"
+      (click)="add()"
+    >
+      @if (book().inStock) {
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+        <span class="add-t">הוספה לעגלה</span>
+      } @else {
+        <span class="add-t">אזל</span>
+      }
+    </button>
+  </div>
 </article>

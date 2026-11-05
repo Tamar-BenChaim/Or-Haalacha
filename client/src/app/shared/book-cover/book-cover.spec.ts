@@ -12,17 +12,22 @@ function render(book: typeof sampleBook, decorative = false) {
 }
 
 describe('BookCover', () => {
-  it('draws a CSS cover with title, topic and volume when there is no image', () => {
+  it('draws a CSS cover with logo, topic and part number when there is no image', () => {
     const el = render(sampleBook);
     expect(el.querySelector('img')).toBeNull();
-    expect(el.textContent).toContain(sampleBook.title);
-    expect(el.textContent).toContain('נושא לדוגמה');
-    expect(el.textContent).toContain('כרך 1');
+    expect(el.querySelector('.cv-logo')!.textContent).toContain('אור ההלכה');
+    expect(el.querySelector('.cv-topic')!.textContent).toContain('נושא לדוגמה');
+    expect(el.querySelector('.cv-n')!.textContent).toContain('חלק 1');
   });
 
-  it('omits the topic when it is missing', () => {
+  it('shows the title instead of the topic when the topic is missing', () => {
     const el = render({ ...sampleBook, topic: null });
-    expect(el.querySelector('.topic')).toBeNull();
+    expect(el.querySelector('.cv-topic')!.textContent).toContain(sampleBook.title);
+  });
+
+  it('leaves the part number empty when the book has no volume', () => {
+    const el = render({ ...sampleBook, volume: null });
+    expect(el.querySelector('.cv-n')!.textContent!.trim()).toBe('');
   });
 
   it('shows the real image, lazy loaded, with the alt text on the host', () => {

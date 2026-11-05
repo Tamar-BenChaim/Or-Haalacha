@@ -2,12 +2,15 @@
   display: block;
 }
 
-.image,
-.cover {
+// Matches the design mockup: a burgundy cover with a dark spine on the right.
+.cover,
+.image {
+  display: block;
   width: 100%;
   aspect-ratio: 3 / 4;
-  border-radius: var(--radius);
-  box-shadow: 0 2px 8px rgb(0 0 0 / 18%);
+  // The card raises the shadow on hover by setting --cover-shadow.
+  box-shadow: var(--cover-shadow, 0 12px 24px rgb(35 28 29 / 22%));
+  transition: box-shadow 0.28s ease;
 }
 
 .image {
@@ -18,42 +21,49 @@
 // Sizes use container query units, so the cover scales with its container.
 .cover {
   container-type: inline-size;
+  background: linear-gradient(100deg, #762230 0%, var(--bur) 45%, #5b1825 100%);
+  box-shadow:
+    var(--cover-shadow, 0 12px 24px rgb(35 28 29 / 22%)),
+    inset -7px 0 0 rgb(0 0 0 / 24%),
+    inset -8px 0 0 rgb(255 255 255 / 7%);
+}
+
+.cv {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 4cqw;
-  padding: 8cqw;
-  background: linear-gradient(160deg, var(--bur) 0%, var(--bur-d) 100%);
-  color: var(--gold-l);
+  justify-content: space-between;
+  height: 100%;
+  padding: 12cqw 10cqw 11cqw 15cqw;
   text-align: center;
 }
 
-.logo {
+.cv-logo {
   font-family: var(--font-stam);
-  font-size: 13cqw;
-  line-height: 1.1;
+  font-size: 15cqw;
+  line-height: 1;
+  color: var(--gold-l);
   -webkit-text-stroke: 0.024em currentcolor;
   paint-order: stroke fill;
 }
 
-.rule {
-  width: 40%;
+.cv-rule {
+  display: block;
+  width: 18cqw;
   height: 1px;
   background: var(--gold);
 }
 
-.topic {
-  font-size: 7cqw;
-}
-
-.title {
+.cv-topic {
   font-family: var(--font-head);
-  font-size: 9cqw;
+  font-weight: 500;
+  font-size: 11cqw;
   line-height: 1.25;
-  color: #fff;
+  color: #f6ebe4;
 }
 
-.volume {
+.cv-n {
   font-size: 7cqw;
+  letter-spacing: 0.5px;
+  color: var(--gold-l);
 }
