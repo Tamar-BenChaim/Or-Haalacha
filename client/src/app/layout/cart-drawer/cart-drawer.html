@@ -1,1 +1,90 @@
-<p>cart-drawer works!</p>
+@if (ui.drawerOpen()) {
+  <button
+    type="button"
+    class="backdrop"
+    tabindex="-1"
+    aria-label="סגירת העגלה"
+    (click)="ui.closeDrawer()"
+  ></button>
+  <aside
+    class="drawer"
+    role="dialog"
+    aria-modal="true"
+    aria-label="עגלת קניות"
+    cdkTrapFocus
+    [cdkTrapFocusAutoCapture]="true"
+    (keydown.escape)="ui.closeDrawer()"
+  >
+    <header class="head">
+      <h2 class="title">העגלה שלך</h2>
+      <button type="button" class="close" aria-label="סגירת העגלה" (click)="ui.closeDrawer()">
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </header>
+
+    @if (cart.isEmpty()) {
+      <div class="empty">
+        <p>העגלה ריקה</p>
+        <a class="btn" routerLink="/" fragment="books">לכל הספרים</a>
+      </div>
+    } @else {
+      <div class="body">
+        @if (cart.notices().length > 0) {
+          <ul class="notices" aria-live="polite">
+            @for (notice of cart.notices(); track notice) {
+              <li>{{ notice }}</li>
+            }
+          </ul>
+        }
+        @if (cart.quoteState() === 'error') {
+          <p class="error" role="alert">לא הצלחנו לעדכן מחירים. נסו שוב בעוד רגע.</p>
+        }
+        <ul class="lines">
+          @for (item of cart.items(); track key(item.line.ref)) {
+            <li>
+              <oh-cart-line
+                [item]="item"
+                (quantityChange)="cart.setQuantity(item.line.ref, $event)"
+                (removed)="cart.remove(item.line.ref)"
+              />
+            </li>
+          }
+        </ul>
+      </div>
+
+      <footer class="foot">
+        <p class="subtotal">
+          <span>סכום ביניים</span>
+          <strong>
+            @if (cart.subtotalAgorot() !== null) {
+              {{ cart.subtotalAgorot() | agorotToShekels }}
+            } @else {
+              מחשב…
+            }
+          </strong>
+        </p>
+        <div class="actions">
+          <a class="btn-o" routerLink="/cart">לעגלה</a>
+          <a
+            class="btn"
+            [routerLink]="cart.canCheckout() ? '/checkout' : null"
+            [attr.aria-disabled]="cart.canCheckout() ? null : 'true'"
+          >
+            לתשלום
+          </a>
+        </div>
+      </footer>
+    }
+  </aside>
+}

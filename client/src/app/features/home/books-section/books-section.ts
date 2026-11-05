@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 
+import { CartStore } from '../../../core/cart/cart-store';
 import { CatalogStore } from '../../../core/catalog/catalog-store';
 import { matchesQuery } from '../../../core/catalog/search';
+import { Book } from '../../../core/models/book';
 import { BookCard } from '../../../shared/book-card/book-card';
 
 /**
@@ -17,6 +19,7 @@ import { BookCard } from '../../../shared/book-card/book-card';
 })
 export class BooksSection {
   private readonly catalog = inject(CatalogStore);
+  private readonly cart = inject(CartStore);
 
   protected readonly status = this.catalog.status;
   protected readonly query = signal('');
@@ -44,5 +47,9 @@ export class BooksSection {
 
   protected retry(): void {
     this.catalog.retry();
+  }
+
+  protected addToCart(book: Book): void {
+    this.cart.addItem({ type: 'book', slug: book.slug });
   }
 }

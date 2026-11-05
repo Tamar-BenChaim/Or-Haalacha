@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 
+import { CartStore } from '../../core/cart/cart-store';
+import { UiStore } from '../../core/ui/ui-store';
 import { SiteHeader } from './site-header';
 
 @Component({ template: '' })
@@ -73,6 +75,28 @@ describe('SiteHeader', () => {
     const cart = el.querySelector('a.cart')!;
     expect(cart.textContent).toContain('עגלה (0)');
     expect(cart.getAttribute('aria-label')).toBe('עגלת קניות, 0 פריטים');
+  });
+
+  it('updates the count when items are added', async () => {
+    const { fixture, el } = await render();
+    TestBed.inject(CartStore).addItem({ type: 'book', slug: 'a' }, 3);
+    fixture.detectChanges();
+    const cart = el.querySelector('a.cart')!;
+    expect(cart.textContent).toContain('עגלה (3)');
+    expect(cart.getAttribute('aria-label')).toBe('עגלת קניות, 3 פריטים');
+  });
+
+  it('goes to the full cart page, and does not open the side cart', async () => {
+    const { fixture, el } = await render();
+    const ui = TestBed.inject(UiStore);
+    TestBed.inject(CartStore).addItem({ type: 'book', slug: 'a' });
+    ui.closeDrawer();
+    fixture.detectChanges();
+    const cart = el.querySelector<HTMLAnchorElement>('a.cart')!;
     expect(cart.getAttribute('href')).toBe('/cart');
+    cart.click();
+    await fixture.whenStable();
+    expect(TestBed.inject(Router).url).toBe('/cart');
+    expect(ui.drawerOpen()).toBe(false);
   });
 });

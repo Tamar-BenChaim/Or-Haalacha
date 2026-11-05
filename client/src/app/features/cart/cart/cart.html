@@ -1,1 +1,81 @@
-<p>cart works!</p>
+<div class="page container">
+  <h1>עגלת הקניות</h1>
+
+  @if (cart.isEmpty()) {
+    <div class="empty tinted">
+      <div class="empty-title">העגלה ריקה</div>
+      <p class="muted">עדיין לא נבחרו ספרים</p>
+      <a class="btn" routerLink="/" fragment="books">לכל הספרים</a>
+    </div>
+  } @else {
+    <div class="info tinted" aria-live="polite">
+      @if (cart.notices().length > 0) {
+        @for (notice of cart.notices(); track notice) {
+          <p>{{ notice }}</p>
+        }
+      } @else {
+        <p>אם מחיר השתנה או שספר אזל מאז שהוספתם אותו, תופיע כאן הודעה.</p>
+      }
+    </div>
+
+    @if (cart.quoteState() === 'error') {
+      <p class="error" role="alert">לא הצלחנו לעדכן מחירים. נסו לרענן את הדף.</p>
+    }
+
+    <div class="cols">
+      <ul class="lines">
+        @for (item of cart.items(); track key(item.line.ref)) {
+          <li>
+            <oh-cart-line
+              [item]="item"
+              [showCover]="true"
+              (quantityChange)="cart.setQuantity(item.line.ref, $event)"
+              (removed)="cart.remove(item.line.ref)"
+            />
+          </li>
+        }
+      </ul>
+
+      <aside class="summary tinted" aria-labelledby="summary-title">
+        <h2 id="summary-title">סיכום</h2>
+
+        @if (showCoupon) {
+          <div class="coupon">
+            <label for="coupon">קוד קופון</label>
+            <div class="coupon-row">
+              <input id="coupon" type="text" autocomplete="off" />
+              <button type="button" class="btn-o" (click)="applyCoupon()">החלה</button>
+            </div>
+            @if (couponMessage()) {
+              <p class="coupon-message" role="status">{{ couponMessage() }}</p>
+            }
+          </div>
+        }
+
+        <p class="row">
+          <span>סכום ביניים</span>
+          <strong>
+            @if (cart.subtotalAgorot() !== null) {
+              {{ cart.subtotalAgorot() | agorotToShekels }}
+            } @else {
+              מחשב…
+            }
+          </strong>
+        </p>
+        <p class="row muted">
+          <span>משלוח</span>
+          <span>יחושב בשלב הבא</span>
+        </p>
+
+        <a
+          class="btn checkout"
+          [routerLink]="cart.canCheckout() ? '/checkout' : null"
+          [attr.aria-disabled]="cart.canCheckout() ? null : 'true'"
+        >
+          להמשך לתשלום
+        </a>
+        <a class="arrow" routerLink="/" fragment="books">להמשך קנייה</a>
+      </aside>
+    </div>
+  }
+</div>

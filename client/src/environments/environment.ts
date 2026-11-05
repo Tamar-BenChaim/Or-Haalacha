@@ -4,4 +4,6 @@ export const environment = {
   apiUrl: 'https://api.orhaalacha.org',
   // Production always talks to the real server.
   useMockApi: false,
+  // Stays false until the client approves coupons and the server supports them.
+  showCoupon: false,
 };

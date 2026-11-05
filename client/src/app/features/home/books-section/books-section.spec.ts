@@ -1,8 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { Observable, of, throwError } from 'rxjs';
+import { NEVER, Observable, of, throwError } from 'rxjs';
 
+import { CART_QUOTE_SOURCE } from '../../../core/cart/cart-quote-source';
+import { CartStore } from '../../../core/cart/cart-store';
 import { BOOKS_SOURCE } from '../../../core/catalog/books-source';
+import { UiStore } from '../../../core/ui/ui-store';
 import { Book } from '../../../core/models/book';
 import { sampleBook, sampleSoldOutBook } from '../../../core/testing/sample-books';
 import { BooksSection } from './books-section';
@@ -12,8 +15,13 @@ const tefilla: Book = { ...sampleBook, id: 'b', slug: 'b', title: 'הלכות ת
 
 function render(list: () => Observable<Book[]>) {
   TestBed.configureTestingModule({
-    providers: [provideRouter([]), { provide: BOOKS_SOURCE, useValue: { list } }],
+    providers: [
+      provideRouter([]),
+      { provide: BOOKS_SOURCE, useValue: { list } },
+      { provide: CART_QUOTE_SOURCE, useValue: { quote: () => NEVER } },
+    ],
   });
+  localStorage.clear();
   const fixture = TestBed.createComponent(BooksSection);
   fixture.detectChanges();
   const el = fixture.nativeElement as HTMLElement;
@@ -31,6 +39,15 @@ describe('BooksSection', () => {
     const { el } = render(() => of([shabbat, tefilla, sampleSoldOutBook]));
     expect(el.querySelectorAll('oh-book-card')).toHaveLength(3);
     expect(el.querySelector('.count')!.textContent).toContain('3 כרכים');
+  });
+
+  it('adds a book to the cart and opens the side cart when its "+" button is clicked', () => {
+    const { el } = render(() => of([shabbat, tefilla]));
+    el.querySelector<HTMLButtonElement>('oh-book-card button.add')!.click();
+    expect(TestBed.inject(CartStore).lines()).toEqual([
+      { ref: { type: 'book', slug: 'a' }, quantity: 1 },
+    ]);
+    expect(TestBed.inject(UiStore).drawerOpen()).toBe(true);
   });
 
   it('has an accessible search field', () => {

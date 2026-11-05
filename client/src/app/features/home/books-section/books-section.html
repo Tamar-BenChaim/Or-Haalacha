@@ -23,7 +23,7 @@
     @if (shown().length > 0) {
       <ul class="grid">
         @for (book of shown(); track book.id) {
-          <li><oh-book-card [book]="book" /></li>
+          <li><oh-book-card [book]="book" (addToCart)="addToCart($event)" /></li>
         }
       </ul>
     } @else {

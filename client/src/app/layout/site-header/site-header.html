@@ -17,6 +17,7 @@
     <a
       class="btn cart"
       routerLink="/cart"
+      [class.bump]="ui.bumping()"
       [attr.aria-label]="'עגלת קניות, ' + cartCount() + ' פריטים'"
     >
       עגלה ({{ cartCount() }})

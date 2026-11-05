@@ -5,12 +5,13 @@ import { filter, skip } from 'rxjs';
 
 import { SiteSettingsStore } from '../../core/settings/site-settings-store';
 import { AnnouncementBar } from '../announcement-bar/announcement-bar';
+import { CartDrawer } from '../cart-drawer/cart-drawer';
 import { SiteFooter } from '../site-footer/site-footer';
 import { SiteHeader } from '../site-header/site-header';
 
 @Component({
   selector: 'oh-shell',
-  imports: [RouterOutlet, AnnouncementBar, SiteHeader, SiteFooter],
+  imports: [RouterOutlet, AnnouncementBar, SiteHeader, SiteFooter, CartDrawer],
   templateUrl: './shell.html',
   styleUrl: './shell.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
