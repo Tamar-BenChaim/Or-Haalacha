@@ -24,8 +24,14 @@
 אין קבצי `.env`. כתובת ה־API בקבצי `src/environments/` (`environment.development.ts` לפיתוח, `environment.ts` לייצור):
 
 ```ts
-export const environment = { apiUrl: 'http://localhost:3000' };
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:3000',
+  useMockApi: true,
+};
 ```
+
+`useMockApi: true` (בפיתוח) מציג ספרים פיקטיביים מתוך הדפדפן, בלי שרת. כדי לעבוד מול השרת האמיתי מחליפים ל־`false` ב־`environment.development.ts`. בייצור הערך תמיד `false`.
 
 הקבצים האלה נשלחים לדפדפן. **אין לשים בהם סודות.**
 

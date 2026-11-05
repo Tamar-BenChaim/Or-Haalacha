@@ -1,3 +1,39 @@
 <section id="books" class="books container" aria-labelledby="books-title">
   <h2 id="books-title">ספרי הסדרה</h2>
+
+  <div class="tools">
+    <label class="visually-hidden" for="book-search">חיפוש ספר</label>
+    <input
+      id="book-search"
+      type="search"
+      placeholder="חיפוש ספר"
+      autocomplete="off"
+      [value]="query()"
+      (input)="onSearch($event)"
+    />
+    <p class="count" aria-live="polite">{{ countText() }}</p>
+  </div>
+
+  @if (status() === 'error') {
+    <div class="state" role="alert">
+      <p>לא הצלחנו לטעון את הספרים.</p>
+      <button type="button" class="btn-o" (click)="retry()">נסו שוב</button>
+    </div>
+  } @else if (status() === 'ready') {
+    @if (shown().length > 0) {
+      <ul class="grid">
+        @for (book of shown(); track book.id) {
+          <li><oh-book-card [book]="book" /></li>
+        }
+      </ul>
+    } @else {
+      <p class="state">לא נמצאו ספרים</p>
+    }
+  } @else {
+    <div class="grid" aria-busy="true" aria-label="טוען ספרים">
+      @for (placeholder of placeholders; track placeholder) {
+        <div class="skeleton"></div>
+      }
+    </div>
+  }
 </section>
