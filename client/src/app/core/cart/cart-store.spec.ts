@@ -2,7 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Observable, of, Subject, throwError } from 'rxjs';
 
+import { BOOKS_SOURCE } from '../catalog/books-source';
 import { CartLine, CartQuote, QuotedLine } from '../models/cart';
+import { sampleBook } from '../testing/sample-books';
 import { UiStore } from '../ui/ui-store';
 import { CART_QUOTE_SOURCE } from './cart-quote-source';
 import { CART_STORAGE_KEY, CartStore, MAX_LINES, MAX_QUANTITY, parseCartLines } from './cart-store';
@@ -30,10 +32,15 @@ function setup(
   quote: (lines: CartLine[]) => Observable<CartQuote> = (lines) => of(okQuote(lines)),
 ) {
   const source = { quote: vi.fn(quote) };
+  const books = { list: vi.fn(() => of([{ ...sampleBook, slug: 'a', title: 'ספר a' }])) };
   TestBed.configureTestingModule({
-    providers: [provideRouter([]), { provide: CART_QUOTE_SOURCE, useValue: source }],
+    providers: [
+      provideRouter([]),
+      { provide: CART_QUOTE_SOURCE, useValue: source },
+      { provide: BOOKS_SOURCE, useValue: books },
+    ],
   });
-  return { source, store: TestBed.inject(CartStore), ui: TestBed.inject(UiStore) };
+  return { source, books, store: TestBed.inject(CartStore), ui: TestBed.inject(UiStore) };
 }
 
 describe('parseCartLines', () => {
@@ -218,6 +225,21 @@ describe('CartStore', () => {
       });
       expect(store.subtotalAgorot()).toBe(2000);
       expect(store.canCheckout()).toBe(true);
+    });
+
+    it('gives each book line its cover details from the catalog', () => {
+      const { store, books } = setup();
+      store.addItem(book('a'));
+      store.addItem(book('unknown'));
+      expect(books.list).toHaveBeenCalledTimes(1);
+      expect(store.items()[0].book).toMatchObject({ title: 'ספר a', volume: 1 });
+      expect(store.items()[1].book).toBeNull();
+    });
+
+    it('has no cover details for a set', () => {
+      const { store } = setup();
+      store.addItem({ type: 'bundle', slug: 'a' });
+      expect(store.items()[0].book).toBeNull();
     });
 
     it('shows a line as pending until the server answered', () => {

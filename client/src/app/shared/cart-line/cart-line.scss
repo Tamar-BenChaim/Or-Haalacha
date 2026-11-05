@@ -11,6 +11,20 @@
   border-block-end: 1px solid var(--line);
 }
 
+// A small cover, like the mockup. The empty box keeps the rows aligned while the catalog loads.
+.mini {
+  display: block;
+  flex: 0 0 58px;
+  inline-size: 58px;
+  --cover-shadow: 0 4px 10px rgb(35 28 29 / 20%);
+}
+
+.placeholder {
+  display: block;
+  aspect-ratio: 3 / 4;
+  background: var(--tint);
+}
+
 .info {
   flex: 1 1 160px;
   min-inline-size: 0;

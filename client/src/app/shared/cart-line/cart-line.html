@@ -1,4 +1,12 @@
 <article class="line">
+  <a class="mini" [routerLink]="link()" tabindex="-1" aria-hidden="true">
+    @if (item().book; as book) {
+      <oh-book-cover [book]="book" [decorative]="true" />
+    } @else {
+      <span class="placeholder"></span>
+    }
+  </a>
+
   <div class="info">
     <a class="title" [routerLink]="link()">{{ title() }}</a>
     @if (item().unitPriceAgorot !== null) {

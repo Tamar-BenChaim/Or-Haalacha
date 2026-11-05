@@ -1,3 +1,5 @@
+import { Book } from './book';
+
 export type CartItemRef = { type: 'book'; slug: string } | { type: 'bundle'; slug: string };
 
 /** What is persisted in localStorage: only the slug and quantity, never prices. */
@@ -32,4 +34,6 @@ export interface CartItemView {
   /** Null while the server has not priced the current quantity yet. */
   lineTotalAgorot: number | null;
   status: QuoteStatus | 'pending';
+  /** What is needed to draw the cover, from the catalog. Null for sets or while it loads. */
+  book: Pick<Book, 'title' | 'volume' | 'topic' | 'coverImage'> | null;
 }

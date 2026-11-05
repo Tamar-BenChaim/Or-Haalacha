@@ -3,12 +3,13 @@ import { RouterLink } from '@angular/router';
 
 import { CartItemView } from '../../core/models/cart';
 import { AgorotToShekels } from '../agorot-to-shekels/agorot-to-shekels';
+import { BookCover } from '../book-cover/book-cover';
 import { QtyStepper } from '../qty-stepper/qty-stepper';
 
 /** One cart line (used by the side cart and the cart page). Presentational. */
 @Component({
   selector: 'oh-cart-line',
-  imports: [RouterLink, QtyStepper, AgorotToShekels],
+  imports: [RouterLink, BookCover, QtyStepper, AgorotToShekels],
   templateUrl: './cart-line.html',
   styleUrl: './cart-line.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

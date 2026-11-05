@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, of, Subject, switchMap } from 'rxjs';
 
 import { Announcer } from '../a11y/announcer';
+import { CatalogStore } from '../catalog/catalog-store';
 import { CartItemRef, CartItemView, CartLine, CartQuote } from '../models/cart';
 import { SafeStorage } from '../storage/safe-storage';
 import { UiStore } from '../ui/ui-store';
@@ -84,6 +85,7 @@ export class CartStore {
   private readonly ui = inject(UiStore);
   private readonly announcer = inject(Announcer);
   private readonly quoteSource = inject(CART_QUOTE_SOURCE);
+  private readonly catalog = inject(CatalogStore);
 
   private readonly linesState = signal<CartLine[]>(
     parseCartLines(this.storage.getItem(CART_STORAGE_KEY)),
@@ -112,7 +114,10 @@ export class CartStore {
 
   readonly items = computed<CartItemView[]>(() => {
     const quoted = new Map((this.quoteStore()?.items ?? []).map((q) => [refKey(q.ref), q]));
-    return this.linesState().map((line) => {
+    const books = new Map(this.catalog.books().map((book) => [book.slug, book]));
+    return this.linesState().map((line): CartItemView => {
+      // The cover comes from the catalog (the server's cart answer has no pictures).
+      const book = line.ref.type === 'book' ? (books.get(line.ref.slug) ?? null) : null;
       const q = quoted.get(refKey(line.ref));
       if (!q) {
         return {
@@ -121,6 +126,7 @@ export class CartStore {
           unitPriceAgorot: null,
           lineTotalAgorot: null,
           status: 'pending',
+          book,
         };
       }
       return {
@@ -130,6 +136,7 @@ export class CartStore {
         // A total for a different quantity is out of date: show nothing until the server answers.
         lineTotalAgorot: q.quantity === line.quantity ? q.lineTotalAgorot : null,
         status: q.status,
+        book,
       };
     });
   });
@@ -218,6 +225,8 @@ export class CartStore {
   revalidate(): void {
     if (!this.isEmpty()) {
       this.quoteStateSignal.set('loading');
+      // The covers come from the catalog; it loads once and is shared.
+      this.catalog.load();
     }
     this.requote.next();
   }

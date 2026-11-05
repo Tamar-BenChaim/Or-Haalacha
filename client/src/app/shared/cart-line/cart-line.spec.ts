@@ -10,6 +10,7 @@ const base: CartItemView = {
   unitPriceAgorot: 6500,
   lineTotalAgorot: 13000,
   status: 'ok',
+  book: { title: 'ספר לדוגמה', volume: 3, topic: 'נושא לדוגמה', coverImage: null },
 };
 
 function render(item: CartItemView) {
@@ -32,6 +33,20 @@ describe('CartLineRow', () => {
     expect(link.getAttribute('href')).toBe('/book/a');
     expect(el.querySelector('.unit')!.textContent).toContain('65');
     expect(el.querySelector('.total')!.textContent).toContain('130');
+  });
+
+  it('shows the book cover as a small picture that links to the book', () => {
+    const { el } = render(base);
+    const cover = el.querySelector('a.mini')!;
+    expect(cover.querySelector('oh-book-cover')).toBeTruthy();
+    expect(cover.getAttribute('href')).toBe('/book/a');
+    expect(cover.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('keeps an empty box where the cover goes while the book is not known yet', () => {
+    const { el } = render({ ...base, book: null });
+    expect(el.querySelector('a.mini oh-book-cover')).toBeNull();
+    expect(el.querySelector('a.mini .placeholder')).toBeTruthy();
   });
 
   it('links a set to the set page', () => {
