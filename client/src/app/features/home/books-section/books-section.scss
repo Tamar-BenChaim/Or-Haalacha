@@ -24,11 +24,17 @@ input[type='search'] {
   max-inline-size: 420px;
   min-height: var(--tap);
   padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--muted);
+  // The same grey as the count text ("20 כרכים"), a little softer. It stays dark enough
+  // (about 3.5:1 against white) to be seen as the edge of the field.
+  border: 1px solid color-mix(in srgb, var(--muted) 70%, white);
   border-radius: var(--radius);
   background: var(--bg);
   color: var(--ink);
   font: inherit;
+
+  &:focus {
+    border-color: var(--bur);
+  }
 }
 
 .count {

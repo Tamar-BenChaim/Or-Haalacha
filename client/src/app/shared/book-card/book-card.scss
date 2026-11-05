@@ -2,62 +2,179 @@
   display: block;
 }
 
+// Matches the design mockup (docs/design/mockups): padded card, narrower cover,
+// a small "+" button that shows its label on hover (always on touch screens).
 .card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 16px;
   height: 100%;
-  padding: var(--space-3);
+  padding: 24px 22px 18px;
   background: var(--card);
   border: 1px solid var(--card-b);
   border-radius: var(--radius);
+  transition: background-color 0.25s;
+}
+
+// Subtle motion (the style chosen by the client): the cover lifts and grows a little,
+// the card gets a faint tint. Sold out books do not react. Motion is switched off for
+// people who prefer reduced motion (global rule in styles/_base.scss).
+@media (hover: hover) {
+  .card:not(.soldout):hover {
+    background: #f8f4f4;
+    --cover-shadow: 0 20px 32px rgb(35 28 29 / 26%);
+
+    .stage {
+      transform: translateY(-8px) scale(1.035);
+    }
+  }
+}
+
+.card:not(.soldout):focus-within {
+  background: #f8f4f4;
+  --cover-shadow: 0 20px 32px rgb(35 28 29 / 26%);
+
+  .stage {
+    transform: translateY(-8px) scale(1.035);
+  }
+}
+
+@media (width <= 640px) {
+  .card {
+    padding: 16px 12px 14px;
+  }
+}
+
+.media {
+  position: relative;
 }
 
 .cover-link {
-  position: relative;
   display: block;
+}
+
+// The cover is narrower than the card and centered.
+.stage {
+  display: block;
+  width: 64%;
+  margin-inline: auto;
+  transition: transform 0.28s ease;
 }
 
 .name {
   margin: 0;
-  font-size: 1.1rem;
-}
-
-.price {
-  margin: 0;
-  color: var(--bur);
   font-family: var(--font-head);
   font-weight: 500;
+  font-size: 20px;
+  line-height: 1.3;
+
+  a:hover {
+    color: var(--bur);
+  }
 }
 
-.add {
+.desc {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.buy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   margin-top: auto;
 }
 
-// Hover lift only where a real pointer exists. Touch screens never hide the button.
-@media (hover: hover) {
-  .card:not(.soldout):hover {
-    box-shadow: 0 4px 14px rgb(0 0 0 / 12%);
+.price {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--bur);
+  letter-spacing: 0.2px;
+}
+
+.add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
+  border: none;
+  background: var(--bur);
+  color: #fff;
+  font: inherit;
+  font-weight: 500;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background: var(--bur-d);
+  }
+
+  &:disabled {
+    padding: 0 16px;
+    background: #efeae8;
+    color: #6f6567;
+    cursor: default;
   }
 }
 
-// Sold out: faded, blurred cover with a centered label, no hover reaction.
-.soldout {
-  .cover-link oh-book-cover {
-    filter: blur(1px) grayscale(0.4);
-    opacity: 0.55;
+.add-t {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-width 0.25s ease,
+    opacity 0.2s;
+}
+
+.add:disabled .add-t {
+  max-width: 60px;
+  opacity: 1;
+}
+
+// With a mouse the label appears on hover or keyboard focus; touch screens always show it.
+@media (hover: hover) {
+  .card:hover .add:not(:disabled) .add-t,
+  .add:focus-visible .add-t {
+    max-width: 110px;
+    opacity: 1;
   }
+}
+
+@media (hover: none) {
+  .add .add-t {
+    max-width: 110px;
+    opacity: 1;
+  }
+}
+
+// Sold out: faded, slightly blurred cover with a label in the middle.
+.soldout .stage {
+  filter: blur(1.3px) grayscale(0.35);
+  opacity: 0.6;
 }
 
 .soldout-label {
   position: absolute;
-  inset-block-start: 50%;
-  inset-inline: 10%;
-  transform: translateY(-50%);
-  padding: var(--space-2);
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  padding: 7px 18px;
   border: 1px solid var(--bur);
-  background: rgb(255 255 255 / 85%);
+  background: rgb(255 255 255 / 94%);
   color: var(--bur);
+  font-size: 15px;
   font-weight: 600;
-  text-align: center;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  pointer-events: none;
 }
