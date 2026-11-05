@@ -1,1 +1,129 @@
-<p>book works!</p>
+<div class="page container">
+  @switch (state().status) {
+    @case ('ready') {
+      @if (state().book; as book) {
+        <oh-breadcrumbs [items]="crumbs()" />
+
+        <div class="top">
+          <div class="media">
+            <div class="panel">
+              <div class="stage">
+                <oh-book-cover [book]="book" [decorative]="true" />
+                @if (!book.inStock) {
+                  <span class="soldout-label">אזל במלאי</span>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="info">
+            @if (book.volume !== null) {
+              <p class="eyebrow">חלק {{ book.volume }}</p>
+            }
+            <h1>{{ book.title }}</h1>
+            <span class="gold-rule"></span>
+            @if (book.shortDescription) {
+              <p class="lead">{{ book.shortDescription }}</p>
+            }
+            <p class="price">{{ book.priceAgorot | agorotToShekels }}</p>
+
+            @if (book.inStock) {
+              <p class="stock"><span class="dot" aria-hidden="true"></span>במלאי</p>
+              <div class="buy">
+                <oh-qty-stepper
+                  [value]="quantity()"
+                  [label]="'כמות: ' + book.title"
+                  (valueChange)="quantity.set($event)"
+                />
+                <button type="button" class="btn add" (click)="add(book)">הוספה לעגלה</button>
+              </div>
+            } @else {
+              <p class="out">הספר אזל במלאי כרגע</p>
+            }
+
+            <p class="set-note tinted">
+              הספר כלול גם <a routerLink="/set">בסט המלא</a> במחיר מיוחד.
+            </p>
+
+            <div class="share">
+              <button type="button" class="arrow" (click)="share(book)">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="18" cy="5" r="3" />
+                  <circle cx="6" cy="12" r="3" />
+                  <circle cx="18" cy="19" r="3" />
+                  <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" />
+                </svg>
+                שיתוף הספר
+              </button>
+              @if (copied()) {
+                <span class="copied" role="status">הקישור הועתק</span>
+              }
+            </div>
+          </div>
+        </div>
+
+        @if (book.description) {
+          <section class="about" aria-labelledby="about-title">
+            <h2 id="about-title">על הספר</h2>
+            <p>{{ book.description }}</p>
+          </section>
+        }
+
+        @if (neighbors(); as near) {
+          <nav class="volumes" aria-label="כרכים נוספים">
+            <a class="arrow" [routerLink]="['/book', near.previous.slug]">
+              → הכרך הקודם: {{ near.previous.title }}
+            </a>
+            <a class="arrow" [routerLink]="['/book', near.next.slug]">
+              הכרך הבא: {{ near.next.title }} ←
+            </a>
+          </nav>
+        }
+
+        @if (related().length > 0) {
+          <section class="related" aria-labelledby="related-title">
+            <h2 id="related-title">עוד מהסדרה</h2>
+            <ul class="grid">
+              @for (other of related(); track other.id) {
+                <li><oh-book-card [book]="other" (addToCart)="addFromCard($event)" /></li>
+              }
+            </ul>
+          </section>
+        }
+
+        @if (book.inStock) {
+          <div class="sticky-buy">
+            <span class="sticky-price">{{ book.priceAgorot | agorotToShekels }}</span>
+            <button type="button" class="btn" (click)="add(book)">הוספה לעגלה</button>
+          </div>
+        }
+      }
+    }
+    @case ('notfound') {
+      <div class="state">
+        <h1>הספר לא נמצא</h1>
+        <p>ייתכן שהקישור שגוי או שהספר הוסר.</p>
+        <a class="btn" routerLink="/" fragment="books">לכל הספרים</a>
+      </div>
+    }
+    @case ('error') {
+      <div class="state" role="alert">
+        <p>לא הצלחנו לטעון את הספר.</p>
+        <button type="button" class="btn-o" (click)="retry()">נסו שוב</button>
+      </div>
+    }
+    @default {
+      <p class="state" aria-busy="true">טוען…</p>
+    }
+  }
+</div>

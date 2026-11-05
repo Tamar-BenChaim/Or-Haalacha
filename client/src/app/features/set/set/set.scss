@@ -1,0 +1,147 @@
+.page {
+  padding-block-end: 72px;
+}
+
+.tinted {
+  background: var(--card);
+  border: 1px solid var(--card-b);
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-block-end: 36px;
+}
+
+.intro {
+  flex: 1 1 380px;
+  min-inline-size: 0;
+
+  h1 {
+    margin-block-end: 14px;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+.gold-rule {
+  display: block;
+  inline-size: 48px;
+  block-size: 2px;
+  margin-block-end: 18px;
+  background: var(--gold);
+}
+
+.lead {
+  max-inline-size: 520px;
+  margin: 0;
+  font-size: 19px;
+  color: var(--muted);
+}
+
+.price-card {
+  flex: 0 1 380px;
+  padding: 24px;
+}
+
+.prices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 14px;
+  margin-block-end: 6px;
+}
+
+.price {
+  font-family: var(--font-head);
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--bur);
+}
+
+.was {
+  font-size: 18px;
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.saving {
+  margin: 0 0 16px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.out {
+  margin: 0;
+  font-weight: 700;
+  color: var(--err);
+}
+
+.add {
+  inline-size: 100%;
+}
+
+.list {
+  margin-block-start: 40px;
+
+  h2 {
+    margin-block-end: 20px;
+    font-size: 30px;
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 0 40px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-block-end: 1px solid var(--line);
+  }
+}
+
+.name {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+
+  a {
+    font-weight: 500;
+
+    &:hover {
+      color: var(--bur);
+    }
+  }
+}
+
+.n,
+.muted {
+  color: var(--muted);
+}
+
+.n {
+  min-inline-size: 26px;
+  font-family: var(--font-head);
+}
+
+.state {
+  padding-block: var(--space-6);
+  text-align: center;
+}

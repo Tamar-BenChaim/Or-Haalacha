@@ -8,7 +8,10 @@ import { MockBooksApi } from './mock-books-api';
 
 /** Where the books come from. The rest of the app does not care which one it is. */
 export interface BooksSource {
+  /** The books that are shown, in display order. */
   list(): Observable<Book[]>;
+  /** One book with its full description. Fails with status 404 when it does not exist. */
+  get(slug: string): Observable<Book>;
 }
 
 /** The real API, or the fictional books when `environment.useMockApi` is true. */

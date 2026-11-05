@@ -21,6 +21,9 @@ export class CartLineRow {
   readonly quantityChange = output<number>();
   readonly removed = output<void>();
 
+  /** Remembered by the book page, to show the way back to the cart in its breadcrumbs. */
+  protected readonly from = { from: 'cart' };
+
   /** Where the title links to: the book page, or the set page. */
   protected readonly link = computed(() => {
     const ref = this.item().line.ref;

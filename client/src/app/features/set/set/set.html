@@ -1,1 +1,55 @@
-<p>set works!</p>
+<div class="page container">
+  <oh-breadcrumbs [items]="crumbs" />
+
+  @if (status() === 'error') {
+    <div class="state" role="alert">
+      <p>לא הצלחנו לטעון את הסט.</p>
+      <button type="button" class="btn-o" (click)="retry()">נסו שוב</button>
+    </div>
+  } @else if (set(); as set) {
+    <div class="top">
+      <div class="intro">
+        <p class="eyebrow">הצעה מיוחדת</p>
+        <h1>{{ set.title }}</h1>
+        <span class="gold-rule"></span>
+        <p class="lead">{{ set.description }} לחצו על ספר במדף כדי לראות אותו.</p>
+      </div>
+
+      <div class="price-card tinted">
+        <div class="prices">
+          <span class="price">{{ set.priceAgorot | agorotToShekels }}</span>
+          @if (saving() !== null) {
+            <span class="was">{{ set.separatePriceAgorot | agorotToShekels }}</span>
+          }
+        </div>
+        @if (saving(); as saved) {
+          <p class="saving">חיסכון של {{ saved | agorotToShekels }} לעומת קנייה בנפרד</p>
+        }
+        @if (set.inStock) {
+          <button type="button" class="btn add" (click)="add()">הוספת הסט לעגלה</button>
+        } @else {
+          <p class="out">הסט אזל במלאי כרגע</p>
+        }
+      </div>
+    </div>
+
+    <oh-shelf [books]="set.books" />
+
+    <section class="list" aria-labelledby="list-title">
+      <h2 id="list-title">הספרים בסט</h2>
+      <ul>
+        @for (book of set.books; track book.id; let i = $index) {
+          <li>
+            <span class="name">
+              <span class="n">{{ book.volume ?? i + 1 }}</span>
+              <a [routerLink]="['/book', book.slug]" [state]="from">{{ book.title }}</a>
+            </span>
+            <span class="muted">{{ book.priceAgorot | agorotToShekels }}</span>
+          </li>
+        }
+      </ul>
+    </section>
+  } @else {
+    <p class="state" aria-busy="true">טוען…</p>
+  }
+</div>
