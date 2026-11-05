@@ -16,3 +16,20 @@ export interface QuotedLine extends CartLine {
   requestedQuantity: number;
   status: QuoteStatus;
 }
+
+/** The POST /cart/quote response: every amount is calculated by the server, in agorot. */
+export interface CartQuote {
+  items: QuotedLine[];
+  subtotalAgorot: number;
+  allAvailable: boolean;
+}
+
+/** A cart line as shown to the user: the saved line plus what the server said about it. */
+export interface CartItemView {
+  line: CartLine;
+  title: string | null;
+  unitPriceAgorot: number | null;
+  /** Null while the server has not priced the current quantity yet. */
+  lineTotalAgorot: number | null;
+  status: QuoteStatus | 'pending';
+}

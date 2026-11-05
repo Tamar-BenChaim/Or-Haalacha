@@ -1,1 +1,40 @@
-<p>cart-line works!</p>
+<article class="line">
+  <div class="info">
+    <a class="title" [routerLink]="link()">{{ title() }}</a>
+    @if (item().unitPriceAgorot !== null) {
+      <p class="unit">{{ item().unitPriceAgorot | agorotToShekels }}</p>
+    }
+    @if (item().status === 'out_of_stock') {
+      <p class="warn">אזל במלאי. אפשר להסיר מהעגלה.</p>
+    }
+  </div>
+
+  <oh-qty-stepper
+    [value]="item().line.quantity"
+    [min]="0"
+    [label]="'כמות: ' + title()"
+    (valueChange)="quantityChange.emit($event)"
+  />
+
+  <p class="total">{{ item().lineTotalAgorot | agorotToShekels }}</p>
+
+  <button
+    type="button"
+    class="remove"
+    [attr.aria-label]="'הסרה מהעגלה: ' + title()"
+    (click)="removed.emit()"
+  >
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      aria-hidden="true"
+    >
+      <path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12" />
+    </svg>
+  </button>
+</article>

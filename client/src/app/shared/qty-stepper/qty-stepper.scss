@@ -1,0 +1,35 @@
+// Like the design mockup: a thin bordered strip with two 44px buttons.
+.qty {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1.5px solid #d9d0cd;
+  background: var(--bg);
+}
+
+button {
+  inline-size: var(--tap);
+  block-size: 46px;
+  border: none;
+  background: var(--bg);
+  color: var(--bur);
+  font: inherit;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: var(--tint);
+  }
+
+  &:disabled {
+    color: var(--muted);
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.value {
+  min-inline-size: 38px;
+  text-align: center;
+  font-weight: 700;
+}

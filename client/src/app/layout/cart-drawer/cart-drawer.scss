@@ -1,0 +1,120 @@
+// Like the design mockup: a panel on the left, a dark backdrop, a short slide-in.
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  inline-size: 100%;
+  padding: 0;
+  border: none;
+  background: rgb(35 28 29 / 45%);
+  cursor: default;
+}
+
+.drawer {
+  position: fixed;
+  inset-block: 0;
+  left: 0;
+  z-index: 41;
+  display: flex;
+  flex-direction: column;
+  inline-size: 410px;
+  max-inline-size: 92vw;
+  background: var(--bg);
+  box-shadow: 8px 0 30px rgb(0 0 0 / 20%);
+  animation: drawer-in 0.28s ease-out;
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(-36px);
+    opacity: 0;
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-block-end: 1px solid var(--line);
+}
+
+.title {
+  font-size: 24px;
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--tap);
+  block-size: var(--tap);
+  border: none;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--tint);
+  }
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 var(--space-4);
+}
+
+.lines,
+.notices {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notices {
+  margin-block: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--tint);
+  font-size: 15px;
+}
+
+.error {
+  color: var(--err);
+  font-weight: 600;
+}
+
+.empty {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.foot {
+  padding: var(--space-3) var(--space-4);
+  border-block-start: 1px solid var(--line);
+}
+
+.subtotal {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 var(--space-3);
+  font-size: 18px;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+
+  a {
+    flex: 1;
+  }
+}

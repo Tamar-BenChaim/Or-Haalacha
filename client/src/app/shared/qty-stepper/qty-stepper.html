@@ -1,1 +1,9 @@
-<p>qty-stepper works!</p>
+<div class="qty" role="group" [attr.aria-label]="label()">
+  <button type="button" aria-label="הגדלת כמות" [disabled]="value() >= max()" (click)="change(1)">
+    +
+  </button>
+  <span class="value" aria-live="polite">{{ value() }}</span>
+  <button type="button" aria-label="הפחתת כמות" [disabled]="value() <= min()" (click)="change(-1)">
+    −
+  </button>
+</div>

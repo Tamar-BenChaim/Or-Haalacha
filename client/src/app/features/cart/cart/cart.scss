@@ -1,0 +1,62 @@
+.page {
+  padding-block: var(--space-5);
+}
+
+h1 {
+  margin-block-end: var(--space-4);
+}
+
+.lines,
+.notices {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notices {
+  margin-block-end: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--tint);
+}
+
+.error {
+  color: var(--err);
+  font-weight: 600;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-6);
+}
+
+.summary {
+  max-inline-size: 420px;
+  margin-block-start: var(--space-4);
+  margin-inline-start: auto;
+}
+
+.subtotal {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  font-size: 20px;
+}
+
+.note {
+  margin: var(--space-1) 0 var(--space-3);
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+
+  a {
+    flex: 1 1 140px;
+  }
+}

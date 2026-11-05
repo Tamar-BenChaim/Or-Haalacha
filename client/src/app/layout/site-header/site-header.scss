@@ -59,6 +59,25 @@
   justify-self: end;
 }
 
+// A short pulse when something was added to the cart (switched off by reduced motion).
+.cart.bump {
+  animation: bump 0.45s ease;
+}
+
+@keyframes bump {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.16);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 // Narrow screens: logo and cart on the first row, the nav centered on its own row.
 @media (width <= 900px) {
   .inner {
