@@ -5,7 +5,7 @@ import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Book } from '../models/book';
 
-/** GET /books: the books that are shown, in display order. */
+/** GET /books and GET /books/:slug. */
 @Injectable({ providedIn: 'root' })
 export class HttpBooksApi {
   private readonly http = inject(HttpClient);
@@ -19,5 +19,18 @@ export class HttpBooksApi {
         return response.books;
       }),
     );
+  }
+
+  get(slug: string): Observable<Book> {
+    return this.http
+      .get<{ book: Book }>(`${environment.apiUrl}/books/${encodeURIComponent(slug)}`)
+      .pipe(
+        map((response) => {
+          if (typeof response?.book?.slug !== 'string') {
+            throw new Error('Unexpected response from GET /books/:slug');
+          }
+          return response.book;
+        }),
+      );
   }
 }

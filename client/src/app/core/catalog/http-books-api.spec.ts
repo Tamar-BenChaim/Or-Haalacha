@@ -36,4 +36,28 @@ describe('HttpBooksApi', () => {
 
     expect(failed).toBe(true);
   });
+
+  it('reads one book from GET /books/:slug, with the slug encoded', () => {
+    const { api, http } = setup();
+    let result: unknown;
+    api.get('a b/ג').subscribe((book) => (result = book));
+    const request = http.expectOne(`${environment.apiUrl}/books/${encodeURIComponent('a b/ג')}`);
+    request.flush({ book: sampleBook });
+    expect(result).toEqual(sampleBook);
+  });
+
+  it('passes a 404 on, and fails on an unexpected shape', () => {
+    const { api, http } = setup();
+    let status: number | undefined;
+    api.get('x').subscribe({ error: (e) => (status = e.status) });
+    http
+      .expectOne(`${environment.apiUrl}/books/x`)
+      .flush({ error: { code: 'BOOK_NOT_FOUND' } }, { status: 404, statusText: 'Not Found' });
+    expect(status).toBe(404);
+
+    let failed = false;
+    api.get('y').subscribe({ error: () => (failed = true) });
+    http.expectOne(`${environment.apiUrl}/books/y`).flush({ nope: true });
+    expect(failed).toBe(true);
+  });
 });

@@ -1,6 +1,6 @@
 <article class="line">
   @if (showCover()) {
-    <a class="mini" [routerLink]="link()" tabindex="-1" aria-hidden="true">
+    <a class="mini" [routerLink]="link()" [state]="from" tabindex="-1" aria-hidden="true">
       @if (item().book; as book) {
         <oh-book-cover [book]="book" [decorative]="true" />
       } @else {
@@ -10,7 +10,7 @@
   }
 
   <div class="info">
-    <a class="title" [routerLink]="link()">{{ title() }}</a>
+    <a class="title" [routerLink]="link()" [state]="from">{{ title() }}</a>
     @if (item().unitPriceAgorot !== null) {
       <p class="unit">{{ item().unitPriceAgorot | agorotToShekels }} ליחידה</p>
     }

@@ -1,0 +1,75 @@
+// Like the design mockup: burgundy spines with gold lines, standing on a board.
+.shelf-scroll {
+  padding-block-start: 16px;
+  overflow-x: auto;
+}
+
+.shelf-in {
+  min-inline-size: 700px;
+}
+
+.spines {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  block-size: 300px;
+  padding-inline: 8px;
+}
+
+.spine {
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 0;
+  overflow: hidden;
+  background: var(--bur);
+  box-shadow: inset -3px 0 0 rgb(0 0 0 / 22%);
+  transition: transform 0.2s;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    block-size: 2px;
+    background: var(--gold);
+  }
+
+  &::before {
+    inset-block-start: 9%;
+  }
+
+  &::after {
+    inset-block-end: 9%;
+  }
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-12px);
+  }
+}
+
+.spine-t {
+  writing-mode: vertical-rl;
+  font-family: var(--font-head);
+  font-size: 13px;
+  color: var(--gold-l);
+  white-space: nowrap;
+}
+
+.board {
+  block-size: 12px;
+  margin-block-start: -1px;
+  background: linear-gradient(#dccfc9, #cdbeb6);
+  box-shadow: 0 10px 16px rgb(35 28 29 / 14%);
+}
+
+.caption {
+  min-block-size: 28px;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+  text-align: center;
+}
