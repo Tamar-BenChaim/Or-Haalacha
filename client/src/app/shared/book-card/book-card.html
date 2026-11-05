@@ -1,1 +1,21 @@
-<p>book-card works!</p>
+<article class="card" [class.soldout]="!book().inStock">
+  <a class="cover-link" [routerLink]="['/book', book().slug]" tabindex="-1" aria-hidden="true">
+    <oh-book-cover [book]="book()" [decorative]="true" />
+    @if (!book().inStock) {
+      <span class="soldout-label">אזל במלאי</span>
+    }
+  </a>
+  <h3 class="name">
+    <a [routerLink]="['/book', book().slug]">{{ book().title }}</a>
+  </h3>
+  <p class="price">{{ book().priceAgorot | agorotToShekels }}</p>
+  <button
+    type="button"
+    class="btn btn-sm add"
+    [disabled]="!book().inStock"
+    [attr.aria-label]="'הוספה לעגלה: ' + book().title"
+    (click)="add()"
+  >
+    הוספה לעגלה
+  </button>
+</article>
