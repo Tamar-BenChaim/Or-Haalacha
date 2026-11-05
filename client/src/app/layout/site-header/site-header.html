@@ -14,16 +14,13 @@
       <a routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page">אודות</a>
       <a routerLink="/contact" routerLinkActive="active" ariaCurrentWhenActive="page">צור קשר</a>
     </nav>
-    <button
-      type="button"
+    <a
       class="btn cart"
+      routerLink="/cart"
       [class.bump]="ui.bumping()"
-      aria-haspopup="dialog"
-      [attr.aria-expanded]="ui.drawerOpen()"
       [attr.aria-label]="'עגלת קניות, ' + cartCount() + ' פריטים'"
-      (click)="ui.openDrawer()"
     >
       עגלה ({{ cartCount() }})
-    </button>
+    </a>
   </div>
 </header>

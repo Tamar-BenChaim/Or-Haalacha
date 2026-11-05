@@ -72,7 +72,7 @@ describe('SiteHeader', () => {
 
   it('shows the cart count and a matching accessible name', async () => {
     const { el } = await render();
-    const cart = el.querySelector('button.cart')!;
+    const cart = el.querySelector('a.cart')!;
     expect(cart.textContent).toContain('עגלה (0)');
     expect(cart.getAttribute('aria-label')).toBe('עגלת קניות, 0 פריטים');
   });
@@ -81,18 +81,22 @@ describe('SiteHeader', () => {
     const { fixture, el } = await render();
     TestBed.inject(CartStore).addItem({ type: 'book', slug: 'a' }, 3);
     fixture.detectChanges();
-    const cart = el.querySelector('button.cart')!;
+    const cart = el.querySelector('a.cart')!;
     expect(cart.textContent).toContain('עגלה (3)');
     expect(cart.getAttribute('aria-label')).toBe('עגלת קניות, 3 פריטים');
   });
 
-  it('opens the side cart when the cart button is clicked', async () => {
+  it('goes to the full cart page, and does not open the side cart', async () => {
     const { fixture, el } = await render();
     const ui = TestBed.inject(UiStore);
-    expect(ui.drawerOpen()).toBe(false);
-    el.querySelector<HTMLButtonElement>('button.cart')!.click();
+    TestBed.inject(CartStore).addItem({ type: 'book', slug: 'a' });
+    ui.closeDrawer();
     fixture.detectChanges();
-    expect(ui.drawerOpen()).toBe(true);
-    expect(el.querySelector('button.cart')!.getAttribute('aria-expanded')).toBe('true');
+    const cart = el.querySelector<HTMLAnchorElement>('a.cart')!;
+    expect(cart.getAttribute('href')).toBe('/cart');
+    cart.click();
+    await fixture.whenStable();
+    expect(TestBed.inject(Router).url).toBe('/cart');
+    expect(ui.drawerOpen()).toBe(false);
   });
 });
