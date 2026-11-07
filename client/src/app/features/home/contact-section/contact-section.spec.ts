@@ -101,6 +101,31 @@ describe('ContactSection', () => {
       );
     });
 
+    // The page's base style makes every link inside a list bold. A row that is a link (the
+    // email) must not turn its label ("מייל") bold while the other row ("טלפון") is normal.
+    it('writes the rows in the same weight, whether or not a row is a link', () => {
+      // Development: the email row is a link, the phone row is only text ("[מספר טלפון]").
+      const { el } = setup();
+      const [email, phone] = Array.from(el.querySelectorAll('.details .row'));
+      expect(email.tagName).toBe('A');
+      expect(phone.tagName).toBe('DIV');
+      expect(getComputedStyle(email).fontWeight).toBe(getComputedStyle(phone).fontWeight);
+    });
+
+    it('writes the rows in the same weight when both are links', () => {
+      const { el } = setup(undefined, { phone: '050-123-4567' });
+      const weights = Array.from(el.querySelectorAll('.details .row')).map(
+        (row) => getComputedStyle(row).fontWeight,
+      );
+      expect(new Set(weights).size).toBe(1);
+    });
+
+    it('keeps the rows in normal weight (only the values are heavier)', () => {
+      const { el } = setup();
+      const row = getComputedStyle(el.querySelector('.details a.row')!).fontWeight;
+      expect(['400', 'normal']).toContain(row);
+    });
+
     it('writes the email and the phone left to right, so they read correctly', () => {
       const { el } = setup(undefined, { phone: '050-123-4567' });
       for (const value of Array.from(el.querySelectorAll('.details .value'))) {

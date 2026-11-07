@@ -58,6 +58,9 @@
   padding: 16px 0;
   border-block-end: 1px solid var(--line);
   color: inherit;
+  // The page's base style makes every link inside a list bold. Without this the email row
+  // (a link) would have a bold "מייל" while the phone row has a normal "טלפון".
+  font-weight: 400;
 }
 
 a.row:hover .value,
