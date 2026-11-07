@@ -20,32 +20,6 @@
   max-inline-size: 100%;
 }
 
-.panel {
-  padding: 40px 24px;
-  background: var(--card);
-  border: 1px solid var(--card-b);
-}
-
-.stage {
-  position: relative;
-  inline-size: 66%;
-  margin-inline: auto;
-}
-
-.soldout-label {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  padding: 7px 18px;
-  border: 1px solid var(--bur);
-  background: rgb(255 255 255 / 94%);
-  color: var(--bur);
-  font-size: 15px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
 .info {
   flex: 1 1 0;
   min-inline-size: 0;
@@ -153,9 +127,17 @@
   color: var(--ok);
 }
 
-.about {
-  max-inline-size: 760px;
+// "About the book" on one side, the details and the institutional order box on the other.
+.more {
+  display: flex;
+  align-items: flex-start;
+  gap: 56px;
   padding-block-end: 48px;
+}
+
+.about {
+  flex: 1 1 0;
+  min-inline-size: 0;
 
   h2 {
     margin-block-end: 14px;
@@ -163,10 +145,95 @@
   }
 
   p {
-    margin: 0;
+    margin: 0 0 22px;
     font-size: 18px;
     line-height: 1.8;
     color: var(--muted);
+  }
+}
+
+.preview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+
+  img {
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border: 1px solid var(--card-b);
+  }
+}
+
+// A sample box where a page is missing (development only).
+.ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 3 / 4;
+  padding: 12px;
+  background: var(--card);
+  border: 1px dashed #cfc4bf;
+  color: var(--muted);
+  text-align: center;
+}
+
+.facts {
+  flex: 0 0 400px;
+  max-inline-size: 100%;
+
+  h2 {
+    margin-block-end: 14px;
+    font-size: 30px;
+  }
+}
+
+.tbl {
+  inline-size: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 12px 4px;
+    border-block-end: 1px solid var(--line);
+    text-align: start;
+  }
+
+  th {
+    inline-size: 42%;
+    font-weight: 400;
+    color: var(--muted);
+  }
+}
+
+.order {
+  margin-block-start: 22px;
+  padding: 20px 22px;
+
+  .order-title {
+    margin: 0 0 4px;
+    font-weight: 700;
+  }
+
+  .order-note {
+    margin: 0 0 10px;
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  a {
+    font-weight: 700;
+    color: var(--bur);
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
   }
 }
 
@@ -237,6 +304,16 @@
   }
 
   .media {
+    flex-basis: auto;
+  }
+
+  .more {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
+  }
+
+  .facts {
     flex-basis: auto;
   }
 

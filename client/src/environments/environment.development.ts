@@ -6,4 +6,7 @@ export const environment = {
   useMockApi: true,
   // The coupon field of the design mockup. Shown here so it can be reviewed; it does nothing yet.
   showCoupon: true,
+  // Sample boxes like in the design mockup where the book has no content yet (back cover,
+  // contents, sample pages, technical details). Shown here so the page can be reviewed.
+  showContentPlaceholders: true,
 };
