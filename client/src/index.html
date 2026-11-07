@@ -6,6 +6,14 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <!-- The Stam font is used by the logo and the big title: load it early, so the title does not change font after it is shown. -->
+    <link
+      rel="preload"
+      href="fonts/stam-ashkenaz-clm-medium.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
   </head>
   <body>
     <oh-root></oh-root>

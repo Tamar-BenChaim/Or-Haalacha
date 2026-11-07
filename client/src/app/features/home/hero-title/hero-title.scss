@@ -1,0 +1,54 @@
+@use 'sass:list';
+
+// The depth: 16 copies of the text, each one a little lower and to the right of the previous
+// one, a little darker, so together they look like the thick side of a metal letter.
+$depth-colors:
+  #966d20, #91691e, #8c651d, #87611b, #825d19, #7d5918, #785516, #735115, #6d4c13, #684811, #634410,
+  #5e400e, #593c0c, #54380b, #4f3409, #4a3008;
+
+@function extrusion() {
+  $shadows: ();
+  @for $i from 1 through 16 {
+    $shadows: list.append(
+      $shadows,
+      (#{0.0036em * $i} #{0.0041em * $i} 0 list.nth($depth-colors, $i)),
+      comma
+    );
+  }
+  // A soft shadow under the whole title.
+  @return list.append($shadows, (0.064em 0.092em 0.12em rgb(0 0 0 / 55%)), comma);
+}
+
+:host {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-stam);
+  font-size: clamp(64px, 15vw, 216px);
+  line-height: 1.08;
+  white-space: nowrap;
+}
+
+.ext {
+  position: absolute;
+  inset: 0;
+  color: #3a2508;
+  text-shadow: extrusion();
+  -webkit-text-stroke: 0.024em #6b4a12;
+}
+
+.face {
+  position: relative;
+  background-image: linear-gradient(
+    180deg,
+    #fff4c9 0%,
+    #f0d27f 22%,
+    #d3a448 48%,
+    #f4db93 62%,
+    #b98530 82%,
+    #8b6120 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 0.026em #f7e2a0;
+}
