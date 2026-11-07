@@ -5,9 +5,9 @@ import { SHOW_CONTENT_PLACEHOLDERS } from '../../../core/config/content-placehol
 import { HeroTitle } from '../hero-title/hero-title';
 
 /**
- * The opening area of the home page: burgundy, with the 3D gold title and five sparkles
- * around it that grow and glow when the page opens, then twinkle slowly. All motion is CSS
- * and is switched off for people who prefer reduced motion.
+ * The opening area of the home page: burgundy, with the 3D gold title across the whole
+ * width and five sparkles around it that grow and glow when the page opens (once, they do
+ * not repeat). All motion is CSS and is switched off for people who prefer reduced motion.
  */
 @Component({
   selector: 'oh-hero',

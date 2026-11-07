@@ -1,8 +1,10 @@
 <section class="hero" aria-labelledby="hero-title">
   <div class="inner">
-    <p class="eyebrow">סדרת ספרי הלכה</p>
     <h1 id="hero-title" class="visually-hidden">אור ההלכה</h1>
-    <oh-hero-title />
+    <!-- The title fills the whole width of the page: its size follows the width of this box. -->
+    <div class="title-wrap">
+      <oh-hero-title />
+    </div>
 
     @if (placeholders) {
       <p class="sub">[משפט משנה על הסדרה]</p>
