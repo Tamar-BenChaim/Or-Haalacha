@@ -1,9 +1,21 @@
 <section class="hero" aria-labelledby="hero-title">
-  <h1 id="hero-title" class="visually-hidden">אור ההלכה</h1>
-  <p class="eyebrow">סדרת ספרי הלכה</p>
-  <p class="title" aria-hidden="true">אור ההלכה</p>
-  <div class="actions">
-    <a class="btn" routerLink="/" fragment="books">לכל הספרים</a>
-    <a class="btn-o" routerLink="/" fragment="set">הסט המלא</a>
+  <div class="inner">
+    <p class="eyebrow">סדרת ספרי הלכה</p>
+    <h1 id="hero-title" class="visually-hidden">אור ההלכה</h1>
+    <oh-hero-title />
+
+    @if (placeholders) {
+      <p class="sub">[משפט משנה על הסדרה]</p>
+      <p class="meta">כ׳ כרכים · מאת הרב [שם המחבר]</p>
+    }
+
+    <div class="actions">
+      <a class="btn gold" routerLink="/" fragment="books">לכל הספרים</a>
+      <a class="btn ghost" routerLink="/" fragment="set">הסט המלא</a>
+    </div>
+
+    @for (n of sparkles; track n) {
+      <span class="spark" [class]="'s' + n" aria-hidden="true"><span class="star"></span></span>
+    }
   </div>
 </section>

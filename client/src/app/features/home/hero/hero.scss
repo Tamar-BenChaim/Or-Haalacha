@@ -1,34 +1,184 @@
+// Burgundy opening area, no frame (docs/design-notes.md). Like the design mockup.
 .hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-4);
-  min-block-size: 70vh;
-  padding: var(--space-6) var(--space-3);
-  background: var(--tint);
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 40%, #7c2533 0%, #5c1926 58%, #40101a 100%);
+  border-block-end: 3px solid var(--gold);
+  color: #f6ebe4;
   text-align: center;
 }
 
-.eyebrow {
-  margin: 0;
-  color: var(--muted);
-  letter-spacing: 0.04em;
+.inner {
+  position: relative;
+  max-inline-size: 1240px;
+  margin-inline: auto;
+  padding: 72px 40px 60px;
 }
 
-.title {
-  margin: 0;
-  font-family: var(--font-stam);
-  font-size: clamp(56px, 12vw, 128px);
-  line-height: 1.1;
-  color: var(--bur);
-  -webkit-text-stroke: 0.024em currentcolor;
-  paint-order: stroke fill;
+.eyebrow {
+  margin: 0 0 18px;
+  font-size: 17px;
+  letter-spacing: 1px;
+  color: #e3cbc5;
+}
+
+.sub {
+  margin: 30px 0 10px;
+  font-family: var(--font-head);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.meta {
+  margin: 0 0 34px;
+  font-size: 18px;
+  opacity: 0.88;
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-3);
+  gap: 16px;
+  margin-block-start: 34px;
+}
+
+// Gold button, and a button with a gold outline, on the burgundy.
+.btn.gold {
+  background: var(--gold-l);
+  border-color: var(--gold-l);
+  color: #3a0f16;
+  font-weight: 600;
+
+  &:hover {
+    background: #f2dda8;
+    border-color: #f2dda8;
+  }
+}
+
+.btn.ghost {
+  background: transparent;
+  border-color: var(--gold-l);
+  color: #f6ebe4;
+
+  &:hover {
+    background: rgb(255 255 255 / 8%);
+  }
+}
+
+// ---- The sparkles ----
+// A four-pointed star with a golden glow. On opening each one grows a little past its size
+// and glows strongly (one after the other), then settles and twinkles slowly.
+.spark {
+  position: absolute;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px rgb(255 236 170 / 95%)) drop-shadow(0 0 14px rgb(255 220 130 / 55%));
+  animation:
+    spark-open 1.4s ease-out both,
+    spark-twinkle 3.4s ease-in-out 1.8s infinite;
+
+  .star {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    background: #fffbe8;
+    clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+  }
+}
+
+.s1 {
+  right: 9%;
+  top: 12%;
+  inline-size: 46px;
+  block-size: 46px;
+  animation-delay: 0.2s, 2s;
+}
+
+.s2 {
+  right: 13%;
+  top: 27%;
+  inline-size: 24px;
+  block-size: 24px;
+  animation-delay: 0.5s, 2.3s;
+}
+
+.s3 {
+  left: 20%;
+  bottom: 14%;
+  inline-size: 34px;
+  block-size: 34px;
+  animation-delay: 0.8s, 2.6s;
+}
+
+.s4 {
+  left: -10px;
+  top: -10px;
+  inline-size: 58px;
+  block-size: 58px;
+  animation-delay: 1.1s, 2.9s;
+}
+
+.s5 {
+  left: 47%;
+  top: 8%;
+  inline-size: 22px;
+  block-size: 22px;
+  animation-delay: 0.35s, 2.15s;
+}
+
+// Opening: from nothing, grows past its size with a big glow, then settles.
+@keyframes spark-open {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+    filter: drop-shadow(0 0 0 rgb(255 236 170 / 0%)) drop-shadow(0 0 0 rgb(255 220 130 / 0%));
+  }
+
+  55% {
+    opacity: 1;
+    transform: scale(1.35);
+    filter: drop-shadow(0 0 12px rgb(255 240 190 / 100%))
+      drop-shadow(0 0 30px rgb(255 220 130 / 85%));
+  }
+
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px rgb(255 236 170 / 95%)) drop-shadow(0 0 14px rgb(255 220 130 / 55%));
+  }
+}
+
+@keyframes spark-twinkle {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.82);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@media (width <= 760px) {
+  .inner {
+    padding: 44px 18px 40px;
+  }
+
+  .sub {
+    font-size: 22px;
+  }
+
+  // Smaller sparkles, so they do not cover the title on a phone.
+  .s1 {
+    inline-size: 30px;
+    block-size: 30px;
+  }
+
+  .s4 {
+    inline-size: 38px;
+    block-size: 38px;
+  }
 }
