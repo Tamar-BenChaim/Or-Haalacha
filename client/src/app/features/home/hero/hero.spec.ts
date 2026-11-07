@@ -30,13 +30,17 @@ describe('Hero', () => {
     expect(el.textContent).not.toContain('סדרת ספרי הלכה');
   });
 
-  it('puts the title in a box that is the whole width of the hero, so it can fill the page', () => {
-    const el = render();
-    const wrap = el.querySelector('.inner > .title-wrap')!;
-    expect(wrap.querySelector('oh-hero-title')).toBeTruthy();
-    expect(styleOf('title-wrap')).toMatch(/container-type:\s*inline-size/);
-    // No side limit on the content (it used to be 1240px).
-    expect(styleOf('inner')).not.toMatch(/max-inline-size/);
+  it('is a burgundy band across the whole page that fills the screen under the header', () => {
+    render();
+    expect(styleOf('hero')).toMatch(/min-block-size:\s*calc\(100svh/);
+    expect(styleOf('hero')).toContain('radial-gradient');
+    expect(allHeroStyles()).toMatch(/_nghost[^{]*\{[^}]*display:\s*block/);
+  });
+
+  it('keeps the content in the middle at its normal width', () => {
+    render();
+    expect(styleOf('inner')).toMatch(/max-inline-size:\s*1240px/);
+    expect(styleOf('inner')).toMatch(/margin-inline:\s*auto/);
   });
 
   it('has the two buttons: all the books, and the full set (gold and outlined)', () => {

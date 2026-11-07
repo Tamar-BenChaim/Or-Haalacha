@@ -23,20 +23,9 @@ $depth-colors:
   position: relative;
   display: inline-block;
   font-family: var(--font-stam);
-  // Until the browser knows container units, a size from the window width.
-  font-size: clamp(48px, 18vw, 300px);
+  font-size: clamp(64px, 15vw, 216px);
   line-height: 1.08;
   white-space: nowrap;
-}
-
-// The title is as wide as the box around it, from edge to edge. "אור ההלכה" in this font
-// is 4.61 times the font size wide (measured from the font file), plus the depth and the
-// outline (about 0.09). 4.7 leaves a hair of room. On very wide screens the size stops
-// growing at 360px, so the letters do not get taller than the screen.
-@supports (font-size: 1cqw) {
-  :host {
-    font-size: min(calc(100cqw / 4.7), 360px);
-  }
 }
 
 .ext {

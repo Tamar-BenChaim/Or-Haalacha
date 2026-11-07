@@ -1,10 +1,7 @@
 <section class="hero" aria-labelledby="hero-title">
   <div class="inner">
     <h1 id="hero-title" class="visually-hidden">אור ההלכה</h1>
-    <!-- The title fills the whole width of the page: its size follows the width of this box. -->
-    <div class="title-wrap">
-      <oh-hero-title />
-    </div>
+    <oh-hero-title />
 
     @if (placeholders) {
       <p class="sub">[משפט משנה על הסדרה]</p>
@@ -15,9 +12,9 @@
       <a class="btn gold" routerLink="/" fragment="books">לכל הספרים</a>
       <a class="btn ghost" routerLink="/" fragment="set">הסט המלא</a>
     </div>
-
-    @for (n of sparkles; track n) {
-      <span class="spark" [class]="'s' + n" aria-hidden="true"><span class="star"></span></span>
-    }
   </div>
+
+  @for (n of sparkles; track n) {
+    <span class="spark" [class]="'s' + n" aria-hidden="true"><span class="star"></span></span>
+  }
 </section>

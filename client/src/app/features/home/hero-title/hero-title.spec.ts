@@ -33,17 +33,14 @@ describe('HeroTitle', () => {
     );
   });
 
-  it('is as wide as the box around it: its size is the width of that box divided by 4.7', () => {
+  it('is back at its original size: 15% of the window width, between 64px and 216px', () => {
     render();
     const css = Array.from(document.head.querySelectorAll('style'))
       .map((style) => style.textContent ?? '')
       .filter((text) => text.includes('text-shadow'))
       .join('\n');
-    // "אור ההלכה" is 4.61 times its font size wide (measured from the font file) plus the depth.
-    // (The build works the division out: 100 / 4.7 = 21.27 percent of the box width.)
-    expect(css).toMatch(/21\.27\d*cqw|100cqw\s*\/\s*4\.7/);
-    // It stops growing on very wide screens, so the letters never get taller than the screen.
-    expect(css).toMatch(/360px/);
+    expect(css).toMatch(/clamp\(64px,\s*15vw,\s*216px\)/);
+    expect(css).not.toMatch(/cqw/);
   });
 
   it('never wraps to a second line', () => {

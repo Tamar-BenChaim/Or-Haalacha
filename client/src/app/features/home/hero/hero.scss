@@ -1,6 +1,17 @@
 // Burgundy opening area, no frame (docs/design-notes.md). Like the design mockup.
+// The host is a custom element: make it a block, so the burgundy runs edge to edge.
+:host {
+  display: block;
+}
+
+// The burgundy band is the whole width of the page and fills the screen under the header.
+// The content in it is centered and keeps its normal width.
 .hero {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-block-size: calc(100svh - 120px);
   overflow: hidden;
   background: radial-gradient(ellipse at 50% 40%, #7c2533 0%, #5c1926 58%, #40101a 100%);
   border-block-end: 3px solid var(--gold);
@@ -8,16 +19,13 @@
   text-align: center;
 }
 
-// The whole width of the page (no side limit). The top padding leaves room for the sparkles
-// above the title, so none of them touches the header.
+// The content keeps its normal width, in the middle. The top padding leaves room for the
+// sparkles above the title, so none of them touches the header.
 .inner {
-  position: relative;
-  padding: 96px clamp(12px, 2vw, 32px) 64px;
-}
-
-// The title is as wide as this box (see hero-title.scss).
-.title-wrap {
-  container-type: inline-size;
+  inline-size: 100%;
+  max-inline-size: 1240px;
+  margin-inline: auto;
+  padding: 96px 40px 64px;
 }
 
 .sub {
@@ -68,8 +76,8 @@
 // ---- The sparkles ----
 // A four-pointed star with a golden glow. When the page opens each one grows a little past
 // its size and glows strongly, one after the other. Then it stays (it does not repeat).
-// Every sparkle is at least 56px below the top edge, and the sides are not cut off, so
-// the glow never touches the header above.
+// They are placed against the whole burgundy band. Every sparkle is at least 56px below the
+// top edge, and the sides are not cut off, so the glow never touches the header above.
 .spark {
   position: absolute;
   pointer-events: none;
