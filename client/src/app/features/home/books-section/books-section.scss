@@ -1,8 +1,8 @@
 .books {
-  // Keeps the title visible below the sticky header after the jump.
-  scroll-margin-block-start: var(--header-offset);
+  // The jump from the header links stops under the header (see core/ui/anchor-offset.ts);
+  // the space above the title is this padding.
   min-block-size: 60vh;
-  padding-block: var(--space-5);
+  padding-block: var(--section-top) var(--space-5);
 }
 
 h2 {

@@ -3,10 +3,12 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 
 import { routes } from './app.routes';
+import { provideAnchorOffset } from './core/ui/anchor-offset';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideAnchorOffset(),
     provideHttpClient(withFetch()),
     provideRouter(
       routes,

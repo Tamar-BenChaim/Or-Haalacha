@@ -1,7 +1,7 @@
 .contact {
-  // Keeps the title visible below the sticky header after the jump.
-  scroll-margin-block-start: var(--header-offset);
-  padding-block: var(--space-6);
+  // The jump from the header links stops under the header (see core/ui/anchor-offset.ts);
+  // the space above the title is this padding.
+  padding-block: var(--section-top) var(--space-6);
   border-block-start: 1px solid var(--line);
 }
 

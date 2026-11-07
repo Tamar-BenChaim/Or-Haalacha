@@ -37,10 +37,6 @@
   --btn-h: 48px;
   --btn-h-sm: 40px;
   --page-max: 1200px;
-  // Approximate height of the sticky header (taller on narrow screens, where the nav has its own row).
-  --header-offset: 112px;
-
-  @media (width <= 900px) {
-    --header-offset: 165px;
-  }
+  // The space between the sticky header and the title of a section after a jump (/#about).
+  --section-top: 40px;
 }
