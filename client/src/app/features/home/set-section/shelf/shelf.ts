@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Book } from '../../../core/models/book';
-import { AgorotToShekels } from '../../../shared/agorot-to-shekels/agorot-to-shekels';
+import { Book } from '../../../../core/models/book';
+import { AgorotToShekels } from '../../../../shared/agorot-to-shekels/agorot-to-shekels';
 
 const DEFAULT_CAPTION = 'מעבר על ספר במדף מציג את שמו. לחיצה פותחת את דף הספר.';
 

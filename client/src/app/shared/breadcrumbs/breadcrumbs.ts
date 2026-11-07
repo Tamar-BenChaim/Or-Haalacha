@@ -5,6 +5,8 @@ export interface Crumb {
   label: string;
   /** A router link for the parents. The last crumb (the current page) has none. */
   link?: string | unknown[];
+  /** A section of that page (for example "set" for /#set). */
+  fragment?: string;
 }
 
 /** "Home › Page" trail. The last item is the current page. */

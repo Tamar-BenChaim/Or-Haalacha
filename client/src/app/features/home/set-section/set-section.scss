@@ -1,5 +1,8 @@
-.page {
-  padding-block-end: 72px;
+.set {
+  // Keeps the title visible below the sticky header after the jump.
+  scroll-margin-block-start: var(--header-offset);
+  padding-block: var(--space-6);
+  border-block-start: 1px solid var(--line);
 }
 
 .tinted {
@@ -20,7 +23,7 @@
   flex: 1 1 380px;
   min-inline-size: 0;
 
-  h1 {
+  h2 {
     margin-block-end: 14px;
   }
 }
@@ -93,9 +96,11 @@
 .list {
   margin-block-start: 40px;
 
-  h2 {
+  h3 {
     margin-block-end: 20px;
+    font-family: var(--font-head);
     font-size: 30px;
+    font-weight: 500;
   }
 
   ul {
@@ -142,6 +147,6 @@
 }
 
 .state {
-  padding-block: var(--space-6);
+  padding-block: var(--space-5);
   text-align: center;
 }

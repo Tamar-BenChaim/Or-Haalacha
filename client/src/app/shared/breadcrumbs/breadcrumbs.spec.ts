@@ -21,11 +21,11 @@ describe('Breadcrumbs', () => {
   it('links the parents and marks the last item as the current page', () => {
     const el = render([
       { label: 'דף הבית', link: '/' },
-      { label: 'הסט המלא', link: '/set' },
+      { label: 'הסט המלא', link: '/', fragment: 'set' },
       { label: 'ספר' },
     ]);
     const links = Array.from(el.querySelectorAll('a')).map((a) => a.getAttribute('href'));
-    expect(links).toEqual(['/', '/set']);
+    expect(links).toEqual(['/', '/#set']);
     const current = el.querySelector('[aria-current="page"]')!;
     expect(current.textContent).toContain('ספר');
     expect(current.tagName).toBe('SPAN');

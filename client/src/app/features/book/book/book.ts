@@ -22,7 +22,7 @@ interface BookState {
 
 const ORIGINS: Record<string, Crumb> = {
   cart: { label: 'עגלת הקניות', link: '/cart' },
-  set: { label: 'הסט המלא', link: '/set' },
+  set: { label: 'הסט המלא', link: '/', fragment: 'set' },
 };
 const HOME: Crumb = { label: 'דף הבית', link: '/' };
 
@@ -88,7 +88,7 @@ export class BookPage {
           this.state.set({ status: 'loading', book: null });
           this.quantity.set(1);
           this.copied.set(false);
-          const from = this.router.getCurrentNavigation()?.extras.state?.['from'];
+          const from = this.router.currentNavigation()?.extras.state?.['from'];
           this.origin.set(typeof from === 'string' ? from : null);
         }),
         switchMap((slug) =>

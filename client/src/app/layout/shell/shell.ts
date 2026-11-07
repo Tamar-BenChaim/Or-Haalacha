@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
@@ -19,22 +20,40 @@ import { SiteHeader } from '../site-header/site-header';
 export class Shell {
   protected readonly announcement = inject(SiteSettingsStore).announcement;
   private readonly main = viewChild.required<ElementRef<HTMLElement>>('main');
+  private readonly document = inject(DOCUMENT);
+  private readonly router = inject(Router);
 
   constructor() {
-    // After every navigation (except the first load and in-page anchors) move focus
-    // to <main>, so keyboard and screen reader users start at the new page content.
-    inject(Router)
-      .events.pipe(
+    // After every navigation except the first load, move focus: to the heading of the
+    // section when the address points at one (/#about), otherwise to <main>. Keyboard and
+    // screen reader users then start where the content they asked for begins.
+    this.router.events
+      .pipe(
         filter((event): event is NavigationEnd => event instanceof NavigationEnd),
         skip(1),
-        filter((event) => !event.urlAfterRedirects.includes('#')),
         takeUntilDestroyed(),
       )
-      .subscribe(() => this.main().nativeElement.focus({ preventScroll: true }));
+      .subscribe((event) => {
+        const fragment = this.router.parseUrl(event.urlAfterRedirects).fragment;
+        if (!fragment || !this.focusSectionHeading(fragment)) {
+          this.main().nativeElement.focus({ preventScroll: true });
+        }
+      });
   }
 
   protected skipToContent(event: Event): void {
     event.preventDefault();
     this.main().nativeElement.focus();
+  }
+
+  /** Returns false when there is no such section or it has no heading. */
+  private focusSectionHeading(id: string): boolean {
+    const heading = this.document.getElementById(id)?.querySelector<HTMLElement>('h1, h2');
+    if (!heading) {
+      return false;
+    }
+    heading.setAttribute('tabindex', '-1');
+    heading.focus({ preventScroll: true });
+    return true;
   }
 }

@@ -5,7 +5,7 @@
         @if (last || !crumb.link) {
           <span aria-current="page">{{ crumb.label }}</span>
         } @else {
-          <a [routerLink]="crumb.link">{{ crumb.label }}</a>
+          <a [routerLink]="crumb.link" [fragment]="crumb.fragment">{{ crumb.label }}</a>
           <span class="sep" aria-hidden="true">›</span>
         }
       </li>
