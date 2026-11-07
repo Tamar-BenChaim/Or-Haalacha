@@ -1,0 +1,93 @@
+<section id="contact" class="contact container" aria-labelledby="contact-title">
+  <p class="eyebrow">נשמח לשמוע</p>
+  <h2 id="contact-title">צור קשר</h2>
+  <span class="gold-rule"></span>
+
+  <div class="layout">
+    <div class="details">
+      <p>
+        <span class="label">מייל</span>
+        <a [href]="'mailto:' + email()" dir="ltr">{{ email() }}</a>
+      </p>
+      @if (phone(); as number) {
+        <p>
+          <span class="label">טלפון</span>
+          <a [href]="'tel:' + number" dir="ltr">{{ number }}</a>
+        </p>
+      }
+    </div>
+
+    <form class="form tinted" [formGroup]="form" (ngSubmit)="send()" novalidate>
+      <oh-field controlId="contact-name" label="שם" [required]="true" [error]="errorOf('name')">
+        <input
+          id="contact-name"
+          type="text"
+          formControlName="name"
+          autocomplete="name"
+          [attr.aria-invalid]="errorOf('name') ? 'true' : null"
+          [attr.aria-describedby]="errorOf('name') ? 'contact-name-error' : null"
+        />
+      </oh-field>
+
+      <oh-field
+        controlId="contact-contact"
+        label="מייל או טלפון"
+        [required]="true"
+        [error]="errorOf('contact')"
+      >
+        <input
+          id="contact-contact"
+          type="text"
+          formControlName="contact"
+          autocomplete="email"
+          dir="auto"
+          [attr.aria-invalid]="errorOf('contact') ? 'true' : null"
+          [attr.aria-describedby]="errorOf('contact') ? 'contact-contact-error' : null"
+        />
+      </oh-field>
+
+      <oh-field controlId="contact-subject" label="נושא" [error]="errorOf('subject')">
+        <input
+          id="contact-subject"
+          type="text"
+          formControlName="subject"
+          [attr.aria-invalid]="errorOf('subject') ? 'true' : null"
+          [attr.aria-describedby]="errorOf('subject') ? 'contact-subject-error' : null"
+        />
+      </oh-field>
+
+      <oh-field
+        controlId="contact-message"
+        label="הודעה"
+        [required]="true"
+        [error]="errorOf('message')"
+      >
+        <textarea
+          id="contact-message"
+          rows="5"
+          formControlName="message"
+          [attr.aria-invalid]="errorOf('message') ? 'true' : null"
+          [attr.aria-describedby]="errorOf('message') ? 'contact-message-error' : null"
+        ></textarea>
+      </oh-field>
+
+      <button type="submit" class="btn" [disabled]="status() === 'sending'">
+        {{ status() === 'sending' ? 'שולחים…' : 'שליחה' }}
+      </button>
+
+      @switch (status()) {
+        @case ('sent') {
+          <p class="result ok" role="status">ההודעה נשלחה. נחזור אליך בהקדם.</p>
+        }
+        @case ('limited') {
+          <p class="result bad" role="alert">נשלחו הרבה הודעות בזמן קצר. נסו שוב בעוד כמה דקות.</p>
+        }
+        @case ('error') {
+          <p class="result bad" role="alert">
+            לא הצלחנו לשלוח את ההודעה. נסו שוב, או כתבו לנו במייל.
+          </p>
+        }
+      }
+    </form>
+  </div>
+</section>

@@ -1,4 +1,11 @@
-import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, Routes } from '@angular/router';
+
+/**
+ * The home page is one long page with sections (books, set, about, contact).
+ * These old addresses still work: they take the visitor to the matching section.
+ */
+const toSection = (fragment: string) => () => inject(Router).createUrlTree(['/'], { fragment });
 
 export const routes: Routes = [
   {
@@ -6,11 +13,9 @@ export const routes: Routes = [
     title: 'אור ההלכה',
     loadComponent: () => import('./features/home/home/home').then((m) => m.Home),
   },
-  {
-    path: 'set',
-    title: 'הסט המלא',
-    loadComponent: () => import('./features/set/set/set').then((m) => m.SetPage),
-  },
+  { path: 'set', pathMatch: 'full', redirectTo: toSection('set') },
+  { path: 'about', pathMatch: 'full', redirectTo: toSection('about') },
+  { path: 'contact', pathMatch: 'full', redirectTo: toSection('contact') },
   {
     path: 'book/:slug',
     loadComponent: () => import('./features/book/book/book').then((m) => m.BookPage),
@@ -36,16 +41,6 @@ export const routes: Routes = [
     title: 'התשלום לא הושלם',
     loadComponent: () =>
       import('./features/order/order-failed/order-failed').then((m) => m.OrderFailed),
-  },
-  {
-    path: 'about',
-    title: 'אודות',
-    loadComponent: () => import('./features/content/about/about').then((m) => m.About),
-  },
-  {
-    path: 'contact',
-    title: 'צור קשר',
-    loadComponent: () => import('./features/contact/contact/contact').then((m) => m.Contact),
   },
   {
     path: 'legal/:doc',

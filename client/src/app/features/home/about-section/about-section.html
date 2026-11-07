@@ -1,0 +1,19 @@
+<section id="about" class="about container" aria-labelledby="about-title">
+  <p class="eyebrow">אור ההלכה</p>
+  <h2 id="about-title">על הסדרה</h2>
+  <span class="gold-rule"></span>
+
+  <div class="text">
+    <p>[טקסט על הסדרה: מה היא כוללת ולמי היא מיועדת.]</p>
+    <p>[טקסט על הרב המחבר.]</p>
+  </div>
+
+  <a class="btn" routerLink="/" fragment="books">לכל הספרים</a>
+
+  <h3 class="lessons-title">מהשיעורים</h3>
+  <ul class="photos">
+    @for (photo of photos; track photo) {
+      <li><div class="photo">[תמונה מהשיעורים]</div></li>
+    }
+  </ul>
+</section>

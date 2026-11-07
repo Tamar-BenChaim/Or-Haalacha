@@ -1,7 +1,6 @@
-<div class="page container">
-  <oh-breadcrumbs [items]="crumbs" />
-
+<section id="set" class="set container" aria-labelledby="set-title">
   @if (status() === 'error') {
+    <h2 id="set-title">הסט המלא</h2>
     <div class="state" role="alert">
       <p>לא הצלחנו לטעון את הסט.</p>
       <button type="button" class="btn-o" (click)="retry()">נסו שוב</button>
@@ -10,7 +9,7 @@
     <div class="top">
       <div class="intro">
         <p class="eyebrow">הצעה מיוחדת</p>
-        <h1>{{ set.title }}</h1>
+        <h2 id="set-title">{{ set.title }}</h2>
         <span class="gold-rule"></span>
         <p class="lead">{{ set.description }} לחצו על ספר במדף כדי לראות אותו.</p>
       </div>
@@ -35,9 +34,9 @@
 
     <oh-shelf [books]="set.books" />
 
-    <section class="list" aria-labelledby="list-title">
-      <h2 id="list-title">הספרים בסט</h2>
-      <ul>
+    <div class="list">
+      <h3 id="list-title">הספרים בסט</h3>
+      <ul aria-labelledby="list-title">
         @for (book of set.books; track book.id; let i = $index) {
           <li>
             <span class="name">
@@ -48,8 +47,9 @@
           </li>
         }
       </ul>
-    </section>
+    </div>
   } @else {
+    <h2 id="set-title">הסט המלא</h2>
     <p class="state" aria-busy="true">טוען…</p>
   }
-</div>
+</section>

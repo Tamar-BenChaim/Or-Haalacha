@@ -65,7 +65,7 @@ describe('CartLineRow', () => {
       ...base,
       line: { ref: { type: 'bundle', slug: 'full-set' }, quantity: 1 },
     });
-    expect(el.querySelector('a.title')!.getAttribute('href')).toBe('/set');
+    expect(el.querySelector('a.title')!.getAttribute('href')).toBe('/#set');
   });
 
   it('shows a loading title and no prices while the server has not answered', () => {

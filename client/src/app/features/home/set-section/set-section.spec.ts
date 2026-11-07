@@ -7,7 +7,7 @@ import { CartStore } from '../../../core/cart/cart-store';
 import { BUNDLES_SOURCE } from '../../../core/catalog/bundles-source';
 import { Bundle } from '../../../core/models/book';
 import { sampleBook } from '../../../core/testing/sample-books';
-import { SetPage } from './set';
+import { SetSection } from './set-section';
 
 const books = [
   { ...sampleBook, id: 'a', slug: 'a', title: 'ספר א', volume: 1 },
@@ -32,18 +32,24 @@ function render(list: () => Observable<Bundle[]>) {
       { provide: CART_QUOTE_SOURCE, useValue: { quote: () => NEVER } },
     ],
   });
-  const fixture = TestBed.createComponent(SetPage);
+  const fixture = TestBed.createComponent(SetSection);
   fixture.detectChanges();
   return { fixture, el: fixture.nativeElement as HTMLElement };
 }
 
-describe('SetPage', () => {
-  it('has the breadcrumbs, a single h1 and the intro', () => {
+describe('SetSection', () => {
+  it('is the #set section with an h2 (the page has one h1, in the hero)', () => {
     const { el } = render(() => of([fullSet]));
-    expect(el.querySelector('nav[aria-label="פירורי לחם"]')).toBeTruthy();
-    expect(el.querySelectorAll('h1')).toHaveLength(1);
-    expect(el.querySelector('h1')!.textContent).toContain('הסט המלא');
+    const section = el.querySelector('section#set')!;
+    expect(section.getAttribute('aria-labelledby')).toBe('set-title');
+    expect(el.querySelector('h1')).toBeNull();
+    expect(el.querySelector('#set-title')!.tagName).toBe('H2');
+    expect(el.querySelector('#set-title')!.textContent).toContain('הסט המלא');
     expect(el.querySelector('.eyebrow')!.textContent).toContain('הצעה מיוחדת');
+  });
+
+  it('keeps the heading while loading and on error, so the link target always has a title', () => {
+    expect(render(() => NEVER).el.querySelector('#set-title')!.textContent).toContain('הסט המלא');
   });
 
   it('shows the set price, the price of buying separately and the saving', () => {
@@ -53,9 +59,14 @@ describe('SetPage', () => {
     expect(el.querySelector('.saving')!.textContent).toContain('300');
   });
 
-  it('hides the old price and the saving when it cannot be told or is not a saving', () => {
+  it('hides the old price and the saving when it cannot be told', () => {
     const { el } = render(() => of([{ ...fullSet, separatePriceAgorot: null }]));
     expect(el.querySelector('.was')).toBeNull();
+    expect(el.querySelector('.saving')).toBeNull();
+  });
+
+  it('hides the saving when the separate price is not higher', () => {
+    const { el } = render(() => of([{ ...fullSet, separatePriceAgorot: 90000 }]));
     expect(el.querySelector('.saving')).toBeNull();
   });
 
@@ -79,8 +90,13 @@ describe('SetPage', () => {
     const items = el.querySelectorAll('.list li');
     expect(items).toHaveLength(2);
     expect(items[0].querySelector('a')!.getAttribute('href')).toBe('/book/a');
-    expect(items[0].textContent).toContain('1');
     expect(items[1].querySelector('.n')!.textContent).toContain('2');
+  });
+
+  it('labels the list of books with its own heading (h3, under the section h2)', () => {
+    const { el } = render(() => of([fullSet]));
+    expect(el.querySelector('#list-title')!.tagName).toBe('H3');
+    expect(el.querySelector('ul')!.getAttribute('aria-labelledby')).toBe('list-title');
   });
 
   it('shows an error with a retry button', () => {
@@ -90,11 +106,10 @@ describe('SetPage', () => {
     fail = false;
     el.querySelector<HTMLButtonElement>('[role="alert"] button')!.click();
     fixture.detectChanges();
-    expect(el.querySelector('h1')).toBeTruthy();
+    expect(el.querySelector('.price')).toBeTruthy();
   });
 
   it('shows a loading state before the set arrives', () => {
-    const { el } = render(() => NEVER);
-    expect(el.querySelector('[aria-busy="true"]')).toBeTruthy();
+    expect(render(() => NEVER).el.querySelector('[aria-busy="true"]')).toBeTruthy();
   });
 });

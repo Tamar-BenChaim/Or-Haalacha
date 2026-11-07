@@ -1,0 +1,93 @@
+.contact {
+  // Keeps the title visible below the sticky header after the jump.
+  scroll-margin-block-start: var(--header-offset);
+  padding-block: var(--space-6);
+  border-block-start: 1px solid var(--line);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+.gold-rule {
+  display: block;
+  inline-size: 48px;
+  block-size: 2px;
+  margin-block: 14px 24px;
+  background: var(--gold);
+}
+
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.details {
+  flex: 1 1 240px;
+  font-size: 18px;
+
+  p {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0 0 18px;
+  }
+
+  .label {
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  a {
+    align-self: flex-start;
+    font-weight: 700;
+    color: var(--bur);
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+  }
+}
+
+.form {
+  display: flex;
+  flex: 1 1 420px;
+  flex-direction: column;
+  gap: 16px;
+  max-inline-size: 640px;
+  padding: 26px;
+  background: var(--card);
+  border: 1px solid var(--card-b);
+
+  button[type='submit'] {
+    align-self: flex-start;
+    min-inline-size: 160px;
+  }
+
+  button:disabled {
+    background: var(--line);
+    border-color: var(--line);
+    color: var(--muted);
+    cursor: default;
+  }
+}
+
+.result {
+  margin: 0;
+  font-weight: 700;
+
+  &.ok {
+    color: var(--ok);
+  }
+
+  &.bad {
+    color: var(--err);
+  }
+}

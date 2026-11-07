@@ -88,6 +88,7 @@ describe('BookPage', () => {
     it('lead back to the set page when the visitor came from it', async () => {
       const { el } = await open('/book/b3', {}, { from: 'set' });
       expect(labels(el)).toEqual(['הסט המלא', 'ספר 3']);
+      expect(el.querySelector('.crumbs a')!.getAttribute('href')).toBe('/#set');
     });
 
     it('ignore an unknown origin', async () => {
@@ -132,7 +133,7 @@ describe('BookPage', () => {
 
     it('points to the full set', async () => {
       const { el } = await open();
-      expect(el.querySelector('.set-note a')!.getAttribute('href')).toBe('/set');
+      expect(el.querySelector('.set-note a')!.getAttribute('href')).toBe('/#set');
     });
   });
 

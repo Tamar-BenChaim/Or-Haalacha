@@ -7,13 +7,22 @@ import { Shell } from './shell';
 @Component({ template: '<h1>דף</h1>' })
 class Page {}
 
+/** A home page with sections, like the real one. */
+@Component({
+  template: `
+    <section id="about"><h2>על הסדרה</h2></section>
+    <section id="empty"><p>בלי כותרת</p></section>
+  `,
+})
+class Sections {}
+
 describe('Shell', () => {
   function render() {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([
-          { path: '', component: Page },
-          { path: 'about', component: Page },
+          { path: '', component: Sections },
+          { path: 'cart', component: Page },
         ]),
       ],
     });
@@ -42,12 +51,40 @@ describe('Shell', () => {
     expect(document.activeElement).toBe(el.querySelector('main'));
   });
 
-  it('moves focus to main after navigating, but not on the first load', async () => {
+  it('moves focus to main after navigating to another page, but not on the first load', async () => {
     const { el, router } = render();
     const main = el.querySelector('main')!;
     await router.navigateByUrl('/');
     expect(document.activeElement).not.toBe(main);
-    await router.navigateByUrl('/about');
+    await router.navigateByUrl('/cart');
     expect(document.activeElement).toBe(main);
+  });
+
+  describe('going to a section of the home page', () => {
+    it('moves focus to the heading of the section (not to the whole page)', async () => {
+      const { fixture, el, router } = render();
+      await router.navigateByUrl('/cart');
+      await router.navigateByUrl('/#about');
+      fixture.detectChanges();
+      const heading = el.querySelector('#about h2')!;
+      expect(document.activeElement).toBe(heading);
+      expect(heading.getAttribute('tabindex')).toBe('-1');
+    });
+
+    it('falls back to main when the section has no heading', async () => {
+      const { fixture, el, router } = render();
+      await router.navigateByUrl('/cart');
+      await router.navigateByUrl('/#empty');
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(el.querySelector('main'));
+    });
+
+    it('falls back to main when there is no such section', async () => {
+      const { fixture, el, router } = render();
+      await router.navigateByUrl('/cart');
+      await router.navigateByUrl('/#nope');
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(el.querySelector('main'));
+    });
   });
 });
