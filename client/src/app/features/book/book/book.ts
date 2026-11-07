@@ -4,20 +4,27 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BehaviorSubject, catchError, combineLatest, map, of, switchMap, tap } from 'rxjs';
 
 import { CartStore } from '../../../core/cart/cart-store';
+import { SHOW_CONTENT_PLACEHOLDERS } from '../../../core/config/content-placeholders';
 import { BOOKS_SOURCE } from '../../../core/catalog/books-source';
 import { CatalogStore } from '../../../core/catalog/catalog-store';
-import { Book } from '../../../core/models/book';
+import { Book, BookImage } from '../../../core/models/book';
 import { Seo } from '../../../core/seo/seo';
 import { Share } from '../../../core/seo/share';
 import { AgorotToShekels } from '../../../shared/agorot-to-shekels/agorot-to-shekels';
 import { BookCard } from '../../../shared/book-card/book-card';
-import { BookCover } from '../../../shared/book-cover/book-cover';
 import { Breadcrumbs, Crumb } from '../../../shared/breadcrumbs/breadcrumbs';
 import { QtyStepper } from '../../../shared/qty-stepper/qty-stepper';
+import { BookGallery } from '../book-gallery/book-gallery';
 
 interface BookState {
   status: 'loading' | 'ready' | 'notfound' | 'error';
   book: Book | null;
+}
+
+/** One page of the "look inside" preview: a real picture, or a sample box in development. */
+interface PreviewPage {
+  label: string;
+  image: BookImage | null;
 }
 
 const ORIGINS: Record<string, Crumb> = {
@@ -25,11 +32,17 @@ const ORIGINS: Record<string, Crumb> = {
   set: { label: 'הסט המלא', link: '/', fragment: 'set' },
 };
 const HOME: Crumb = { label: 'דף הבית', link: '/' };
+const PREVIEW_SAMPLES = ['תוכן עניינים', 'עמוד א׳', 'עמוד ב׳'];
+const MISSING = '[—]';
 
-/** A single book (/book/:slug): details, buy, share, neighbors in the series and related books. */
+/**
+ * A single book (/book/:slug), laid out like the design mockup: pictures, details and buying,
+ * share, about the book with a look inside, technical details, previous / next volume and
+ * related books.
+ */
 @Component({
   selector: 'oh-book',
-  imports: [RouterLink, AgorotToShekels, BookCard, BookCover, Breadcrumbs, QtyStepper],
+  imports: [RouterLink, AgorotToShekels, BookCard, BookGallery, Breadcrumbs, QtyStepper],
   templateUrl: './book.html',
   styleUrl: './book.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,9 +57,13 @@ export class BookPage {
   private readonly sharer = inject(Share);
   private readonly retryTick = new BehaviorSubject(0);
 
+  /** Sample boxes for content the book does not have yet (development only). */
+  protected readonly placeholders = inject(SHOW_CONTENT_PLACEHOLDERS);
+
   protected readonly state = signal<BookState>({ status: 'loading', book: null });
   protected readonly quantity = signal(1);
   protected readonly copied = signal(false);
+  protected readonly previewOpen = signal(false);
   /** Where the visitor came from ("cart", "set"), for the breadcrumbs. Anything else is the home page. */
   private readonly origin = signal<string | null>(null);
 
@@ -54,6 +71,38 @@ export class BookPage {
     (this.origin() && ORIGINS[this.origin()!]) || HOME,
     { label: this.state().book?.title ?? '' },
   ]);
+
+  /** The pages of "look inside": the contents and sample pages the book has. */
+  protected readonly previewPages = computed<PreviewPage[]>(() => {
+    const images = (this.state().book?.images ?? []).filter(
+      (image) => image.kind === 'contents' || image.kind === 'sample',
+    );
+    if (images.length > 0) {
+      return images.map((image, index) => ({ label: `עמוד לדוגמה ${index + 1}`, image }));
+    }
+    return this.placeholders ? PREVIEW_SAMPLES.map((label) => ({ label, image: null })) : [];
+  });
+
+  /** The rows of the details table. Without a value a row shows only in development ("[—]"). */
+  protected readonly detailRows = computed(() => {
+    const details = this.state().book?.details;
+    const rows = [
+      { label: 'מספר עמודים', value: details?.pages },
+      { label: 'גודל', value: details?.size },
+      { label: 'כריכה', value: details?.binding },
+      { label: 'שנת הוצאה', value: details?.year },
+    ];
+    return rows
+      .map((row) => ({
+        label: row.label,
+        value:
+          row.value === null || row.value === undefined || row.value === ''
+            ? null
+            : String(row.value),
+      }))
+      .filter((row) => row.value !== null || this.placeholders)
+      .map((row) => ({ label: row.label, value: row.value ?? MISSING }));
+  });
 
   /** The previous and next volume. After the last one comes the first (a circle). */
   protected readonly neighbors = computed(() => {
@@ -88,6 +137,7 @@ export class BookPage {
           this.state.set({ status: 'loading', book: null });
           this.quantity.set(1);
           this.copied.set(false);
+          this.previewOpen.set(false);
           const from = this.router.currentNavigation()?.extras.state?.['from'];
           this.origin.set(typeof from === 'string' ? from : null);
         }),
@@ -127,6 +177,10 @@ export class BookPage {
       this.copied.set(true);
       setTimeout(() => this.copied.set(false), 3000);
     }
+  }
+
+  protected togglePreview(): void {
+    this.previewOpen.update((open) => !open);
   }
 
   protected retry(): void {

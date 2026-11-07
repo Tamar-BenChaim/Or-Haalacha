@@ -6,4 +6,6 @@ export const environment = {
   useMockApi: false,
   // Stays false until the client approves coupons and the server supports them.
   showCoupon: false,
+  // Production shows only real content: no sample boxes, no "[—]" in the details table.
+  showContentPlaceholders: false,
 };

@@ -8,6 +8,7 @@ import { NEVER, Observable, of, throwError } from 'rxjs';
 import { CART_QUOTE_SOURCE } from '../../../core/cart/cart-quote-source';
 import { CartStore } from '../../../core/cart/cart-store';
 import { BOOKS_SOURCE } from '../../../core/catalog/books-source';
+import { SHOW_CONTENT_PLACEHOLDERS } from '../../../core/config/content-placeholders';
 import { Book } from '../../../core/models/book';
 import { Share } from '../../../core/seo/share';
 import { sampleBook } from '../../../core/testing/sample-books';
@@ -26,7 +27,12 @@ const books: Book[] = Array.from({ length: 6 }, (_, i) => ({
 interface Options {
   get?: (slug: string) => Observable<Book>;
   share?: () => Promise<'shared' | 'copied' | 'failed'>;
+  /** Sample boxes for missing content (development). Default: on. */
+  placeholders?: boolean;
 }
+
+const page = (overrides: Partial<Book>) => (slug: string) =>
+  of({ ...books.find((b) => b.slug === slug)!, ...overrides });
 
 async function open(url = '/book/b3', options: Options = {}, state?: Record<string, string>) {
   const get = options.get ?? ((slug: string) => of(books.find((b) => b.slug === slug)!));
@@ -37,6 +43,7 @@ async function open(url = '/book/b3', options: Options = {}, state?: Record<stri
       { provide: BOOKS_SOURCE, useValue: { list: () => of(books), get } },
       { provide: CART_QUOTE_SOURCE, useValue: { quote: () => NEVER } },
       { provide: Share, useValue: { share } },
+      { provide: SHOW_CONTENT_PLACEHOLDERS, useValue: options.placeholders ?? true },
     ],
   });
   const harness = await RouterTestingHarness.create();
@@ -187,6 +194,153 @@ describe('BookPage', () => {
       const { el } = await open();
       el.querySelector<HTMLButtonElement>('.related button.add')!.click();
       expect(TestBed.inject(CartStore).lines()[0].ref).toEqual({ type: 'book', slug: 'b4' });
+    });
+  });
+
+  describe('pictures of the book', () => {
+    it('shows the gallery next to the details', async () => {
+      const { el } = await open();
+      expect(el.querySelector('.top oh-book-gallery')).toBeTruthy();
+      expect(el.querySelectorAll('.thumb')).toHaveLength(4);
+    });
+
+    it('shows only real pictures in production', async () => {
+      const { el } = await open('/book/b3', { placeholders: false });
+      expect(el.querySelectorAll('.thumb')).toHaveLength(0);
+      expect(el.querySelector('oh-book-cover')).toBeTruthy();
+    });
+
+    it('shows the pictures the book has', async () => {
+      const images = [{ kind: 'back' as const, url: '/back.jpg', alt: 'אחורית' }];
+      const { el } = await open('/book/b3', { get: page({ images }), placeholders: false });
+      expect(el.querySelectorAll('.thumb')).toHaveLength(2);
+    });
+  });
+
+  describe('about the book and a look inside', () => {
+    const toggle = (el: HTMLElement) =>
+      el.querySelector<HTMLButtonElement>('button.preview-toggle')!;
+
+    it('shows the description under "על הספר"', async () => {
+      const { el } = await open();
+      expect(el.querySelector('#about-title')!.textContent).toContain('על הספר');
+      expect(el.querySelector('.about')!.textContent).toContain('תיאור מלא של ספר 3');
+    });
+
+    it('opens and closes three sample pages with the button, and says so to screen readers', async () => {
+      const { el, refresh } = await open();
+      expect(toggle(el).textContent).toContain('עיון בספר – עמודים לדוגמה');
+      expect(toggle(el).getAttribute('aria-expanded')).toBe('false');
+      expect(el.querySelector('#preview')).toBeNull();
+
+      toggle(el).click();
+      refresh();
+      expect(toggle(el).getAttribute('aria-expanded')).toBe('true');
+      expect(toggle(el).getAttribute('aria-controls')).toBe('preview');
+      const boxes = Array.from(el.querySelectorAll('#preview .ph')).map((b) =>
+        b.textContent!.trim(),
+      );
+      expect(boxes).toEqual(['[תוכן עניינים]', '[עמוד א׳]', '[עמוד ב׳]']);
+
+      toggle(el).click();
+      refresh();
+      expect(el.querySelector('#preview')).toBeNull();
+      expect(toggle(el).getAttribute('aria-expanded')).toBe('false');
+    });
+
+    it('shows the real pages of the book, with alt text', async () => {
+      const images = [
+        { kind: 'contents' as const, url: '/c.jpg', alt: 'תוכן' },
+        { kind: 'sample' as const, url: '/s1.jpg', alt: '' },
+        { kind: 'back' as const, url: '/b.jpg', alt: 'אחורית' },
+      ];
+      const { el, refresh } = await open('/book/b3', {
+        get: page({ images }),
+        placeholders: false,
+      });
+      toggle(el).click();
+      refresh();
+      const pages = Array.from(el.querySelectorAll<HTMLImageElement>('#preview img'));
+      expect(pages.map((p) => p.getAttribute('src'))).toEqual(['/c.jpg', '/s1.jpg']);
+      expect(pages[0].getAttribute('alt')).toBe('תוכן');
+      expect(pages[1].getAttribute('alt')).toContain('ספר 3');
+    });
+
+    it('has no look inside in production when the book has no sample pages', async () => {
+      const { el } = await open('/book/b3', { placeholders: false });
+      expect(el.querySelector('button.preview-toggle')).toBeNull();
+    });
+
+    it('closes the look inside when another book is opened', async () => {
+      const { harness, el, refresh } = await open();
+      toggle(el).click();
+      refresh();
+      await harness.navigateByUrl('/book/b4');
+      refresh();
+      expect(el.querySelector('#preview')).toBeNull();
+    });
+  });
+
+  describe('details of the book', () => {
+    const rows = (el: HTMLElement) =>
+      Array.from(el.querySelectorAll('.tbl tr')).map((tr) => [
+        tr.querySelector('th')!.textContent!.trim(),
+        tr.querySelector('td')!.textContent!.trim(),
+      ]);
+
+    it('lists the four details, with a sample "[—]" for each missing one (development)', async () => {
+      const { el } = await open();
+      expect(el.querySelector('#facts-title')!.textContent).toContain('פרטי הספר');
+      expect(rows(el)).toEqual([
+        ['מספר עמודים', '[—]'],
+        ['גודל', '[—]'],
+        ['כריכה', '[—]'],
+        ['שנת הוצאה', '[—]'],
+      ]);
+    });
+
+    it('shows the real values', async () => {
+      const details = { pages: 320, size: '17×24 ס״מ', binding: 'קשה', year: 2025 };
+      const { el } = await open('/book/b3', { get: page({ details }) });
+      expect(rows(el)).toEqual([
+        ['מספר עמודים', '320'],
+        ['גודל', '17×24 ס״מ'],
+        ['כריכה', 'קשה'],
+        ['שנת הוצאה', '2025'],
+      ]);
+    });
+
+    it('in production shows only the details the book has', async () => {
+      const details = { pages: 320, size: null, binding: '', year: 2025 };
+      const { el } = await open('/book/b3', { get: page({ details }), placeholders: false });
+      expect(rows(el)).toEqual([
+        ['מספר עמודים', '320'],
+        ['שנת הוצאה', '2025'],
+      ]);
+    });
+
+    it('in production has no table at all when there are no details', async () => {
+      const { el } = await open('/book/b3', { placeholders: false });
+      expect(el.querySelector('.tbl')).toBeNull();
+      expect(el.querySelector('#facts-title')).toBeNull();
+    });
+  });
+
+  describe('order for a synagogue or a yeshiva', () => {
+    it('has the box with a link to the contact section', async () => {
+      const { el } = await open();
+      const box = el.querySelector('.order')!;
+      expect(box.querySelector('.order-title')!.textContent).toContain('הזמנה לבית כנסת או ישיבה?');
+      expect(box.querySelector('a')!.textContent).toContain('צרו קשר להזמנה מוסדית');
+      expect(box.querySelector('a')!.getAttribute('href')).toBe('/#contact');
+    });
+
+    it('shows the "to be decided" note only in development', async () => {
+      expect((await open()).el.querySelector('.order-note')).toBeTruthy();
+      TestBed.resetTestingModule();
+      const production = await open('/book/b3', { placeholders: false });
+      expect(production.el.querySelector('.order-note')).toBeNull();
+      expect(production.el.querySelector('.order a')).toBeTruthy();
     });
   });
 

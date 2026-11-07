@@ -5,16 +5,7 @@
         <oh-breadcrumbs [items]="crumbs()" />
 
         <div class="top">
-          <div class="media">
-            <div class="panel">
-              <div class="stage">
-                <oh-book-cover [book]="book" [decorative]="true" />
-                @if (!book.inStock) {
-                  <span class="soldout-label">אזל במלאי</span>
-                }
-              </div>
-            </div>
-          </div>
+          <oh-book-gallery class="media" [book]="book" [placeholders]="placeholders" />
 
           <div class="info">
             @if (book.volume !== null) {
@@ -72,12 +63,73 @@
           </div>
         </div>
 
-        @if (book.description) {
-          <section class="about" aria-labelledby="about-title">
-            <h2 id="about-title">על הספר</h2>
-            <p>{{ book.description }}</p>
-          </section>
-        }
+        <div class="more">
+          @if (book.description || previewPages().length > 0) {
+            <section class="about" aria-labelledby="about-title">
+              <h2 id="about-title">על הספר</h2>
+              @if (book.description) {
+                <p>{{ book.description }}</p>
+              }
+
+              @if (previewPages().length > 0) {
+                <button
+                  type="button"
+                  class="btn-o preview-toggle"
+                  aria-controls="preview"
+                  [attr.aria-expanded]="previewOpen()"
+                  (click)="togglePreview()"
+                >
+                  עיון בספר – עמודים לדוגמה
+                </button>
+                @if (previewOpen()) {
+                  <ul id="preview" class="preview">
+                    @for (page of previewPages(); track $index) {
+                      <li>
+                        @if (page.image; as image) {
+                          <img
+                            [src]="image.url"
+                            [alt]="image.alt || page.label + ' – ' + book.title"
+                            loading="lazy"
+                          />
+                        } @else {
+                          <div class="ph" role="img" [attr.aria-label]="page.label + ' (דוגמה)'">
+                            [{{ page.label }}]
+                          </div>
+                        }
+                      </li>
+                    }
+                  </ul>
+                }
+              }
+            </section>
+          }
+
+          <aside class="facts" aria-label="פרטים נוספים">
+            @if (detailRows().length > 0) {
+              <section aria-labelledby="facts-title">
+                <h2 id="facts-title">פרטי הספר</h2>
+                <table class="tbl">
+                  <tbody>
+                    @for (row of detailRows(); track row.label) {
+                      <tr>
+                        <th scope="row">{{ row.label }}</th>
+                        <td>{{ row.value }}</td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </section>
+            }
+
+            <div class="order tinted">
+              <p class="order-title">הזמנה לבית כנסת או ישיבה?</p>
+              @if (placeholders) {
+                <p class="order-note">[הנחת כמות / טופס הזמנה מוסדית]</p>
+              }
+              <a routerLink="/" fragment="contact">צרו קשר להזמנה מוסדית</a>
+            </div>
+          </aside>
+        </div>
 
         @if (neighbors(); as near) {
           <nav class="volumes" aria-label="כרכים נוספים">
