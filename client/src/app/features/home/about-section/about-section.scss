@@ -1,0 +1,66 @@
+.about {
+  // Keeps the title visible below the sticky header after the jump.
+  scroll-margin-block-start: var(--header-offset);
+  padding-block: var(--space-6);
+  border-block-start: 1px solid var(--line);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+.gold-rule {
+  display: block;
+  inline-size: 48px;
+  block-size: 2px;
+  margin-block: 14px 18px;
+  background: var(--gold);
+}
+
+.text {
+  max-inline-size: 760px;
+  margin-block-end: 24px;
+
+  p {
+    margin: 0 0 14px;
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+}
+
+.lessons-title {
+  margin-block: 40px 16px;
+  font-family: var(--font-head);
+  font-size: 30px;
+  font-weight: 500;
+}
+
+// Three photos of the same size in one row; one column on phones.
+.photos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  background: var(--card);
+  border: 1px solid var(--card-b);
+  color: var(--muted);
+}
+
+@media (width <= 760px) {
+  .photos {
+    grid-template-columns: 1fr;
+  }
+}

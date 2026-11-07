@@ -27,8 +27,13 @@ export class CartLineRow {
   /** Where the title links to: the book page, or the set page. */
   protected readonly link = computed(() => {
     const ref = this.item().line.ref;
-    return ref.type === 'bundle' ? ['/set'] : ['/book', ref.slug];
+    return ref.type === 'bundle' ? ['/'] : ['/book', ref.slug];
   });
+
+  /** The set is a section of the home page (/#set). */
+  protected readonly fragment = computed(() =>
+    this.item().line.ref.type === 'bundle' ? 'set' : undefined,
+  );
 
   protected readonly title = computed(() => {
     const item = this.item();

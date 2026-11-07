@@ -2,17 +2,15 @@
   <div class="inner container">
     <a class="logo" routerLink="/" aria-label="אור ההלכה – לדף הבית">אור ההלכה</a>
     <nav class="nav" aria-label="ניווט ראשי">
-      <a
-        routerLink="/"
-        fragment="books"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="booksMatch"
-        ariaCurrentWhenActive="location"
-        >הספרים</a
-      >
-      <a routerLink="/set" routerLinkActive="active" ariaCurrentWhenActive="page">הסט המלא</a>
-      <a routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page">אודות</a>
-      <a routerLink="/contact" routerLinkActive="active" ariaCurrentWhenActive="page">צור קשר</a>
+      @for (item of items; track item.section) {
+        <a
+          routerLink="/"
+          [fragment]="item.section"
+          [class.active]="activeSection() === item.section"
+          [attr.aria-current]="activeSection() === item.section ? 'location' : null"
+          >{{ item.label }}</a
+        >
+      }
     </nav>
     <a
       class="btn cart"

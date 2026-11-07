@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { Book } from '../../../core/models/book';
-import { sampleBook } from '../../../core/testing/sample-books';
+import { Book } from '../../../../core/models/book';
+import { sampleBook } from '../../../../core/testing/sample-books';
 import { Shelf } from './shelf';
 
 const books: Book[] = Array.from({ length: 5 }, (_, i) => ({

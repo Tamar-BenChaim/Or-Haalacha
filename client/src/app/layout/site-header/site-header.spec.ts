@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 
 import { CartStore } from '../../core/cart/cart-store';
+import { ScrollSpy } from '../../core/ui/scroll-spy';
 import { UiStore } from '../../core/ui/ui-store';
 import { SiteHeader } from './site-header';
 
@@ -10,16 +11,18 @@ import { SiteHeader } from './site-header';
 class Page {}
 
 describe('SiteHeader', () => {
+  /** The section the scroll spy reports, which the test controls. */
+  const activeSection = signal<string | null>(null);
+
   async function render() {
+    activeSection.set(null);
     TestBed.configureTestingModule({
       providers: [
         provideRouter([
           { path: '', component: Page },
-          { path: 'set', component: Page },
-          { path: 'about', component: Page },
-          { path: 'contact', component: Page },
           { path: 'cart', component: Page },
         ]),
+        { provide: ScrollSpy, useValue: { active: activeSection.asReadonly() } },
       ],
     });
     const router = TestBed.inject(Router);
@@ -28,12 +31,23 @@ describe('SiteHeader', () => {
     return { router, fixture, el: fixture.nativeElement as HTMLElement };
   }
 
-  it('has a labelled main navigation with the four links', async () => {
+  const links = (el: HTMLElement) => Array.from(el.querySelectorAll<HTMLAnchorElement>('nav a'));
+
+  it('has a labelled main navigation with a link to each section of the home page', async () => {
     const { el } = await render();
-    const nav = el.querySelector('nav')!;
-    expect(nav.getAttribute('aria-label')).toBe('ניווט ראשי');
-    const hrefs = Array.from(nav.querySelectorAll('a')).map((a) => a.getAttribute('href'));
-    expect(hrefs).toEqual(['/#books', '/set', '/about', '/contact']);
+    expect(el.querySelector('nav')!.getAttribute('aria-label')).toBe('ניווט ראשי');
+    expect(links(el).map((a) => a.getAttribute('href'))).toEqual([
+      '/#books',
+      '/#set',
+      '/#about',
+      '/#contact',
+    ]);
+    expect(links(el).map((a) => a.textContent!.trim())).toEqual([
+      'הספרים',
+      'הסט המלא',
+      'אודות',
+      'צור קשר',
+    ]);
   });
 
   it('links the logo to the home page with an accessible name', async () => {
@@ -43,31 +57,35 @@ describe('SiteHeader', () => {
     expect(logo.getAttribute('aria-label')).toBe('אור ההלכה – לדף הבית');
   });
 
-  it('marks the current page with aria-current', async () => {
-    const { router, fixture, el } = await render();
-    await router.navigateByUrl('/about');
-    fixture.detectChanges();
-    const current = el.querySelectorAll('nav a[aria-current="page"]');
-    expect(current).toHaveLength(1);
-    expect(current[0].getAttribute('href')).toBe('/about');
+  it('highlights no link while the opening area is on the screen', async () => {
+    const { el } = await render();
+    expect(el.querySelectorAll('nav a.active')).toHaveLength(0);
+    expect(el.querySelectorAll('nav a[aria-current]')).toHaveLength(0);
   });
 
-  it('highlights "Books" only when the URL points at #books', async () => {
-    const { router, fixture, el } = await render();
-    const books = el.querySelector<HTMLAnchorElement>('nav a[href="/#books"]')!;
-
-    await router.navigateByUrl('/');
+  it.each([
+    ['books', 0],
+    ['set', 1],
+    ['about', 2],
+    ['contact', 3],
+  ])('highlights the link of the section on the screen: %s', async (section, index) => {
+    const { fixture, el } = await render();
+    activeSection.set(section);
     fixture.detectChanges();
-    expect(books.classList.contains('active')).toBe(false);
+    const active = el.querySelectorAll('nav a.active');
+    expect(active).toHaveLength(1);
+    expect(active[0]).toBe(links(el)[index]);
+    expect(active[0].getAttribute('aria-current')).toBe('location');
+  });
 
-    await router.navigateByUrl('/#books');
+  it('moves the highlight as the visitor scrolls on', async () => {
+    const { fixture, el } = await render();
+    activeSection.set('books');
     fixture.detectChanges();
-    expect(books.classList.contains('active')).toBe(true);
-    expect(books.getAttribute('aria-current')).toBe('location');
-
-    await router.navigateByUrl('/about');
+    activeSection.set('set');
     fixture.detectChanges();
-    expect(books.classList.contains('active')).toBe(false);
+    expect(links(el)[0].classList.contains('active')).toBe(false);
+    expect(links(el)[1].classList.contains('active')).toBe(true);
   });
 
   it('shows the cart count and a matching accessible name', async () => {
