@@ -127,6 +127,48 @@ describe('BookGallery', () => {
     );
   });
 
+  describe('a sold out book', () => {
+    const soldOut: Book = { ...sampleBook, inStock: false, images: [image('back')] };
+
+    it('shows its front cover faded and blurred, like on its card', () => {
+      const { el } = render(soldOut);
+      const picture = el.querySelector('.picture')!;
+      expect(picture.classList.contains('soldout')).toBe(true);
+      expect(picture.querySelector('oh-book-cover')).toBeTruthy();
+    });
+
+    it('blurs a real front photo too', () => {
+      const { el } = render({ ...soldOut, images: [image('front')] });
+      const picture = el.querySelector('.picture.soldout')!;
+      expect(picture.querySelector('.photo')!.getAttribute('src')).toBe('/front.jpg');
+    });
+
+    it('keeps the "sold out" label sharp: it is outside the blurred picture', () => {
+      const { el } = render(soldOut);
+      const label = el.querySelector('.soldout-label')!;
+      expect(label).toBeTruthy();
+      expect(el.querySelector('.picture')!.contains(label)).toBe(false);
+    });
+
+    it('shows the other views (back cover, pages) clear, so they can be read', () => {
+      const { el, pick } = render(soldOut);
+      pick('כריכה אחורית');
+      expect(el.querySelector('.picture')!.classList.contains('soldout')).toBe(false);
+      expect(el.querySelector('.photo')).toBeTruthy();
+    });
+
+    it('does not blur the thumbnails', () => {
+      const { thumbs } = render(soldOut);
+      expect(thumbs().every((t) => !t.classList.contains('soldout'))).toBe(true);
+      expect(thumbs().every((t) => !t.closest('.soldout'))).toBe(true);
+    });
+  });
+
+  it('does not blur the picture of a book in stock', () => {
+    const { el } = render();
+    expect(el.querySelector('.picture')!.classList.contains('soldout')).toBe(false);
+  });
+
   it('marks a sold out book on its front cover only', () => {
     const soldOut: Book = { ...sampleBook, inStock: false, images: [image('back')] };
     const { el, pick } = render(soldOut);

@@ -1,21 +1,24 @@
 <div class="panel">
   @if (current(); as view) {
     <div class="stage">
-      @if (view.image; as image) {
-        <img
-          class="photo"
-          [src]="image.url"
-          [alt]="image.alt || view.label + ' – ' + book().title"
-          width="300"
-          height="400"
-        />
-      } @else if (view.kind === 'front') {
-        <oh-book-cover [book]="book()" [decorative]="true" />
-      } @else {
-        <div class="ph" role="img" [attr.aria-label]="view.label + ' (דוגמה)'">
-          {{ view.placeholder }}
-        </div>
-      }
+      <!-- A sold out book's front cover is faded and blurred, like on its card. -->
+      <div class="picture" [class.soldout]="!book().inStock && view.kind === 'front'">
+        @if (view.image; as image) {
+          <img
+            class="photo"
+            [src]="image.url"
+            [alt]="image.alt || view.label + ' – ' + book().title"
+            width="300"
+            height="400"
+          />
+        } @else if (view.kind === 'front') {
+          <oh-book-cover [book]="book()" [decorative]="true" />
+        } @else {
+          <div class="ph" role="img" [attr.aria-label]="view.label + ' (דוגמה)'">
+            {{ view.placeholder }}
+          </div>
+        }
+      </div>
       @if (!book().inStock && view.kind === 'front') {
         <span class="soldout-label">אזל במלאי</span>
       }

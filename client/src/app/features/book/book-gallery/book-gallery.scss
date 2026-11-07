@@ -15,6 +15,12 @@
   margin-inline: auto;
 }
 
+// Same look as the sold out card: faded and slightly blurred (the label stays sharp).
+.picture.soldout {
+  filter: blur(1.3px) grayscale(0.35);
+  opacity: 0.6;
+}
+
 .photo {
   display: block;
   inline-size: 100%;
