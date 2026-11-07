@@ -50,6 +50,7 @@
             >
               <input
                 id="contact-name"
+                [attr.maxlength]="limits.name.max"
                 type="text"
                 formControlName="name"
                 autocomplete="name"
@@ -66,6 +67,7 @@
             >
               <input
                 id="contact-contact"
+                [attr.maxlength]="limits.contact.max"
                 type="text"
                 formControlName="contact"
                 autocomplete="email"
@@ -79,6 +81,7 @@
           <oh-field controlId="contact-subject" label="נושא" [error]="errorOf('subject')">
             <input
               id="contact-subject"
+              [attr.maxlength]="limits.subject.max"
               type="text"
               formControlName="subject"
               [attr.aria-invalid]="errorOf('subject') ? 'true' : null"
@@ -94,6 +97,7 @@
           >
             <textarea
               id="contact-message"
+              [attr.maxlength]="limits.message.max"
               rows="5"
               formControlName="message"
               [attr.aria-invalid]="errorOf('message') ? 'true' : null"
