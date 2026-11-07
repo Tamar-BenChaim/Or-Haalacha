@@ -33,6 +33,7 @@ export const MOCK_BOOKS: Book[] = LETTERS.map((letter, index) => ({
   volume: index + 1,
   topic: TOPICS[index % TOPICS.length],
   shortDescription: 'תיאור קצר לדוגמה',
+  description: 'תיאור מלא לדוגמה של הספר: אילו הלכות הוא מקיף, איך הוא בנוי, ולמי הוא מתאים.',
   priceAgorot: 5500 + (index % 5) * 500,
   // One book is sold out, to show that state.
   inStock: index !== 6,

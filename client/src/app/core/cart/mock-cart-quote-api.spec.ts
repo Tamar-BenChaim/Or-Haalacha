@@ -40,11 +40,21 @@ describe('MockCartQuoteApi', () => {
     expect(result.allAvailable).toBe(false);
   });
 
-  it('marks unknown books and sets as unavailable', () => {
+  it('marks unknown books and unknown sets as unavailable', () => {
     const result = quote(
       { slug: 'nope', quantity: 1 },
-      { slug: 'full-set', quantity: 1, type: 'bundle' },
+      { slug: 'no-such-set', quantity: 1, type: 'bundle' },
     );
     expect(result.items.map((i) => i.status)).toEqual(['unavailable', 'unavailable']);
+  });
+
+  it('prices the full set at the set price (not the sum of the books)', () => {
+    const result = quote({ slug: 'full-set', quantity: 2, type: 'bundle' });
+    expect(result.items[0]).toMatchObject({
+      status: 'ok',
+      unitPriceAgorot: 99000,
+      lineTotalAgorot: 198000,
+    });
+    expect(result.subtotalAgorot).toBe(198000);
   });
 });

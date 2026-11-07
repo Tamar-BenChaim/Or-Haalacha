@@ -1,0 +1,246 @@
+// Laid out like the design mockup (docs/design/mockups).
+.page {
+  padding-block-end: 96px;
+}
+
+.tinted {
+  background: var(--card);
+  border: 1px solid var(--card-b);
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  gap: 56px;
+  padding-block-end: 56px;
+}
+
+.media {
+  flex: 0 0 420px;
+  max-inline-size: 100%;
+}
+
+.panel {
+  padding: 40px 24px;
+  background: var(--card);
+  border: 1px solid var(--card-b);
+}
+
+.stage {
+  position: relative;
+  inline-size: 66%;
+  margin-inline: auto;
+}
+
+.soldout-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 7px 18px;
+  border: 1px solid var(--bur);
+  background: rgb(255 255 255 / 94%);
+  color: var(--bur);
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.info {
+  flex: 1 1 0;
+  min-inline-size: 0;
+
+  h1 {
+    margin-block-end: 14px;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+.gold-rule {
+  display: block;
+  inline-size: 48px;
+  block-size: 2px;
+  margin-block-end: 18px;
+  background: var(--gold);
+}
+
+.lead {
+  margin: 0 0 22px;
+  font-size: 19px;
+  color: var(--muted);
+}
+
+.price {
+  margin: 0 0 8px;
+  font-family: var(--font-head);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--bur);
+}
+
+.stock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 24px;
+  font-weight: 500;
+}
+
+.dot {
+  inline-size: 9px;
+  block-size: 9px;
+  background: var(--ok);
+}
+
+.out {
+  margin: 0 0 24px;
+  font-weight: 700;
+  color: var(--err);
+}
+
+.buy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-block-end: 24px;
+}
+
+.add {
+  min-inline-size: 200px;
+}
+
+.set-note {
+  margin: 0 0 18px;
+  padding: 14px 18px;
+  font-size: 16px;
+
+  a {
+    font-weight: 700;
+    color: var(--bur);
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+  }
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-block-size: var(--tap);
+  padding: 8px 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  color: var(--bur);
+  cursor: pointer;
+}
+
+.copied {
+  margin-inline-start: 12px;
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.about {
+  max-inline-size: 760px;
+  padding-block-end: 48px;
+
+  h2 {
+    margin-block-end: 14px;
+    font-size: 30px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+}
+
+.volumes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-block: 1px solid var(--line);
+}
+
+.related {
+  padding-block: 56px 0;
+
+  h2 {
+    margin-block-end: 24px;
+    font-size: 30px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.state {
+  padding-block: var(--space-6);
+  text-align: center;
+}
+
+// A fixed "add to cart" bar at the bottom of phone screens.
+.sticky-buy {
+  display: none;
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 35;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--bg);
+  border-block-start: 1px solid var(--line);
+
+  .btn {
+    flex: 1 1 0;
+    max-inline-size: 240px;
+  }
+}
+
+.sticky-price {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--bur);
+}
+
+@media (width <= 760px) {
+  .top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .media {
+    flex-basis: auto;
+  }
+
+  .sticky-buy {
+    display: flex;
+  }
+}

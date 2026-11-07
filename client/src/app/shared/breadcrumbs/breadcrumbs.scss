@@ -1,0 +1,20 @@
+.crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 22px 0;
+  list-style: none;
+  font-size: 15px;
+  color: var(--muted);
+
+  li {
+    display: flex;
+    gap: 8px;
+  }
+
+  a:hover {
+    color: var(--bur);
+  }
+}

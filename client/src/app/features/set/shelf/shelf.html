@@ -1,1 +1,30 @@
-<p>shelf works!</p>
+<div class="shelf-scroll">
+  <div class="shelf-in">
+    <div class="spines" role="group" aria-label="ספרי הסדרה על המדף">
+      @for (spine of spines(); track spine.book.id) {
+        <a
+          class="spine"
+          [routerLink]="['/book', spine.book.slug]"
+          [state]="from"
+          [style.height.%]="spine.height"
+          [attr.aria-label]="spine.book.title"
+          (mouseenter)="show(spine.book)"
+          (focus)="show(spine.book)"
+          (mouseleave)="clear()"
+          (blur)="clear()"
+        >
+          <span class="spine-t">{{ spine.book.topic || spine.book.title }}</span>
+        </a>
+      }
+    </div>
+    <div class="board"></div>
+  </div>
+</div>
+
+<p class="caption" aria-live="polite">
+  @if (active(); as book) {
+    {{ book.title }} · {{ book.priceAgorot | agorotToShekels }}
+  } @else {
+    {{ defaultCaption }}
+  }
+</p>

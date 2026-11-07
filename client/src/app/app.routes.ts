@@ -13,7 +13,7 @@ export const routes: Routes = [
   },
   {
     path: 'book/:slug',
-    loadComponent: () => import('./features/book/book/book').then((m) => m.Book),
+    loadComponent: () => import('./features/book/book/book').then((m) => m.BookPage),
   },
   {
     path: 'cart',
