@@ -10,10 +10,12 @@
   border: 1px solid var(--card-b);
 }
 
+// The text and the price box start at the same line (the box never sticks out above the
+// title) and are as tall as each other.
 .top {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: stretch;
   justify-content: space-between;
   gap: 32px;
   margin-block-end: 36px;
@@ -51,7 +53,10 @@
 }
 
 .price-card {
+  display: flex;
   flex: 0 1 380px;
+  flex-direction: column;
+  justify-content: center;
   padding: 24px;
 }
 
