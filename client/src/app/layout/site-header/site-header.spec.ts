@@ -57,6 +57,14 @@ describe('SiteHeader', () => {
     expect(logo.getAttribute('aria-label')).toBe('אור ההלכה – לדף הבית');
   });
 
+  it('stays at the top of the window while scrolling (the component itself is sticky)', async () => {
+    const { fixture } = await render();
+    const host = getComputedStyle(fixture.nativeElement as HTMLElement);
+    expect(host.position).toBe('sticky');
+    expect(host.top).toBe('0px');
+    expect(Number(host.zIndex)).toBeGreaterThan(0);
+  });
+
   it('highlights no link while the opening area is on the screen', async () => {
     const { el } = await render();
     expect(el.querySelectorAll('nav a.active')).toHaveLength(0);

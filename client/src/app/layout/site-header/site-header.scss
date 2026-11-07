@@ -1,7 +1,14 @@
-.header {
+// The bar stays at the top of the window while scrolling. "Sticky" must be on the
+// component's own element (the host): a sticky element can only move inside its parent,
+// and the <header> inside is exactly as tall as its parent, so it had nowhere to move.
+:host {
   position: sticky;
-  inset-block-start: 0;
+  top: 0;
   z-index: 10;
+  display: block;
+}
+
+.header {
   background: var(--bg);
   border-block-end: 1px solid var(--line);
 }
