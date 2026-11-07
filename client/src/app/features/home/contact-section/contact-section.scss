@@ -1,3 +1,5 @@
+// Laid out like the design mockup (docs/design/mockups): the text and the details on one
+// side, a large framed form filling the rest.
 .contact {
   // The jump from the header links stops under the header (see core/ui/anchor-offset.ts);
   // the space above the title is this padding.
@@ -5,8 +7,24 @@
   border-block-start: 1px solid var(--line);
 }
 
+.layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 56px;
+}
+
+.intro {
+  flex: 0 0 360px;
+  max-inline-size: 100%;
+
+  h2 {
+    margin-block-end: 18px;
+    font-size: clamp(36px, 7vw, 56px);
+  }
+}
+
 .eyebrow {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   font-size: 15px;
   color: var(--muted);
   letter-spacing: 0.3px;
@@ -16,58 +34,70 @@
   display: block;
   inline-size: 48px;
   block-size: 2px;
-  margin-block: 14px 24px;
+  margin-block-end: 22px;
   background: var(--gold);
 }
 
-.layout {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 40px;
+.lead {
+  margin: 0 0 28px;
+  font-size: 18px;
+  color: var(--muted);
 }
 
 .details {
-  flex: 1 1 240px;
-  font-size: 18px;
+  margin: 0;
+  padding: 0;
+  border-block-start: 1px solid var(--line);
+  list-style: none;
+}
 
-  p {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    margin: 0 0 18px;
-  }
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+  border-block-end: 1px solid var(--line);
+  color: inherit;
+  // The page's base style makes every link inside a list bold. Without this the email row
+  // (a link) would have a bold "מייל" while the phone row has a normal "טלפון".
+  font-weight: 400;
+}
 
-  .label {
-    font-size: 15px;
-    color: var(--muted);
-  }
+a.row:hover .value,
+a.row:focus-visible .value {
+  color: var(--bur);
+}
 
-  a {
-    align-self: flex-start;
-    font-weight: 700;
-    color: var(--bur);
+.label {
+  color: var(--muted);
+}
 
-    &:hover,
-    &:focus-visible {
-      text-decoration: underline;
-      text-underline-offset: 4px;
-    }
-  }
+.value {
+  font-weight: 500;
+}
+
+// The large framed box with the form.
+.panel {
+  flex: 1 1 0;
+  min-inline-size: 0;
+  padding: 34px;
+  background: var(--card);
+  border: 1px solid var(--card-b);
+}
+
+.form-title {
+  margin: 0 0 20px;
+  font-family: var(--font-head);
+  font-size: 26px;
+  font-weight: 500;
 }
 
 .form {
   display: flex;
-  flex: 1 1 420px;
   flex-direction: column;
   gap: 16px;
-  max-inline-size: 640px;
-  padding: 26px;
-  background: var(--card);
-  border: 1px solid var(--card-b);
 
   button[type='submit'] {
-    align-self: flex-start;
     min-inline-size: 160px;
   }
 
@@ -79,15 +109,72 @@
   }
 }
 
+// Name and "email or phone" side by side.
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
 .result {
   margin: 0;
   font-weight: 700;
 
-  &.ok {
+  &.bad {
+    color: var(--err);
+  }
+}
+
+.sent {
+  padding: 40px 0;
+  text-align: center;
+
+  .sent-title {
+    margin: 0 0 8px;
+    font-family: var(--font-head);
+    font-size: 30px;
     color: var(--ok);
   }
 
-  &.bad {
-    color: var(--err);
+  .sent-note {
+    margin: 0 0 20px;
+    color: var(--muted);
+  }
+}
+
+.again {
+  min-block-size: var(--tap);
+  padding: 8px 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  color: var(--bur);
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+@media (width <= 760px) {
+  .layout {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
+  }
+
+  .intro {
+    flex-basis: auto;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+
+  .pair {
+    grid-template-columns: 1fr;
   }
 }

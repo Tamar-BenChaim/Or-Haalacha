@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { SHOW_CONTENT_PLACEHOLDERS } from '../../../core/config/content-placeholders';
 import { CONTACT_SOURCE } from '../../../core/contact/contact-source';
 import { SiteSettingsStore } from '../../../core/settings/site-settings-store';
 import { Field } from '../../../shared/field/field';
@@ -51,6 +52,8 @@ export class ContactSection {
 
   protected readonly email = this.settings.email;
   protected readonly phone = this.settings.phone;
+  /** Shows "[מספר טלפון]" while the phone is not known (development only, like the mockup). */
+  protected readonly placeholders = inject(SHOW_CONTENT_PLACEHOLDERS);
 
   protected readonly status = signal<SendStatus>('idle');
   /** Errors are shown only after the visitor left the field or tried to send. */
@@ -112,5 +115,10 @@ export class ContactSection {
         error: (error: { status?: number }) =>
           this.status.set(error?.status === 429 ? 'limited' : 'error'),
       });
+  }
+
+  /** After a message was sent, shows an empty form again. */
+  protected writeAnother(): void {
+    this.status.set('idle');
   }
 }
