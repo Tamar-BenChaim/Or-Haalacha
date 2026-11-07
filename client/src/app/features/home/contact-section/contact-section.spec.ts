@@ -209,6 +209,78 @@ describe('ContactSection', () => {
       expect(field('contact-name').getAttribute('aria-describedby')).toBe('contact-name-error');
     });
 
+    describe('a field of spaces only counts as empty', () => {
+      it.each([
+        ['contact-name', 'נא למלא שם'],
+        ['contact-contact', 'נא למלא מייל או טלפון'],
+        ['contact-message', 'נא לכתוב הודעה'],
+      ])('%s asks to fill it in', (id, message) => {
+        const { fill, blur, text } = setup();
+        fill(id, '      ');
+        blur(id);
+        expect(text(`#${id}-error`)).toContain(message);
+      });
+
+      it('does not send a form whose fields are spaces only', async () => {
+        const { source, fill, fixture, submit, text } = setup();
+        fill('contact-name', '   ');
+        fill('contact-contact', '   ');
+        fill('contact-message', ' '.repeat(20));
+        fixture.detectChanges();
+        await submit();
+        expect(source.send).not.toHaveBeenCalled();
+        expect(text('#contact-name-error')).toBeTruthy();
+        expect(text('#contact-message-error')).toBeTruthy();
+      });
+
+      it('does not count the spaces around a short message', () => {
+        const { fill, blur, text } = setup();
+        fill('contact-message', '   קצר   ');
+        blur('contact-message');
+        expect(text('#contact-message-error')).toContain('קצרה מדי');
+      });
+
+      it('does not count the spaces around a short name', () => {
+        const { fill, blur, text } = setup();
+        fill('contact-name', '  א  ');
+        blur('contact-name');
+        expect(text('#contact-name-error')).toContain('קצר מדי');
+      });
+    });
+
+    describe('limits on the length', () => {
+      it('stops the typing at the longest allowed length in each field', () => {
+        const { field } = setup();
+        expect(field('contact-name').getAttribute('maxlength')).toBe('80');
+        expect(field('contact-contact').getAttribute('maxlength')).toBe('254');
+        expect(field('contact-subject').getAttribute('maxlength')).toBe('100');
+        expect(field('contact-message').getAttribute('maxlength')).toBe('2000');
+      });
+
+      it('rejects a pasted name or subject that is too long (the browser limit does not apply to code)', () => {
+        const { fill, blur, text } = setup();
+        fill('contact-name', 'א'.repeat(81));
+        blur('contact-name');
+        expect(text('#contact-name-error')).toContain('ארוך מדי');
+        fill('contact-subject', 'א'.repeat(101));
+        blur('contact-subject');
+        expect(text('#contact-subject-error')).toContain('ארוך מדי');
+      });
+
+      it('rejects a message longer than 2000 characters, and accepts exactly 2000', async () => {
+        const { source, fill, blur, text, fillValid, submit, fixture } = setup();
+        fill('contact-message', 'א'.repeat(2001));
+        blur('contact-message');
+        expect(text('#contact-message-error')).toContain('ארוכה מדי');
+
+        fillValid();
+        fill('contact-message', 'א'.repeat(2000));
+        fixture.detectChanges();
+        await submit();
+        expect(source.send).toHaveBeenCalledTimes(1);
+      });
+    });
+
     it('asks for a valid email or phone', () => {
       const { fill, blur, text, fixture } = setup();
       fill('contact-contact', 'not valid');

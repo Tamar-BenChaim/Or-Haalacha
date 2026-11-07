@@ -7,13 +7,19 @@ import {
   Injector,
   signal,
 } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { SHOW_CONTENT_PLACEHOLDERS } from '../../../core/config/content-placeholders';
 import { CONTACT_SOURCE } from '../../../core/contact/contact-source';
 import { SiteSettingsStore } from '../../../core/settings/site-settings-store';
 import { Field } from '../../../shared/field/field';
-import { emailOrPhone } from './contact-validators';
+import {
+  CONTACT_LIMITS,
+  emailOrPhone,
+  requiredText,
+  trimmedMaxLength,
+  trimmedMinLength,
+} from './contact-validators';
 
 type SendStatus = 'idle' | 'sending' | 'sent' | 'error' | 'limited';
 type FieldName = 'name' | 'contact' | 'subject' | 'message';
@@ -59,19 +65,34 @@ export class ContactSection {
   /** Errors are shown only after the visitor left the field or tried to send. */
   protected readonly submitted = signal(false);
 
+  /** The longest each field may be; the form stops the typing there. */
+  protected readonly limits = CONTACT_LIMITS;
+
+  // Lengths count the text without spaces at its ends, so a field of spaces only is empty.
   protected readonly form = new FormGroup({
     name: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(2), Validators.maxLength(80)],
+      validators: [
+        requiredText,
+        trimmedMinLength(CONTACT_LIMITS.name.min),
+        trimmedMaxLength(CONTACT_LIMITS.name.max),
+      ],
     }),
     contact: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, emailOrPhone],
+      validators: [requiredText, emailOrPhone, trimmedMaxLength(CONTACT_LIMITS.contact.max)],
     }),
-    subject: new FormControl('', { nonNullable: true, validators: [Validators.maxLength(100)] }),
+    subject: new FormControl('', {
+      nonNullable: true,
+      validators: [trimmedMaxLength(CONTACT_LIMITS.subject.max)],
+    }),
     message: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(10), Validators.maxLength(2000)],
+      validators: [
+        requiredText,
+        trimmedMinLength(CONTACT_LIMITS.message.min),
+        trimmedMaxLength(CONTACT_LIMITS.message.max),
+      ],
     }),
   });
 
